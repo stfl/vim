@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/etc/profile.d'
+let g:netrw_dirhist_2='/home/slendl/.vim'
+let g:netrw_dirhist_3='/home/slendl/merging/openssl/openssl101j_build/test'
+let g:netrw_dirhist_4='/home/slendl'
+let g:netrw_dirhist_5='/home/slendl/merging/pcre/pcre_build'
+let g:netrw_dirhist_6='/home/slendl/.zprezto'
+let g:netrw_dirhist_7='/home/slendl/.vim'
+let g:netrw_dirhist_8='/home/slendl/.config'
+let g:netrw_dirhist_9='/home/slendl/.zprezto'
