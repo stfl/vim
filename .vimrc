@@ -46,6 +46,14 @@ imap <c-s-v> <ESC>"+gp
 nmap <c-s-a> ggVG
 imap <c-s-a> <ESC>ggvG
 
+" tab navigation like firefox
+nnoremap <C-S-tab> :tabprevious<CR>
+nnoremap <C-tab>   :tabnext<CR>
+nnoremap <C-t>     :tabnew<CR>
+inoremap <C-S-tab> <Esc>:tabprevious<CR>i
+inoremap <C-tab>   <Esc>:tabnext<CR>i
+inoremap <C-t>     <Esc>:tabnew<CR>
+
 " Search for selected text, forwards or backwards. first * then n/N ->
 " multiple * does not work
 vnoremap <silent> * :<C-U>
