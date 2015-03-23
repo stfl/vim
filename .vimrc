@@ -39,9 +39,10 @@ endif
 colorscheme solarized
 
 "adds user and timestamp to end of line
+nmap <F4> :r! echo "(${USER} on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
 vmap <c-s-c> "+y
-nmap <c-s-v> "+gP
-imap <c-s-v> <ESC>"+gP
+nmap <c-s-v> "+gp
+imap <c-s-v> <ESC>"+gp
 nmap <c-s-a> ggVG
 imap <c-s-a> <ESC>ggvG
 
