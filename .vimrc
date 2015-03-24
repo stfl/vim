@@ -1,34 +1,49 @@
-set nocompatible
+set nocompatible " Make Vim more useful
 
 " format
 set autoindent
 set backup
 set nu
 set smartindent
-set showmatch
 set textwidth=80
-set title
 set tabstop=3
 set shiftwidth=3
 set softtabstop=3
-set expandtab
+" set expandtab
 
-set incsearch
-set hlsearch
+" searching
+set hlsearch   " Search highlighting
+set incsearch  " Incremental search
+set ignorecase " Ignore case when searching
+set smartcase  " Ignore case if search pattern is all lc, cs or otherwise
 
 " syntax
 syntax on
 set number
 
-set mouse=a
-set clipboard=unnamedplus " set y to clipboard
+set encoding=utf-8    " Set utf-8 as standard encoding
+set clipboard=unnamed " Use the OS clipboard by default
+set wildmenu          " Wild char completion menu
+set wildmode=list:longest,list:full
+set mouse=a           " Enable mouse in all modes
+if exists('$TMUX')
+  set ttymouse=xterm2 " Support resizing in tmux
+endif
+set autoread          " Set to auto read when a file is changed from the outside
 
-" support 256 colors in Lion terminal 
-" set t_Co=256
+syntax on        " Syntax highlighting
+set number       " Show line numbers
+set showcmd      " Show the (partial) command as it's being typed
+set laststatus=2 " Always show status line
+set title        " Change the terminal's title
+set ruler        " Show the cursor position all the time
+set cursorline   " Highlight current line
+set showmatch    " Cursor shows matching ) and }
+set showmode     " Show the current mode
+if version >= 703
+   set colorcolumn=80
+endif
 
-" always show file name
-set modeline
-set ls=2
 
 if has('gui_running')
    set background=light
