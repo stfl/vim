@@ -61,7 +61,7 @@ imap <c-s-v> <ESC>"+gp
 nmap <c-s-a> ggVG
 imap <c-s-a> <ESC>ggvG
 
-" tab navigation like firefox
+" tab navigation like firefox - only works in gvim
 nnoremap <C-S-tab> :tabprevious<CR>
 nnoremap <C-tab>   :tabnext<CR>
 nnoremap <C-t>     :tabnew<CR>
