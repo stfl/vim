@@ -35,7 +35,6 @@ syntax on        " Syntax highlighting
 set number       " Show line numbers
 set showcmd      " Show the (partial) command as it's being typed
 set laststatus=2 " Always show status line
-set title        " Change the terminal's title
 set ruler        " Show the cursor position all the time
 set cursorline   " Highlight current line
 set showmatch    " Cursor shows matching ) and }
