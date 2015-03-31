@@ -11,8 +11,8 @@ set softtabstop=3
 " set expandtab
 
 set backup
-set backupdir=~/.vimtmp,.  " save backup file (*~) somewhere else
-set directory=~/.vimtmp,.
+set backupdir=~/.vim/tmp,.  " save backup file (*~) somewhere else
+set directory=~/.vim/tmp,.
 
 " searching
 set hlsearch   " Search highlighting
