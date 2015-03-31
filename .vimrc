@@ -28,8 +28,6 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 
-
-
 " format
 set autoindent
 set backup
@@ -40,6 +38,10 @@ set shiftwidth=3
 set softtabstop=3
 " set expandtab
 
+set backup
+set backupdir=~/.vim/tmp,.  " save backup file (*~) somewhere else
+set directory=~/.vim/tmp,.
+
 " searching
 set hlsearch   " Search highlighting
 set incsearch  " Incremental search
@@ -49,7 +51,7 @@ set smartcase  " Ignore case if search pattern is all lc, cs or otherwise
 " syntax
 syntax on
 set number
-
+set expandtab			 " tab expansion
 set encoding=utf-8    " Set utf-8 as standard encoding
 set clipboard=unnamed " Use the OS clipboard by default
 set wildmenu          " Wild char completion menu
