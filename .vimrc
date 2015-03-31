@@ -1,9 +1,38 @@
-set nocompatible " Make Vim more useful
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+Plugin 'file:///home/slendl/bin/Plugin-ReleaseNotes/Plugin-ReleaseNotes'
+
+Plugin 'altercation/vim-colors-solarized'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+
+
 
 " format
 set autoindent
 set backup
-set nu
 set smartindent
 set textwidth=80
 set tabstop=3
@@ -39,10 +68,6 @@ set ruler        " Show the cursor position all the time
 set cursorline   " Highlight current line
 set showmatch    " Cursor shows matching ) and }
 set showmode     " Show the current mode
-if version >= 703
-   set colorcolumn=80
-endif
-
 
 if has('gui_running')
    set background=light
@@ -51,6 +76,9 @@ else
    let g:solarized_termtrans = 1
 endif
 colorscheme solarized
+if version >= 703
+   set colorcolumn=80
+endif
 
 "adds user and timestamp to end of line
 nmap <F4> :r! echo "(${USER} on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
