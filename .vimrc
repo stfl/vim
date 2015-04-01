@@ -8,7 +8,14 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-Plugin 'file:///home/slendl/bin/Plugin-ReleaseNotes/Plugin-ReleaseNotes'
+" if whatever HOSTNAME
+" or replace in advance
+
+if !empty(glob("/home/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes"))
+   Plugin 'file:///home/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes'
+elseif !empty(glob("/home_vie/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes'"))
+   Plugin 'file:///home_vie/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes'
+endif 
 
 Plugin 'altercation/vim-colors-solarized'
 
