@@ -30,13 +30,12 @@ filetype plugin indent on    " required
 
 " format
 set autoindent
-set backup
 set smartindent
-set textwidth=80
+set expandtab			 " tab expansion
+" set textwidth=80
 set tabstop=3
 set shiftwidth=3
 set softtabstop=3
-" set expandtab
 
 set backup
 set backupdir=~/.vim/tmp,.  " save backup file (*~) somewhere else
@@ -49,9 +48,6 @@ set ignorecase " Ignore case when searching
 set smartcase  " Ignore case if search pattern is all lc, cs or otherwise
 
 " syntax
-syntax on
-set number
-set expandtab			 " tab expansion
 set encoding=utf-8    " Set utf-8 as standard encoding
 set clipboard=unnamed " Use the OS clipboard by default
 set wildmenu          " Wild char completion menu
