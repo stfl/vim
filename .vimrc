@@ -18,7 +18,7 @@ elseif !empty(glob("/home_vie/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNot
 endif 
 
 Plugin 'altercation/vim-colors-solarized'
-asdfsadfaqqqZQQQ
+
 " zoom into one split windo with <c-w-o>
 Plugin 'vim-scripts/ZoomWindf
 
