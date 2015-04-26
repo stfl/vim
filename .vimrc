@@ -22,7 +22,29 @@ endif
 Plugin 'altercation/vim-colors-solarized'
 
 " zoom into one split windo with <c-w-o>
-Plugin 'vim-scripts/ZoomWindf
+Plugin 'vim-scripts/ZoomWin'
+
+" Plugin 'bling/vim-airline'
+
+" Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc)
+" http://www.vim.org/scripts/script.php?script_id=273
+Plugin 'vim-scripts/taglist.vim'
+
+Plugin 'tpope/vim-surround'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+
+
+" a Git wrapper so awesome, it should be illegal 
+" http://www.vim.org/scripts/script.php?script_id=2975
+Plugin 'tpope/vim-fugitive'
+
+" Syntax checking hacks for vim
+Plugin 'scrooloose/syntastic'
+
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'haya14busa/vim-easyoperator-line'
+
 
 " adds support for ansi escape characters
 " Plugin 'powerman/vim-plugin-AnsiEsc'
