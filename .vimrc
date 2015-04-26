@@ -8,6 +8,8 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
+Plugin 'will133/vim-dirdiff'
+
 " if whatever HOSTNAME
 " or replace in advance
 
