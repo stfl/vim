@@ -21,6 +21,12 @@ endif
 
 Plugin 'altercation/vim-colors-solarized'
 
+" zoom into one split windo with <c-w-o>
+Plugin 'vim-scripts/ZoomWindf
+
+" adds support for ansi escape characters
+" Plugin 'powerman/vim-plugin-AnsiEsc'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -87,13 +93,16 @@ if version >= 703
    set colorcolumn=80
 endif
 
-"adds user and timestamp to end of line
-nmap <F4> :r! echo "(${USER} on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
 vmap <c-s-c> "+y
 nmap <c-s-v> "+gp
 imap <c-s-v> <ESC>"+gp
 nmap <c-s-a> ggVG
-imap <c-s-a> <ESC>ggvG
+imap <c-s-a> <ESC>ggVG
+
+" Frequentis specifics
+"adds user and timestamp to end of line
+nmap <F4> :r! echo "(${USER} on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
+autocmd BufRead MakePkg setlocal noexpandtab
 
 " tab navigation like firefox - only works in gvim
 nnoremap <C-S-tab> :tabprevious<CR>
