@@ -24,11 +24,12 @@ Plugin 'altercation/vim-colors-solarized'
 " zoom into one split windo with <c-w-o>
 Plugin 'vim-scripts/ZoomWin'
 
-" Plugin 'bling/vim-airline'
+Plugin 'bling/vim-airline'
+set laststatus=2
 
 " Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc)
 " http://www.vim.org/scripts/script.php?script_id=273
-Plugin 'vim-scripts/taglist.vim'
+" Plugin 'vim-scripts/taglist.vim'
 
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/nerdcommenter'
@@ -42,9 +43,11 @@ Plugin 'tpope/vim-fugitive'
 " Syntax checking hacks for vim
 Plugin 'scrooloose/syntastic'
 
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'haya14busa/vim-easyoperator-line'
+"Plugin 'Lokaltog/vim-easymotion'
+"Plugin 'haya14busa/vim-easyoperator-line'
 
+" Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box.
+Plugin 'klen/python-mode'
 
 " adds support for ansi escape characters
 " Plugin 'powerman/vim-plugin-AnsiEsc'
@@ -64,6 +67,8 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
+autocmd! bufwritepost .vimrc source % " automatic reload .vimrc
+set autoread          " Set to auto read when a file is changed from the outside
 
 " format
 set autoindent
@@ -86,14 +91,17 @@ set smartcase  " Ignore case if search pattern is all lc, cs or otherwise
 
 " syntax
 set encoding=utf-8    " Set utf-8 as standard encoding
-set clipboard=unnamed " Use the OS clipboard by default
 set wildmenu          " Wild char completion menu
 set wildmode=list:longest,list:full
+set bs=2          " make backspace bahve like normal
 set mouse=a           " Enable mouse in all modes
 if exists('$TMUX')
   set ttymouse=xterm2 " Support resizing in tmux
 endif
-set autoread          " Set to auto read when a file is changed from the outside
+
+" better copy & pase behabour
+set pastetoggle=<F2>
+set clipboard=unnamed " Use the OS clipboard by default
 
 syntax on        " Syntax highlighting
 set number       " Show line numbers
@@ -103,7 +111,16 @@ set ruler        " Show the cursor position all the time
 set cursorline   " Highlight current line
 set showmatch    " Cursor shows matching ) and }
 set showmode     " Show the current mode
+let mapleader = ","  " rebmap the <Leader> key
 
+set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
+nnoremap <F7> :set list!<CR>  " toggle show whitespaces
+
+" easier moving of code blocks
+vnoremap < <gv " better indentation
+vnoremap > >gv
+
+" colorization
 if has('gui_running')
    set background=light
 else
@@ -115,11 +132,23 @@ if version >= 703
    set colorcolumn=80
 endif
 
+" ================================
+" key mappings
 vmap <c-s-c> "+y
 nmap <c-s-v> "+gp
 imap <c-s-v> <ESC>"+gp
 nmap <c-s-a> ggVG
 imap <c-s-a> <ESC>ggVG
+
+" map Ctrl - S to save file
+nnoremap <silent> <C-s> :update<CR>
+vnoremap <C-S> <C-C>:update<CR>
+inoremap <C-S> <C-O>:update<CR>
+
+" map Ctrl-N to remove highlight from last search
+noremap <C-n> :nohl<CR>
+vnoremap <C-n> <C-C>:nohl<CR>
+inoremap <C-n> <C-O>:nohl<CR>
 
 " Frequentis specifics
 "adds user and timestamp to end of line
