@@ -8,11 +8,8 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-Plugin 'will133/vim-dirdiff'
-
 " if whatever HOSTNAME
 " or replace in advance
-
 if !empty(glob("/home/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes"))
    Plugin 'file:///home/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes'
 elseif !empty(glob("/home_vie/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes"))
@@ -25,20 +22,24 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'vim-scripts/ZoomWin'
 
 Plugin 'bling/vim-airline'
-set laststatus=2
 
 " Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc)
 " http://www.vim.org/scripts/script.php?script_id=273
 " Plugin 'vim-scripts/taglist.vim'
 
 Plugin 'tpope/vim-surround'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
 
+" Fuzzy file, buffer, mru, tag, etc finder.  http://kien.github.com/ctrlp.vim
+Plugin 'kien/ctrlp.vim'
+
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
+let NERDSpaceDelims=1
 
 " a Git wrapper so awesome, it should be illegal 
 " http://www.vim.org/scripts/script.php?script_id=2975
 Plugin 'tpope/vim-fugitive'
+Plugin 'will133/vim-dirdiff'
 
 " Syntax checking hacks for vim
 Plugin 'scrooloose/syntastic'
@@ -48,8 +49,9 @@ Plugin 'scrooloose/syntastic'
 
 " Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box.
 Plugin 'klen/python-mode'
+let g:pymode_python = 'python3'
 
-" adds support for ansi escape characters
+" adds support for ansi escape characters - useful for vimpager
 " Plugin 'powerman/vim-plugin-AnsiEsc'
 
 " All of your Plugins must be added before the following line
@@ -101,14 +103,14 @@ endif
 
 " better copy & pase behabour
 set pastetoggle=<F2>
-set clipboard=unnamed " Use the OS clipboard by default
+set clipboard=unnamedplus " Use the OS clipboard by default
 
 syntax on        " Syntax highlighting
 set number       " Show line numbers
 set showcmd      " Show the (partial) command as it's being typed
-set laststatus=2 " Always show status line
 set ruler        " Show the cursor position all the time
 set cursorline   " Highlight current line
+set laststatus=2 " always show status line
 set showmatch    " Cursor shows matching ) and }
 set showmode     " Show the current mode
 let mapleader = ","  " rebmap the <Leader> key
@@ -134,21 +136,24 @@ endif
 
 " ================================
 " key mappings
-vmap <c-s-c> "+y
-nmap <c-s-v> "+gp
-imap <c-s-v> <ESC>"+gp
-nmap <c-s-a> ggVG
-imap <c-s-a> <ESC>ggVG
+"vmap <c-s-c> "+y
+"nmap <c-s-v> "+gp
+"imap <c-s-v> <ESC>"+gp
+"nmap <c-s-a> ggVG
+" imap <c-s-a> <ESC>ggVG
 
 " map Ctrl - S to save file
+" i like to be in normal mode afterwards
 nnoremap <silent> <C-s> :update<CR>
-vnoremap <C-S> <C-C>:update<CR>
-inoremap <C-S> <C-O>:update<CR>
+" vnoremap <C-S> <C-C>:update<CR>
+vnoremap <C-S> <Esc>:update<CR>
+" inoremap <C-S> <C-O>:update<CR>
+inoremap <C-S> <Esc>:update<CR>
 
 " map Ctrl-N to remove highlight from last search
-noremap <C-n> :nohl<CR>
-vnoremap <C-n> <C-C>:nohl<CR>
-inoremap <C-n> <C-O>:nohl<CR>
+"noremap <C-n> :nohl<CR>
+"vnoremap <C-n> <C-C>:nohl<CR>
+"inoremap <C-n> <C-O>:nohl<CR>
 
 " Frequentis specifics
 "adds user and timestamp to end of line
