@@ -142,13 +142,13 @@ endif
 "nmap <c-s-a> ggVG
 " imap <c-s-a> <ESC>ggVG
 
-" map Ctrl - S to save file
-" i like to be in normal mode afterwards
+" map Ctrl - Y to save file - Ctrl-S doesn't work in terminal...
+" I like to be in normal mode afterwards
 nnoremap <silent> <C-s> :update<CR>
 " vnoremap <C-S> <C-C>:update<CR>
-vnoremap <C-S> <Esc>:update<CR>
+vnoremap <C-Y> <Esc>:update<CR>
 " inoremap <C-S> <C-O>:update<CR>
-inoremap <C-S> <Esc>:update<CR>
+inoremap <C-Y> <Esc>:update<CR>
 
 " map Ctrl-N to remove highlight from last search
 "noremap <C-n> :nohl<CR>
@@ -161,12 +161,12 @@ nmap <F4> :r! echo "(${USER} on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
 autocmd BufRead MakePkg setlocal noexpandtab
 
 " tab navigation like firefox - only works in gvim
-nnoremap <C-S-tab> :tabprevious<CR>
-nnoremap <C-tab>   :tabnext<CR>
-nnoremap <C-t>     :tabnew<CR>
-inoremap <C-S-tab> <Esc>:tabprevious<CR>i
-inoremap <C-tab>   <Esc>:tabnext<CR>i
-inoremap <C-t>     <Esc>:tabnew<CR>
+" nnoremap <C-S-tab> :tabprevious<CR>
+" nnoremap <C-tab>   :tabnext<CR>
+" nnoremap <C-t>     :tabnew<CR>
+" inoremap <C-S-tab> <Esc>:tabprevious<CR>i
+" inoremap <C-tab>   <Esc>:tabnext<CR>i
+" inoremap <C-t>     <Esc>:tabnew<CR>
 
 " Search for selected text, forwards or backwards. first * then n/N ->
 " multiple * does not work
