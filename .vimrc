@@ -103,7 +103,9 @@ endif
 
 " better copy & pase behabour
 set pastetoggle=<F2>
-set clipboard=unnamedplus " Use the OS clipboard by default
+if version >= 703
+   set clipboard=unnamedplus " Use the OS clipboard by default
+endif
 
 syntax on        " Syntax highlighting
 set number       " Show line numbers
