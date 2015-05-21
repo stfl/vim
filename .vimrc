@@ -23,7 +23,7 @@ Plugin 'vim-scripts/ZoomWin'
 
 Plugin 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
-set noshowmode     " don't show the current mode (not needed whith airline)
+set noshowmode     " don't show the current mode (not needed with airline)
 
 " Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc)
 " http://www.vim.org/scripts/script.php?script_id=273
@@ -77,7 +77,7 @@ set autoread          " Set to auto read when a file is changed from the outside
 " format
 set autoindent
 set smartindent
-set expandtab			 " tab expansion
+set expandtab  " tab expansion
 " set textwidth=80
 set tabstop=3
 set shiftwidth=3
@@ -97,7 +97,7 @@ set smartcase  " Ignore case if search pattern is all lc, cs or otherwise
 set encoding=utf-8    " Set utf-8 as standard encoding
 set wildmenu          " Wild char completion menu
 set wildmode=list:longest,list:full
-set bs=2          " make backspace bahve like normal
+set bs=2              " make backspace bahve like normal
 set mouse=a           " Enable mouse in all modes
 if exists('$TMUX')
   set ttymouse=xterm2 " Support resizing in tmux
@@ -118,9 +118,10 @@ set laststatus=2 " always show status line
 set showmatch    " Cursor shows matching ) and }
 " set showmode     " Show the current mode
 let mapleader = ","  " rebmap the <Leader> key
+set timeoutlen=1000 
+set ttimeoutlen=10  " timeout leaving Insert
 
 " colorization
-let g:solarized_visibility = "high"
 let g:solarized_contrast = "high"
 let g:solarized_diffmode = "high"
 if has('gui_running')
@@ -147,9 +148,7 @@ endif
 " map Ctrl - Y to save file - Ctrl-S doesn't work in terminal...
 " I like to be in normal mode afterwards
 nnoremap <silent> <C-y> :update<CR>
-" vnoremap <C-S> <C-C>:update<CR>
 vnoremap <C-Y> <Esc>:update<CR>
-" inoremap <C-S> <C-O>:update<CR>
 inoremap <C-Y> <Esc>:update<CR>
 
 set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
@@ -176,6 +175,14 @@ autocmd BufRead MakePkg setlocal noexpandtab
 " inoremap <C-S-tab> <Esc>:tabprevious<CR>i
 " inoremap <C-tab>   <Esc>:tabnext<CR>i
 " inoremap <C-t>     <Esc>:tabnew<CR>
+
+" split naviagetion
+nnoremap <leader>v <C-w>v<C-w>l " split vertically
+nnoremap <leader>s <C-w>s       " split
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 " Search for selected text, forwards or backwards. first * then n/N ->
 " multiple * does not work
