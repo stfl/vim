@@ -22,6 +22,8 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'vim-scripts/ZoomWin'
 
 Plugin 'bling/vim-airline'
+let g:airline_powerline_fonts = 1
+set noshowmode     " don't show the current mode (not needed whith airline)
 
 " Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc)
 " http://www.vim.org/scripts/script.php?script_id=273
@@ -114,26 +116,24 @@ set ruler        " Show the cursor position all the time
 set cursorline   " Highlight current line
 set laststatus=2 " always show status line
 set showmatch    " Cursor shows matching ) and }
-set showmode     " Show the current mode
+" set showmode     " Show the current mode
 let mapleader = ","  " rebmap the <Leader> key
 
-set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
-nnoremap <F7> :set list!<CR>  " toggle show whitespaces
-
-" easier moving of code blocks
-vnoremap < <gv " better indentation
-vnoremap > >gv
-
 " colorization
+let g:solarized_visibility = "high"
+let g:solarized_contrast = "high"
+let g:solarized_diffmode = "high"
 if has('gui_running')
    set background=light
 else
    set background=dark
    let g:solarized_termtrans = 1
+   let &t_Co=256
 endif
 colorscheme solarized
 if version >= 703
    set colorcolumn=80
+   let g:solarized_hitrail = 1
 endif
 
 " ================================
@@ -146,11 +146,18 @@ endif
 
 " map Ctrl - Y to save file - Ctrl-S doesn't work in terminal...
 " I like to be in normal mode afterwards
-nnoremap <silent> <C-s> :update<CR>
+nnoremap <silent> <C-y> :update<CR>
 " vnoremap <C-S> <C-C>:update<CR>
 vnoremap <C-Y> <Esc>:update<CR>
 " inoremap <C-S> <C-O>:update<CR>
 inoremap <C-Y> <Esc>:update<CR>
+
+set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
+nnoremap <F7> :set list!<CR>  " toggle show whitespaces
+
+" easier moving of code blocks
+vnoremap < <gv " better indentation
+vnoremap > >gv
 
 " map Ctrl-N to remove highlight from last search
 "noremap <C-n> :nohl<CR>
