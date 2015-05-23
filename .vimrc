@@ -123,11 +123,15 @@ set ttimeoutlen=10  " timeout leaving Insert
 
 " colorization
 let g:solarized_contrast = "high"
-let g:solarized_diffmode = "high"
+" let g:solarized_diffmode = "high"
 if has('gui_running')
    set background=light
    set guifont=Anonymous\ Pro\ for\ Powerline\ 11
       " https://github.com/powerline/fonts
+   if &diff  " make fullscreen if gvimdiff
+      set lines=999
+      set columns=999
+   endif
 else
    set background=dark
    let g:solarized_termtrans = 1
@@ -147,6 +151,14 @@ endif
 "nmap <c-s-a> ggVG
 " imap <c-s-a> <ESC>ggVG
 
+" split naviagetion
+nnoremap <leader>v <C-w>v<C-w>l " split vertically
+nnoremap <leader>s <C-w>s       " split
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
 " map Ctrl - Y to save file - Ctrl-S doesn't work in terminal...
 " I like to be in normal mode afterwards
 nnoremap <silent> <C-y> :update<CR>
@@ -160,10 +172,23 @@ nnoremap <F7> :set list!<CR>  " toggle show whitespaces
 vnoremap < <gv " better indentation
 vnoremap > >gv
 
-" map Ctrl-N to remove highlight from last search
-"noremap <C-n> :nohl<CR>
-"vnoremap <C-n> <C-C>:nohl<CR>
-"inoremap <C-n> <C-O>:nohl<CR>
+" map Ctrl-M to remove highlight from last search
+noremap <C-m> :nohl<CR>
+
+inoremap jk <Esc> " quickly leave Insert-Mode
+inoremap <C-c> <Esc>
+
+" usefull keys from US-Keyboard - maped to German
+map ü <C-]>  " for tags
+map ö [
+map ä ]
+map Ö {
+map Ä }
+map ß /
+map ää ]]
+map öö [[
+map öä []
+map äö ][
 
 " Frequentis specifics
 "adds user and timestamp to end of line
@@ -178,16 +203,7 @@ autocmd BufRead MakePkg setlocal noexpandtab
 " inoremap <C-tab>   <Esc>:tabnext<CR>i
 " inoremap <C-t>     <Esc>:tabnew<CR>
 
-" split naviagetion
-nnoremap <leader>v <C-w>v<C-w>l " split vertically
-nnoremap <leader>s <C-w>s       " split
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
 " Search for selected text, forwards or backwards. first * then n/N ->
-" multiple * does not work
 vnoremap <silent> * :<C-U>
   \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
   \gvy/<C-R><C-R>=substitute(
@@ -199,3 +215,12 @@ vnoremap <silent> # :<C-U>
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
+" functions
+" ==========================
+function! CopyMatches(reg)
+  let hits = []
+  %s//\=len(add(hits, submatch(0))) ? submatch(0) : ''/ge
+  let reg = empty(a:reg) ? '+' : a:reg
+  execute 'let @'.reg.' = join(hits, "\n") . "\n"'
+endfunction
+command! -register CopyMatches call CopyMatches(<q-reg>)
