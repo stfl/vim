@@ -1,4 +1,4 @@
-set nocompatible              " be iMproved, required
+set nocompatible              " be iMproved, requiredj
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -145,6 +145,10 @@ endif
 
 " ================================
 " key mappings
+" inoremap jk <C-[>  " quickly leave Insert-Mode
+inoremap jk <esc>
+inoremap <Esc> <nop>
+
 "vmap <c-s-c> "+y
 "nmap <c-s-v> "+gp
 "imap <c-s-v> <ESC>"+gp
@@ -175,9 +179,6 @@ vnoremap > >gv
 " map Ctrl-M to remove highlight from last search
 noremap <C-m> :nohl<CR>
 
-inoremap jk <Esc> " quickly leave Insert-Mode
-inoremap <C-c> <Esc>
-
 " usefull keys from US-Keyboard - maped to German
 map ü <C-]>  " for tags
 map ö [
@@ -190,11 +191,6 @@ map öö [[
 map öä []
 map äö ][
 
-" Frequentis specifics
-"adds user and timestamp to end of line
-nmap <F4> :r! echo "(${USER} on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
-autocmd BufRead MakePkg setlocal noexpandtab
-
 " tab navigation like firefox - only works in gvim
 " nnoremap <C-S-tab> :tabprevious<CR>
 " nnoremap <C-tab>   :tabnext<CR>
@@ -202,6 +198,11 @@ autocmd BufRead MakePkg setlocal noexpandtab
 " inoremap <C-S-tab> <Esc>:tabprevious<CR>i
 " inoremap <C-tab>   <Esc>:tabnext<CR>i
 " inoremap <C-t>     <Esc>:tabnew<CR>
+
+" Frequentis specifics
+"adds user and timestamp to end of line
+nmap <F4> :r! echo "(${USER} on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
+autocmd BufRead MakePkg setlocal noexpandtab
 
 " Search for selected text, forwards or backwards. first * then n/N ->
 vnoremap <silent> * :<C-U>
