@@ -126,6 +126,8 @@ let g:solarized_contrast = "high"
 let g:solarized_diffmode = "high"
 if has('gui_running')
    set background=light
+   set guifont=Anonymous\ Pro\ for\ Powerline\ 11
+      " https://github.com/powerline/fonts
 else
    set background=dark
    let g:solarized_termtrans = 1
