@@ -188,17 +188,17 @@ noremap <C-m> :nohl<CR>
 " maps <CR> to :nohl in vim - TODO
 
 " usefull keys from US-Keyboard - maped to German
-map ü <C-]>
+noremap ü <C-]>
 " for tags
-map ö [
-map ä ]
-map Ö {
-map Ä }
-map ß /
-map ää ]]
-map öö [[
-map öä []
-map äö ][
+noremap ö [
+noremap ä ]
+noremap Ö {
+noremap Ä }
+noremap ß /
+noremap ää ]]
+noremap öö [[
+noremap öä []
+noremap äö ][
 nnoremap ZAQ :qa<CR>
 nnoremap ZAZ :wqa<CR>
 
