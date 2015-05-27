@@ -93,9 +93,10 @@ set incsearch  " Incremental search
 set ignorecase " Ignore case when searching
 set smartcase  " Ignore case if search pattern is all lc, cs or otherwise
 
+
 " syntax
 set encoding=utf-8    " Set utf-8 as standard encoding
-set wildmenu          " Wild char completion menu
+set wildmenu          " completion menu in comand menu
 set wildmode=list:longest,list:full
 set bs=2              " make backspace bahve like normal
 set mouse=a           " Enable mouse in all modes
@@ -121,9 +122,15 @@ let mapleader = ","  " rebmap the <Leader> key
 set timeoutlen=1000 
 set ttimeoutlen=10  " timeout leaving Insert
 
+" show whitespaces
+set list
+set listchars=tab:»\ ,eol:¬,trail:·,extends:>,precedes:<
+nnoremap <F7> :set list!<CR>
+
 " colorization
 let g:solarized_contrast = "high"
 " let g:solarized_diffmode = "high"
+let g:solarized_visibility = "low"
 if has('gui_running')
    set background=light
    set guifont=Anonymous\ Pro\ for\ Powerline\ 11
@@ -168,9 +175,6 @@ nnoremap <C-l> <C-w>l
 nnoremap <silent> <C-y> :update<CR>
 vnoremap <C-Y> <Esc>:update<CR>
 inoremap <C-Y> <Esc>:update<CR>
-
-set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
-nnoremap <F7> :set list!<CR>  " toggle show whitespaces
 
 " easier moving of code blocks
 vnoremap < <gv " better indentation
