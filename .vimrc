@@ -41,7 +41,9 @@ let NERDSpaceDelims=1
 " a Git wrapper so awesome, it should be illegal 
 " http://www.vim.org/scripts/script.php?script_id=2975
 Plugin 'tpope/vim-fugitive'
+
 Plugin 'will133/vim-dirdiff'
+let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
 
 " Syntax checking hacks for vim
 Plugin 'scrooloose/syntastic'
@@ -127,7 +129,7 @@ set list
 set listchars=tab:»\ ,eol:¬,trail:·,extends:>,precedes:<
 nnoremap <F7> :set list!<CR>
 
-" colorization
+" colorization and styles
 let g:solarized_contrast = "high"
 " let g:solarized_diffmode = "high"
 let g:solarized_visibility = "low"
@@ -138,6 +140,9 @@ if has('gui_running')
    if &diff  " make fullscreen if gvimdiff
       set lines=999
       set columns=999
+   else " set to ~half the screen
+      set lines=999
+      set columns=120
    endif
 else
    set background=dark
@@ -149,18 +154,20 @@ if version >= 703
    set colorcolumn=80
    let g:solarized_hitrail = 1
 endif
-
+                                                                                                                
 " ================================
 " key mappings
 " inoremap jk <C-[>  " quickly leave Insert-Mode
 inoremap jk <esc>
 inoremap <Esc> <nop>
 
-"vmap <c-s-c> "+y
-"nmap <c-s-v> "+gp
-"imap <c-s-v> <ESC>"+gp
-"nmap <c-s-a> ggVG
-" imap <c-s-a> <ESC>ggVG
+" if has('gui_running')
+   " " fix pasting with c-s-v in insert mode for gvim  - no distinction between
+   " " c-v and c-s-v...
+   " " vmap <c-s-c> "+y
+   " " nmap <C-S-v> "+gp
+   " imap <c-s-v> <ESC>"+gp
+" endif
 
 " split naviagetion
 nnoremap <leader>v <C-w>v<C-w>l " split vertically
@@ -182,18 +189,22 @@ vnoremap > >gv
 
 " map Ctrl-M to remove highlight from last search
 noremap <C-m> :nohl<CR>
+" maps <CR> to :nohl in vim - TODO
 
 " usefull keys from US-Keyboard - maped to German
-map ü <C-]>  " for tags
-map ö [
-map ä ]
-map Ö {
-map Ä }
-map ß /
-map ää ]]
-map öö [[
-map öä []
-map äö ][
+noremap ü <C-]>
+" for tags
+noremap ö [
+noremap ä ]
+noremap Ö {
+noremap Ä }
+noremap ß /
+noremap ää ]]
+noremap öö [[
+noremap öä []
+noremap äö ][
+nnoremap ZAQ :qa<CR>
+nnoremap ZAZ :wqa<CR>
 
 " tab navigation like firefox - only works in gvim
 " nnoremap <C-S-tab> :tabprevious<CR>
