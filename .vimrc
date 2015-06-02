@@ -160,6 +160,8 @@ endif
 " inoremap jk <C-[>  " quickly leave Insert-Mode
 inoremap jk <esc>
 inoremap <Esc> <nop>
+vnoremap jk <esc>
+vnoremap <Esc> <nop>
 
 " if has('gui_running')
    " " fix pasting with c-s-v in insert mode for gvim  - no distinction between
