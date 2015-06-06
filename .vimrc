@@ -14,7 +14,7 @@ if !empty(glob("/home/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes"))
    Plugin 'file:///home/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes'
 elseif !empty(glob("/home_vie/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes"))
    Plugin 'file:///home_vie/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes'
-endif 
+endif
 
 Plugin 'altercation/vim-colors-solarized'
 
@@ -127,7 +127,8 @@ set ttimeoutlen=10  " timeout leaving Insert
 " show whitespaces
 set list
 set listchars=tab:»\ ,eol:¬,trail:·,extends:>,precedes:<
-nnoremap <F7> :set list!<CR>
+nnoremap <F7> :call TogleVisibility()<CR>
+" :set list!<CR>
 
 " colorization and styles
 let g:solarized_contrast = "high"
@@ -141,8 +142,8 @@ if has('gui_running')
       set lines=999
       set columns=999
    else " set to ~half the screen
-      set lines=999
-      set columns=120
+      " set lines=999
+      " set columns=120
    endif
 else
    set background=dark
@@ -154,7 +155,7 @@ if version >= 703
    set colorcolumn=80
    let g:solarized_hitrail = 1
 endif
-                                                                                                                
+
 " ================================
 " key mappings
 " inoremap jk <C-[>  " quickly leave Insert-Mode
@@ -240,3 +241,14 @@ function! CopyMatches(reg)
   execute 'let @'.reg.' = join(hits, "\n") . "\n"'
 endfunction
 command! -register CopyMatches call CopyMatches(<q-reg>)
+
+function! TogleVisibility()
+
+   if (g:solarized_visibility == "low")
+      let g:solarized_visibility = "normal"
+   elseif (g:solarized_visibility == "normal")
+      let g:solarized_visibility = "low"
+   endif
+   colorscheme solarized
+endfunction
+
