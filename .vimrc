@@ -38,7 +38,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 let NERDSpaceDelims=1
 
-" a Git wrapper so awesome, it should be illegal 
+" a Git wrapper so awesome, it should be illegal
 " http://www.vim.org/scripts/script.php?script_id=2975
 Plugin 'tpope/vim-fugitive'
 
@@ -121,7 +121,7 @@ set laststatus=2 " always show status line
 set showmatch    " Cursor shows matching ) and }
 " set showmode     " Show the current mode
 let mapleader = ","  " rebmap the <Leader> key
-set timeoutlen=1000 
+set timeoutlen=1000
 set ttimeoutlen=10  " timeout leaving Insert
 
 " show whitespaces
@@ -252,3 +252,30 @@ function! TogleVisibility()
    colorscheme solarized
 endfunction
 
+" Change font size quickly - http://vim.wikia.com/wiki/Change_font_size_quickly
+nnoremap <C-A>+ :LargerFont<cr>
+nnoremap <C-A>- :SmallerFont<cr>
+let s:pattern = '^\(.* \)\([1-9][0-9]*\)$'
+let s:minfontsize = 6
+let s:maxfontsize = 16
+function! AdjustFontSize(amount)
+  if has("gui_running")
+    let fontname = substitute(&guifont, s:pattern, '\1', '')
+    let cursize = substitute(&guifont, s:pattern, '\2', '')
+    let newsize = cursize + a:amount
+    if (newsize >= s:minfontsize) && (newsize <= s:maxfontsize)
+      let newfont = fontname . newsize
+      let &guifont = newfont
+    endif
+  endif
+endfunction
+
+function! LargerFont()
+  call AdjustFontSize(1)
+endfunction
+command! LargerFont call LargerFont()
+
+function! SmallerFont()
+  call AdjustFontSize(-1)
+endfunction
+command! SmallerFont call SmallerFont()
