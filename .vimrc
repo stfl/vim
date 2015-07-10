@@ -55,6 +55,10 @@ Plugin 'scrooloose/syntastic'
 Plugin 'klen/python-mode'
 let g:pymode_python = 'python3'
 
+Plugin 'mileszs/ack.vim'
+" if executable('ack')
+" endif
+
 " adds support for ansi escape characters - useful for vimpager
 " Plugin 'powerman/vim-plugin-AnsiEsc'
 
@@ -128,7 +132,15 @@ set ttimeoutlen=10  " timeout leaving Insert
 set list
 set listchars=tab:»\ ,eol:¬,trail:·,extends:>,precedes:<
 nnoremap <F7> :call TogleVisibility()<CR>
-" :set list!<CR>
+nnoremap <C-a><F7> :set list!<CR>
+
+" vimdiff stuff
+" ignore whitespace
+set diffopt=filler,vertical,iwhite
+
+" if &diff
+   " set nolist
+" endif
 
 " colorization and styles
 let g:solarized_contrast = "high"
@@ -243,13 +255,16 @@ endfunction
 command! -register CopyMatches call CopyMatches(<q-reg>)
 
 function! TogleVisibility()
-
-   if (g:solarized_visibility == "low")
-      let g:solarized_visibility = "normal"
-   elseif (g:solarized_visibility == "normal")
-      let g:solarized_visibility = "low"
+   if (&list == 0)
+      set list
+   else
+      if (g:solarized_visibility == "low")
+         let g:solarized_visibility = "normal"
+      elseif (g:solarized_visibility == "normal")
+         let g:solarized_visibility = "low"
+      endif
+      colorscheme solarized
    endif
-   colorscheme solarized
 endfunction
 
 " Change font size quickly - http://vim.wikia.com/wiki/Change_font_size_quickly
@@ -279,3 +294,21 @@ function! SmallerFont()
   call AdjustFontSize(-1)
 endfunction
 command! SmallerFont call SmallerFont()
+
+
+" This diff function uses "-w" instead of "-b", to ignore *all* whitespace
+" changes (not only non-leading whitespace)
+set diffexpr=MyDiff2()
+" if !exists("*MyDiff")
+   function MyDiff2()
+      let opt = ""
+      if &diffopt =~ "icase"
+         let opt = opt . "-i "
+      endif
+      if &diffopt =~ "iwhite"
+         let opt = opt . "-w "
+      endif
+      silent execute "!diff -a --binary " . opt . v:fname_in . " " . v:fname_new .
+               \  " > " . v:fname_out
+   endfunction
+" endif
