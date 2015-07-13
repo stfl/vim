@@ -42,6 +42,16 @@ let NERDSpaceDelims=1
 " http://www.vim.org/scripts/script.php?script_id=2975
 Plugin 'tpope/vim-fugitive'
 
+" A Vim plugin which shows a git diff in the gutter (sign column) and stages/reverts hunks.
+Plugin 'airblade/vim-gitgutter'
+" let g:gitgutter_sign_column_always = 1
+
+" Plugin to toggle, display and navigate marks
+let g:SignatureMarkerTextHLDynamic=1
+let g:SignatureMarksTextHLDynamic=1
+Plugin 'kshenoy/vim-signature'
+let g:SignatureEnabledAtStartup=1
+
 Plugin 'will133/vim-dirdiff'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
 
@@ -58,6 +68,7 @@ let g:pymode_python = 'python3'
 Plugin 'mileszs/ack.vim'
 " if executable('ack')
 " endif
+
 
 " adds support for ansi escape characters - useful for vimpager
 " Plugin 'powerman/vim-plugin-AnsiEsc'
@@ -298,9 +309,9 @@ command! SmallerFont call SmallerFont()
 
 " This diff function uses "-w" instead of "-b", to ignore *all* whitespace
 " changes (not only non-leading whitespace)
-set diffexpr=MyDiff2()
+set diffexpr=MyDiff()
 " if !exists("*MyDiff")
-   function MyDiff2()
+   function! MyDiff()
       let opt = ""
       if &diffopt =~ "icase"
          let opt = opt . "-i "
