@@ -196,8 +196,10 @@ inoremap <Esc> <nop>
 " endif
 
 " split naviagetion
-nnoremap <leader>v <C-w>v<C-w>l " split vertically
-nnoremap <leader>s <C-w>s       " split
+nnoremap <leader>v <C-w>v<C-w>l
+" split vertically
+nnoremap <leader>s <C-w>s
+" split
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
