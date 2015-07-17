@@ -35,6 +35,9 @@ Plugin 'tpope/vim-surround'
 Plugin 'kien/ctrlp.vim'
 
 Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+nnoremap <F3> :NERDTreeTabsToggle<CR>
+
 Plugin 'scrooloose/nerdcommenter'
 let NERDSpaceDelims=1
 
@@ -181,8 +184,7 @@ endif
 
 " ================================
 " key mappings
-" inoremap jk <C-[>  " quickly leave Insert-Mode
-inoremap jk <esc>
+inoremap jk <Esc>
 inoremap <Esc> <nop>
 
 " if has('gui_running')
@@ -227,8 +229,8 @@ noremap ää ]]
 noremap öö [[
 noremap öä []
 noremap äö ][
-nnoremap ZAQ :qa<CR>
-nnoremap ZAZ :wqa<CR>
+nnoremap ZAQ :tabclose!<CR>
+nnoremap ZAZ :w<CR>:tabclose<CR>
 
 " tab navigation like firefox - only works in gvim
 " nnoremap <C-S-tab> :tabprevious<CR>
