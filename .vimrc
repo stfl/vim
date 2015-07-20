@@ -146,7 +146,7 @@ set ttimeoutlen=10  " timeout leaving Insert
 set list
 set listchars=tab:»\ ,eol:¬,trail:·,extends:>,precedes:<
 nnoremap <F7> :call TogleVisibility()<CR>
-nnoremap <C-a><F7> :set list!<CR>
+nnoremap <leader><F7> :set list!<CR>
 
 " vimdiff stuff
 " ignore whitespace
@@ -283,8 +283,8 @@ function! TogleVisibility()
 endfunction
 
 " Change font size quickly - http://vim.wikia.com/wiki/Change_font_size_quickly
-nnoremap <C-A>+ :LargerFont<cr>
-nnoremap <C-A>- :SmallerFont<cr>
+nnoremap <leader>+ :LargerFont<cr>
+nnoremap <leader>- :SmallerFont<cr>
 let s:pattern = '^\(.* \)\([1-9][0-9]*\)$'
 let s:minfontsize = 6
 let s:maxfontsize = 16
