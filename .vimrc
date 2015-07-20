@@ -1,3 +1,5 @@
+" Plugins
+" {{{
 set nocompatible              " be iMproved, requiredj
 filetype off                  " required
 
@@ -90,7 +92,10 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+" }}}
 
+" Settings
+" {{{
 autocmd! bufwritepost .vimrc source % " automatic reload .vimrc
 set autoread          " Set to auto read when a file is changed from the outside
 
@@ -112,7 +117,6 @@ set hlsearch   " Search highlighting
 set incsearch  " Incremental search
 set ignorecase " Ignore case when searching
 set smartcase  " Ignore case if search pattern is all lc, cs or otherwise
-
 
 " syntax
 set encoding=utf-8    " Set utf-8 as standard encoding
@@ -152,11 +156,16 @@ nnoremap <leader><F7> :set list!<CR>
 " ignore whitespace
 set diffopt=filler,vertical,iwhite
 
+" allow folding at markers
+set foldmethod=marker
+
 " if &diff
    " set nolist
 " endif
+" }}}
 
 " colorization and styles
+" {{{
 let g:solarized_contrast = "high"
 " let g:solarized_diffmode = "high"
 let g:solarized_visibility = "low"
@@ -181,9 +190,10 @@ if version >= 703
    set colorcolumn=80
    let g:solarized_hitrail = 1
 endif
+" }}}
 
-" ================================
 " key mappings
+" {{{
 inoremap jk <Esc>
 inoremap <Esc> <nop>
 
@@ -241,12 +251,18 @@ nnoremap ZAZ :w<CR>:tabclose<CR>
 " inoremap <C-S-tab> <Esc>:tabprevious<CR>i
 " inoremap <C-tab>   <Esc>:tabnext<CR>i
 " inoremap <C-t>     <Esc>:tabnew<CR>
+" }}}
 
 " Frequentis specifics
+" {{{
+
 "adds user and timestamp to end of line
 nmap <F4> :r! echo "(${USER} on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
 autocmd BufRead MakePkg setlocal noexpandtab
+" }}}
 
+" Functions
+" {{{
 " Search for selected text, forwards or backwards. first * then n/N ->
 vnoremap <silent> * :<C-U>
   \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
@@ -259,8 +275,6 @@ vnoremap <silent> # :<C-U>
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
-" functions
-" ==========================
 function! CopyMatches(reg)
   let hits = []
   %s//\=len(add(hits, submatch(0))) ? submatch(0) : ''/ge
@@ -327,3 +341,4 @@ set diffexpr=MyDiff()
                \  " > " . v:fname_out
    endfunction
 " endif
+" }}}
