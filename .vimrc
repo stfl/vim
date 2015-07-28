@@ -38,6 +38,7 @@ Plugin 'kien/ctrlp.vim'
 
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
+let g:nerdtree_tabs_open_on_gui_startup = 0
 nnoremap <F3> :NERDTreeTabsToggle<CR>
 
 Plugin 'scrooloose/nerdcommenter'
@@ -48,14 +49,14 @@ let NERDSpaceDelims=1
 Plugin 'tpope/vim-fugitive'
 
 " A Vim plugin which shows a git diff in the gutter (sign column) and stages/reverts hunks.
-Plugin 'airblade/vim-gitgutter'
+" Plugin 'airblade/vim-gitgutter'
 " let g:gitgutter_sign_column_always = 1
 
 " Plugin to toggle, display and navigate marks
-let g:SignatureMarkerTextHLDynamic=1
-let g:SignatureMarksTextHLDynamic=1
-Plugin 'kshenoy/vim-signature'
-let g:SignatureEnabledAtStartup=1
+" let g:SignatureMarkerTextHLDynamic=1
+" let g:SignatureMarksTextHLDynamic=1
+" Plugin 'kshenoy/vim-signature'
+" let g:SignatureEnabledAtStartup=1
 
 Plugin 'will133/vim-dirdiff'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
