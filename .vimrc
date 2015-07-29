@@ -258,8 +258,12 @@ nnoremap ZAZ :w<CR>:tabclose<CR>
 " {{{
 
 "adds user and timestamp to end of line
-nmap <F4> :r! echo "(${USER} on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
+nmap <F4> :r! echo "(slendl on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
 autocmd BufRead MakePkg setlocal noexpandtab
+
+command TargetOn execute '%s/t on="false/t on="true/gc'
+command TargetOff execute '%s/t on="true/t on="false/gc'
+
 " }}}
 
 " Functions
