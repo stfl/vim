@@ -35,6 +35,9 @@ Plugin 'tpope/vim-surround'
 
 " Fuzzy file, buffer, mru, tag, etc finder.  http://kien.github.com/ctrlp.vim
 Plugin 'kien/ctrlp.vim'
+" open file in new tab with <c-t> = default
+" let g:ctrlp_open_new_file = 't'
+
 
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -259,10 +262,10 @@ nnoremap ZAZ :w<CR>:tabclose<CR>
 
 "adds user and timestamp to end of line
 nmap <F4> :r! echo "(slendl on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
-autocmd BufRead MakePkg setlocal noexpandtab
+autocmd BufRead MakePkg setlocal noexpandtab filetype=make
 
-command TargetOn execute '%s/t on="false/t on="true/gc'
-command TargetOff execute '%s/t on="true/t on="false/gc'
+command! TargetOn execute '%s/t on="false/t on="true/gc'
+command! TargetOff execute '%s/t on="true/t on="false/gc'
 
 " }}}
 
