@@ -154,6 +154,7 @@ if version >= 703
 endif
 
 syntax on        " Syntax highlighting
+set complete=.,w,b,u,t,i,kspell  " where the completion should look
 set number       " Show line numbers
 set showcmd      " Show the (partial) command as it's being typed
 set ruler        " Show the cursor position all the time
