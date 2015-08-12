@@ -37,7 +37,11 @@ Plugin 'tpope/vim-surround'
 Plugin 'kien/ctrlp.vim'
 " open file in new tab with <c-t> = default
 " let g:ctrlp_open_new_file = 't'
+nnoremap <leader>p :CtrlPTag<cr>
 
+" Vim plugin that displays tags in a window, ordered by scope
+Plugin 'majutsushi/tagbar'
+nnoremap <F6> :TagbarToggle<CR>
 
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -54,6 +58,17 @@ Plugin 'tpope/vim-fugitive'
 " A Vim plugin which shows a git diff in the gutter (sign column) and stages/reverts hunks.
 " Plugin 'airblade/vim-gitgutter'
 " let g:gitgutter_sign_column_always = 1
+
+" VIM SVN plugin ( subversion svn vim7)
+Plugin 'juneedahamed/svnj.vim'
+let g:svnj_custom_statusbar_ops_hide = 1
+   " Supported operations are listed on the status line of the svnj_window. With growing support for
+   " many commands, recomend to hide it. You can still have a quick glance of supported operations by
+   " pressing ? (question-mark)
+let g:svnj_browse_cache_all = 1
+   " This enables caching, Listing of files will be faster, On MAC/Unix the default location is $HOME/.cache.
+   " A new directory svnj will be created in the specified directory.
+
 
 " Plugin to toggle, display and navigate marks
 " let g:SignatureMarkerTextHLDynamic=1
