@@ -253,7 +253,7 @@ noremap <C-m> :nohl<CR>
 noremap ü <C-]>
 " for tags
 noremap ö [
-noremap ä ]:Ack <cword>
+noremap ä ]
 noremap Ö {
 noremap Ä }
 noremap ß /
@@ -265,7 +265,7 @@ nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
 
 " search for current word in project: acording to current dir!!
-nnoremap <leader>* :Ack <c-r><c-w><cr>
+nnoremap <leader>* :Ack! <c-r><c-w><cr>
 
 
 " Search for selected text, forwards or backwards. first * then n/N ->
