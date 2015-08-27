@@ -154,7 +154,7 @@ if version >= 703
 endif
 
 syntax on        " Syntax highlighting
-set complete=.,w,b,u,t,i,kspell  " where the completion should look
+set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
 set number       " Show line numbers
 set showcmd      " Show the (partial) command as it's being typed
 set ruler        " Show the cursor position all the time
@@ -172,12 +172,15 @@ set listchars=tab:»\ ,eol:¬,trail:·,extends:>,precedes:<
 nnoremap <F7> :call TogleVisibility()<CR>
 nnoremap <leader><F7> :set list!<CR>
 
+" allow folding at markers
+set foldmethod=marker
+
+" make vim look for tags file reverse-recursivly ;)
+set tags=./tags;tags;
+
 " vimdiff stuff
 " ignore whitespace
 set diffopt=filler,vertical,iwhite
-
-" allow folding at markers
-set foldmethod=marker
 
 " if &diff
    " set nolist
@@ -250,8 +253,8 @@ noremap <C-m> :nohl<CR>
 " maps <CR> to :nohl in vim - TODO
 
 " usefull keys from US-Keyboard - maped to German
-noremap ü <C-]>
 " for tags
+noremap ü <C-]>
 noremap ö [
 noremap ä ]
 noremap Ö {
@@ -266,7 +269,6 @@ nnoremap ZAZ :wqa<CR>
 
 " search for current word in project: acording to current dir!!
 nnoremap <leader>* :Ack! <c-r><c-w><cr>
-
 
 " Search for selected text, forwards or backwards. first * then n/N ->
 vnoremap <silent> * :<C-U>
