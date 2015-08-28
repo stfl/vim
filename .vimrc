@@ -154,7 +154,7 @@ if version >= 703
 endif
 
 syntax on        " Syntax highlighting
-set complete=.,w,b,u,t,i,kspell  " where the completion should look
+set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
 set number       " Show line numbers
 set showcmd      " Show the (partial) command as it's being typed
 set ruler        " Show the cursor position all the time
@@ -172,12 +172,15 @@ set listchars=tab:»\ ,eol:¬,trail:·,extends:>,precedes:<
 nnoremap <F7> :call TogleVisibility()<CR>
 nnoremap <leader><F7> :set list!<CR>
 
+" allow folding at markers
+set foldmethod=marker
+
+" make vim look for tags file reverse-recursivly ;)
+set tags=./tags;tags;
+
 " vimdiff stuff
 " ignore whitespace
 set diffopt=filler,vertical,iwhite
-
-" allow folding at markers
-set foldmethod=marker
 
 " if &diff
    " set nolist
@@ -251,8 +254,8 @@ noremap <C-m> :nohl<CR>
 " maps <CR> to :nohl in vim - TODO
 
 " usefull keys from US-Keyboard - maped to German
-noremap ü <C-]>
 " for tags
+noremap ü <C-]>
 noremap ö [
 noremap ä ]
 noremap Ö {
@@ -262,32 +265,12 @@ noremap ää ]]
 noremap öö [[
 noremap öä []
 noremap äö ][
-nnoremap ZAQ :tabclose!<CR>
-nnoremap ZAZ :w<CR>:tabclose<CR>
+nnoremap ZAQ :qa!<CR>
+nnoremap ZAZ :wqa<CR>
 
-" tab navigation like firefox - only works in gvim
-" nnoremap <C-S-tab> :tabprevious<CR>
-" nnoremap <C-tab>   :tabnext<CR>
-" nnoremap <C-t>     :tabnew<CR>
-" inoremap <C-S-tab> <Esc>:tabprevious<CR>i
-" inoremap <C-tab>   <Esc>:tabnext<CR>i
-" inoremap <C-t>     <Esc>:tabnew<CR>
-" }}}
+" search for current word in project: acording to current dir!!
+nnoremap <leader>* :Ack! <c-r><c-w><cr>
 
-" Frequentis specifics
-" {{{
-
-"adds user and timestamp to end of line
-nmap <F4> :r! echo "(slendl on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
-autocmd BufRead MakePkg setlocal noexpandtab filetype=make
-
-command! TargetOn execute '%s/t on="false/t on="true/gc'
-command! TargetOff execute '%s/t on="true/t on="false/gc'
-
-" }}}
-
-" Functions
-" {{{
 " Search for selected text, forwards or backwards. first * then n/N ->
 vnoremap <silent> * :<C-U>
   \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
@@ -299,7 +282,10 @@ vnoremap <silent> # :<C-U>
   \gvy?<C-R><C-R>=substitute(
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
+" }}}
 
+" Functions
+" {{{
 function! CopyMatches(reg)
   let hits = []
   %s//\=len(add(hits, submatch(0))) ? submatch(0) : ''/ge
@@ -367,3 +353,16 @@ set diffexpr=MyDiff()
    endfunction
 " endif
 " }}}
+"
+" Frequentis specifics
+" {{{
+
+"adds user and timestamp to end of line
+nmap <F4> :r! echo "(slendl on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
+autocmd BufRead MakePkg setlocal noexpandtab filetype=make
+
+command! TargetOn execute '%s/t on="false/t on="true/gc'
+command! TargetOff execute '%s/t on="true/t on="false/gc'
+
+" }}}
+
