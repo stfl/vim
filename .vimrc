@@ -206,6 +206,7 @@ else
    let &t_Co=256
 endif
 colorscheme solarized
+
 if version >= 703
    set colorcolumn=80
    let g:solarized_hitrail = 1
