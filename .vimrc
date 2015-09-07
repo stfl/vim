@@ -176,7 +176,7 @@ nnoremap <leader><F7> :set list!<CR>
 set foldmethod=marker
 
 " make vim look for tags file reverse-recursivly ;)
-set tags=./tags;tags;
+set tags=./tags,./TAGS,tags;TAGS;
 
 " vimdiff stuff
 " ignore whitespace
