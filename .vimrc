@@ -126,6 +126,7 @@ set expandtab  " tab expansion
 set tabstop=3
 set shiftwidth=3
 set softtabstop=3
+set scrolloff=10  " scroll offset for searching
 
 set backup
 set backupdir=~/.vim/tmp,.  " save backup file (*~) somewhere else
