@@ -126,7 +126,7 @@ set expandtab  " tab expansion
 set tabstop=3
 set shiftwidth=3
 set softtabstop=3
-set scrolloff=10  " scroll offset for searching
+set scrolloff=5  " scroll offset for searching
 
 set backup
 set backupdir=~/.vim/tmp,.  " save backup file (*~) somewhere else
@@ -362,8 +362,8 @@ set diffexpr=MyDiff()
 nmap <F4> :r! echo "(slendl on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
 autocmd BufRead MakePkg setlocal noexpandtab filetype=make
 
-command! TargetOn execute '%s/t on="false/t on="true/gc'
-command! TargetOff execute '%s/t on="true/t on="false/gc'
+command! TargetOn execute 'set scrolloff=15 | %s/t on="false/t on="true/gc | set scrolloff=5'
+command! TargetOff execute 'set scrolloff=15 | %s/t on="true/t on="false/gc | set scrolloff=15'
 
 " }}}
 
