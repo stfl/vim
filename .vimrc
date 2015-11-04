@@ -85,6 +85,8 @@ Plugin 'scrooloose/syntastic'
 "Plugin 'Lokaltog/vim-easymotion'
 "Plugin 'haya14busa/vim-easyoperator-line'
 
+Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+
 " Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box.
 Plugin 'klen/python-mode'
 let g:pymode_python = 'python3'
