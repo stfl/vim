@@ -59,6 +59,10 @@ Plugin 'tpope/vim-fugitive'
 " Plugin 'airblade/vim-gitgutter'
 " let g:gitgutter_sign_column_always = 1
 
+" If you experience a lag, you can trade speed for accuracy:
+" let g:gitgutter_realtime = 0
+" let g:gitgutter_eager = 0
+
 " VIM SVN plugin ( subversion svn vim7)
 Plugin 'juneedahamed/svnj.vim'
 let g:svnj_custom_statusbar_ops_hide = 1
