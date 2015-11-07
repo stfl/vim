@@ -1,62 +1,56 @@
-" Plugins
-" {{{
-set nocompatible              " be iMproved, requiredj
+" Plugins {{{
+set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" set rtp+=~/.vim/bundle/Vundle.vim
+" call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+" Plugin 'gmarik/Vundle.vim'
 
-" if whatever HOSTNAME
-" or replace in advance
-if !empty(glob("/home/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes"))
-   Plugin 'file:///home/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes'
-elseif !empty(glob("/home_vie/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes"))
-   Plugin 'file:///home_vie/slendl/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes'
-endif
+Plug '~/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes', { 'for': 'ReleaseNotes' }
 
-Plugin 'altercation/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized'
 
 " zoom into one split windo with <c-w-o>
-Plugin 'vim-scripts/ZoomWin'
+Plug 'vim-scripts/ZoomWin'
 
-Plugin 'bling/vim-airline'
+Plug 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 set noshowmode     " don't show the current mode (not needed with airline)
 
 " Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc)
 " http://www.vim.org/scripts/script.php?script_id=273
-" Plugin 'vim-scripts/taglist.vim'
+" Plug 'vim-scripts/taglist.vim'
 
-Plugin 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 
 " Fuzzy file, buffer, mru, tag, etc finder.  http://kien.github.com/ctrlp.vim
-Plugin 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim'
 " open file in new tab with <c-t> = default
 " let g:ctrlp_open_new_file = 't'
 nnoremap <leader>p :CtrlPTag<cr>
 
 " Vim plugin that displays tags in a window, ordered by scope
-Plugin 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 nnoremap <F6> :TagbarToggle<CR>
 
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
-let g:nerdtree_tabs_open_on_gui_startup = 0
-nnoremap <F3> :NERDTreeTabsToggle<CR>
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" Plug 'jistr/vim-nerdtree-tabs'
+" let g:nerdtree_tabs_open_on_gui_startup = 0
+nnoremap <F3> :NERDTreeToggle<CR>
 
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 let NERDSpaceDelims=1
 
 " a Git wrapper so awesome, it should be illegal
 " http://www.vim.org/scripts/script.php?script_id=2975
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 " A Vim plugin which shows a git diff in the gutter (sign column) and stages/reverts hunks.
-" Plugin 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 " let g:gitgutter_sign_column_always = 1
 
 " If you experience a lag, you can trade speed for accuracy:
@@ -64,7 +58,7 @@ Plugin 'tpope/vim-fugitive'
 " let g:gitgutter_eager = 0
 
 " VIM SVN plugin ( subversion svn vim7)
-Plugin 'juneedahamed/svnj.vim'
+Plug 'juneedahamed/svnj.vim'
 let g:svnj_custom_statusbar_ops_hide = 1
    " Supported operations are listed on the status line of the svnj_window. With growing support for
    " many commands, recomend to hide it. You can still have a quick glance of supported operations by
@@ -74,57 +68,48 @@ let g:svnj_browse_cache_all = 1
    " A new directory svnj will be created in the specified directory.
 
 
-" Plugin to toggle, display and navigate marks
+" Plug to toggle, display and navigate marks
 " let g:SignatureMarkerTextHLDynamic=1
 " let g:SignatureMarksTextHLDynamic=1
-" Plugin 'kshenoy/vim-signature'
+" Plug 'kshenoy/vim-signature'
 " let g:SignatureEnabledAtStartup=1
 
-Plugin 'will133/vim-dirdiff'
+Plug 'will133/vim-dirdiff'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
 
 " Syntax checking hacks for vim
-Plugin 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 
-"Plugin 'Lokaltog/vim-easymotion'
-"Plugin 'haya14busa/vim-easyoperator-line'
+"Plug 'Lokaltog/vim-easymotion'
+"Plug 'haya14busa/vim-easyoperator-line'
 
-Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
 " Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box.
-Plugin 'klen/python-mode'
+Plug 'klen/python-mode', { 'for': 'python' }
 let g:pymode_python = 'python3'
 
-Plugin 'vim-scripts/Conque-GDB'
-let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always with color
-let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
-let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly 
+" Plug 'vim-scripts/Conque-GDB'
+" let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always with color
+" let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
+" let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly 
 
-Plugin 'mileszs/ack.vim'
+Plug 'mileszs/ack.vim'
 " if executable('ack')
 " endif
 
 " adds support for ansi escape characters - useful for vimpager
-" Plugin 'powerman/vim-plugin-AnsiEsc'
+" Plug 'powerman/vim-plugin-AnsiEsc'
+
+" Add plugins to &runtimepath
+call plug#end()
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+" call vundle#end()            " required
+" filetype plugin indent on    " required
 " }}}
 
-" Settings
-" {{{
+" Settings {{{
 autocmd! bufwritepost .vimrc source % " automatic reload .vimrc
 set autoread          " Set to auto read when a file is changed from the outside
 
@@ -154,15 +139,21 @@ set wildmenu          " completion menu in comand menu
 set wildmode=list:longest,list:full
 set bs=2              " make backspace bahve like normal
 set mouse=a           " Enable mouse in all modes
-if exists('$TMUX')
+if exists('$TMUX') && !has('nvim')
   set ttymouse=xterm2 " Support resizing in tmux
 endif
+" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 " better copy & pase behabour
 set pastetoggle=<F2>
-if version >= 703
-   set clipboard=unnamedplus " Use the OS clipboard by default
+if has('nvim')
+   if (executable('pbcopy') || executable('xclip') || executable('xsel')) && has('clipboard')
+      set clipboard+=unnamedplus " Use the OS clipboard by default
+   endif
+elseif version >= 703
+   set clipboard+=unnamedplus " Use the OS clipboard by default
 endif
+
 
 syntax on        " Syntax highlighting
 set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
@@ -198,8 +189,7 @@ set diffopt=filler,vertical,iwhite
 " endif
 " }}}
 
-" colorization and styles
-" {{{
+" colorization and styles {{{
 let g:solarized_contrast = "high"
 " let g:solarized_diffmode = "high"
 let g:solarized_visibility = "low"
@@ -227,18 +217,9 @@ if version >= 703
 endif
 " }}}
 
-" key mappings
-" {{{
+" key mappings {{{
 inoremap jk <Esc>
 inoremap <Esc> <nop>
-
-" if has('gui_running')
-   " " fix pasting with c-s-v in insert mode for gvim  - no distinction between
-   " " c-v and c-s-v...
-   " " vmap <c-s-c> "+y
-   " " nmap <C-S-v> "+gp
-   " imap <c-s-v> <ESC>"+gp
-" endif
 
 " split naviagetion
 nnoremap <leader>v <C-w>v<C-w>l
@@ -295,8 +276,7 @@ vnoremap <silent> # :<C-U>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 " }}}
 
-" Functions
-" {{{
+" Functions {{{
 function! CopyMatches(reg)
   let hits = []
   %s//\=len(add(hits, submatch(0))) ? submatch(0) : ''/ge
@@ -364,9 +344,8 @@ set diffexpr=MyDiff()
    endfunction
 " endif
 " }}}
-"
-" Frequentis specifics
-" {{{
+
+" Frequentis specifics {{{
 
 "adds user and timestamp to end of line
 nmap <F4> :r! echo "(slendl on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
