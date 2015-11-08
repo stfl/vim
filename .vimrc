@@ -101,6 +101,10 @@ Plug 'mileszs/ack.vim'
 " adds support for ansi escape characters - useful for vimpager
 " Plug 'powerman/vim-plugin-AnsiEsc'
 
+" Plug 'jszakmeister/vim-togglecursor'
+" try with disabling nvim settings!!!
+" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
 " Add plugins to &runtimepath
 call plug#end()
 
@@ -142,7 +146,6 @@ set mouse=a           " Enable mouse in all modes
 if exists('$TMUX') && !has('nvim')
   set ttymouse=xterm2 " Support resizing in tmux
 endif
-" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 " better copy & pase behabour
 set pastetoggle=<F2>
