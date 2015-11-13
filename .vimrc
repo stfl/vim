@@ -145,7 +145,7 @@ set backupdir=~/.vim/tmp,.  " save backup file (*~) somewhere else
 set directory=~/.vim/tmp,.
 
 " searching
-set hlsearch   " Search highlighting
+set nohlsearch   " Search highlighting
 set incsearch  " Incremental search
 set ignorecase " Ignore case when searching
 set smartcase  " Ignore case if search pattern is all lc, cs or otherwise
@@ -299,16 +299,18 @@ omap / <Plug>(easymotion-tn)
 map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
 
-map <Leader>l <Plug>(easymotion-lineforward)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map <Leader>h <Plug>(easymotion-linebackward)
-map <Leader>f <Plug>(easymotion-f)
-map <Leader>F <Plug>(easymotion-F)
-map <Leader>t <Plug>(easymotion-t)
-map <Leader>T <Plug>(easymotion-T)
-map <Leader>w <Plug>(easymotion-w)
-map <Leader>W <Plug>(easymotion-W)
+map <leader>l <Plug>(easymotion-lineforward)
+map <C-X>l <Plug>(easymotion-lineforward)
+map <leader>j <Plug>(easymotion-bd-jk)
+" map <C-X>k <Plug>(easymotion-k)
+map <C-X>h <Plug>(easymotion-linebackward)
+map <leader>h <Plug>(easymotion-linebackward)
+" map <Leader>f <Plug>(easymotion-f)
+" map <Leader>F <Plug>(easymotion-F)
+" map <Leader>t <Plug>(easymotion-t)
+" map <Leader>T <Plug>(easymotion-T)
+" map <Leader>w <Plug>(easymotion-w)
+" map <Leader>W <Plug>(easymotion-W)
 
 " Search for selected text, forwards or backwards. first * then n/N ->
 vnoremap <silent> * :<C-U>
