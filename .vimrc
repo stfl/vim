@@ -37,10 +37,13 @@ nnoremap <leader>p :CtrlPTag<cr>
 Plug 'majutsushi/tagbar'
 nnoremap <F6> :TagbarToggle<CR>
 
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" nnoremap <F3> :NERDTreeToggle<CR>
 " Plug 'jistr/vim-nerdtree-tabs'
 " let g:nerdtree_tabs_open_on_gui_startup = 0
-nnoremap <F3> :NERDTreeToggle<CR>
+" let NERDTreeHijackNetrw=1
+
+Plug 'tpope/vim-vinegar'
 
 Plug 'scrooloose/nerdcommenter'
 let NERDSpaceDelims=1
@@ -80,8 +83,7 @@ let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
 " Syntax checking hacks for vim
 Plug 'scrooloose/syntastic'
 
-"Plug 'Lokaltog/vim-easymotion'
-"Plug 'haya14busa/vim-easyoperator-line'
+Plug 'Lokaltog/vim-easymotion'
 
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
@@ -95,13 +97,24 @@ let g:pymode_python = 'python3'
 " let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly 
 
 Plug 'mileszs/ack.vim'
-" if executable('ack')
-" endif
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+if has("persistent_undo")
+   set undodir=~/.vim/undodir
+   set undofile
+endif
+nnoremap <F5> :UndotreeToggle<cr>
 
 " adds support for ansi escape characters - useful for vimpager
 " Plug 'powerman/vim-plugin-AnsiEsc'
 
 " Plug 'jszakmeister/vim-togglecursor'
+" let g:togglecursor_insert='line'
+" let g:togglecursor_default='block'
+" let g:togglecursor_force='xterm'
 " try with disabling nvim settings!!!
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
@@ -132,7 +145,7 @@ set backupdir=~/.vim/tmp,.  " save backup file (*~) somewhere else
 set directory=~/.vim/tmp,.
 
 " searching
-set hlsearch   " Search highlighting
+set nohlsearch   " Search highlighting
 set incsearch  " Incremental search
 set ignorecase " Ignore case when searching
 set smartcase  " Ignore case if search pattern is all lc, cs or otherwise
@@ -149,6 +162,7 @@ endif
 
 " better copy & pase behabour
 set pastetoggle=<F2>
+" inoremap <F2> <Esc>:set toggle!<CR>i
 if has('nvim')
    if (executable('pbcopy') || executable('xclip') || executable('xsel')) && has('clipboard')
       set clipboard+=unnamedplus " Use the OS clipboard by default
@@ -225,17 +239,18 @@ inoremap jk <Esc>
 inoremap <Esc> <nop>
 
 " split naviagetion
-nnoremap <leader>v <C-w>v<C-w>l
 " split vertically
-nnoremap <leader>s <C-w>s
-" split
+nnoremap <leader>v :Vex<CR>
+" nnoremap <leader>v <C-w>v<C-w>l
+" split vertically
+nnoremap <leader>s :Sex<CR>
+" nnoremap <leader>s <C-w>s
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" map Ctrl - Y to save file - Ctrl-S doesn't work in terminal...
-" I like to be in normal mode afterwards
+" map Ctrl - Y to save file
 nnoremap <silent> <C-y> :update<CR>
 vnoremap <C-Y> <Esc>:update<CR>
 inoremap <C-Y> <Esc>:update<CR>
@@ -248,23 +263,54 @@ vnoremap > >gv
 noremap <C-m> :nohl<CR>
 " maps <CR> to :nohl in vim - TODO
 
+" search for current word in project: acording to current dir!!
+nnoremap <leader>* :Ack! <c-r><c-w><cr>
+
 " usefull keys from US-Keyboard - maped to German
 " for tags
-noremap ü <C-]>
-noremap ö [
-noremap ä ]
-noremap Ö {
-noremap Ä }
-noremap ß /
-noremap ää ]]
-noremap öö [[
-noremap öä []
-noremap äö ][
+nmap ü <C-]>
+nmap ö [
+omap ö [
+nmap ä ]
+omap ä ]
+nmap Ö {
+omap Ö {
+nmap Ä }
+omap Ä }
+nmap ß /
+omap ß /
+" noremap ää ]]
+" noremap öö [[
+" noremap öä []
+" noremap äö ][
 nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
 
-" search for current word in project: acording to current dir!!
-nnoremap <leader>* :Ack! <c-r><c-w><cr>
+" vim-easymotion mappings
+let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
+let g:EasyMotion_smartcase = 1
+nmap s <Plug>(easymotion-s2)
+nmap t <Plug>(easymotion-t2)
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
+" Without these mappings, `n` & `N` works fine. (These mappings just provide
+" different highlight method and have some other features )
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
+
+map <leader>l <Plug>(easymotion-lineforward)
+map <C-X>l <Plug>(easymotion-lineforward)
+map <leader>j <Plug>(easymotion-bd-jk)
+" map <C-X>k <Plug>(easymotion-k)
+map <C-X>h <Plug>(easymotion-linebackward)
+map <leader>h <Plug>(easymotion-linebackward)
+" map <Leader>f <Plug>(easymotion-f)
+" map <Leader>F <Plug>(easymotion-F)
+" map <Leader>t <Plug>(easymotion-t)
+" map <Leader>T <Plug>(easymotion-T)
+" map <Leader>w <Plug>(easymotion-w)
+" map <Leader>W <Plug>(easymotion-W)
 
 " Search for selected text, forwards or backwards. first * then n/N ->
 vnoremap <silent> * :<C-U>
