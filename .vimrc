@@ -50,9 +50,9 @@ let NERDSpaceDelims=1
 Plug 'tpope/vim-fugitive'
 
 " A Vim plugin which shows a git diff in the gutter (sign column) and stages/reverts hunks.
-" Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' }
+let g:gitgutter_enabled = 0 " default off
 " let g:gitgutter_sign_column_always = 1
-
 " If you experience a lag, you can trade speed for accuracy:
 " let g:gitgutter_realtime = 0
 " let g:gitgutter_eager = 0
