@@ -43,7 +43,7 @@ nnoremap <F6> :TagbarToggle<CR>
 " let g:nerdtree_tabs_open_on_gui_startup = 0
 " let NERDTreeHijackNetrw=1
 
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-vinegar'
 
 Plug 'scrooloose/nerdcommenter'
 let NERDSpaceDelims=1
@@ -145,7 +145,7 @@ set backupdir=~/.vim/tmp,.  " save backup file (*~) somewhere else
 set directory=~/.vim/tmp,.
 
 " searching
-set nohlsearch   " Search highlighting
+set hlsearch   " Search highlighting
 set incsearch  " Incremental search
 set ignorecase " Ignore case when searching
 set smartcase  " Ignore case if search pattern is all lc, cs or otherwise
@@ -181,7 +181,7 @@ set cursorline   " Highlight current line
 set laststatus=2 " always show status line
 set showmatch    " Cursor shows matching ) and }
 " set showmode     " Show the current mode
-let mapleader = ","  " rebmap the <Leader> key
+let mapleader = "-"  " rebmap the <Leader> key
 set timeoutlen=1000
 set ttimeoutlen=10  " timeout leaving Insert
 
@@ -291,20 +291,21 @@ let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 let g:EasyMotion_smartcase = 1
 nmap s <Plug>(easymotion-s2)
 nmap t <Plug>(easymotion-t2)
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
+" map  / <Plug>(easymotion-sn)
+" omap / <Plug>(easymotion-tn)
 " These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
 " Without these mappings, `n` & `N` works fine. (These mappings just provide
 " different highlight method and have some other features )
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
+" map  n <Plug>(easymotion-next)
+" map  N <Plug>(easymotion-prev)
 
+" nnoremap <C-X>x <C-X>
 map <leader>l <Plug>(easymotion-lineforward)
-map <C-X>l <Plug>(easymotion-lineforward)
-map <leader>j <Plug>(easymotion-bd-jk)
-" map <C-X>k <Plug>(easymotion-k)
-map <C-X>h <Plug>(easymotion-linebackward)
+map <leader>j <Plug>(easymotion-j)
+map <leader>k <Plug>(easymotion-k)
 map <leader>h <Plug>(easymotion-linebackward)
+map <leader>n <Plug>(easymotion-n)
+map <leader>N <Plug>(easymotion-N)
 " map <Leader>f <Plug>(easymotion-f)
 " map <Leader>F <Plug>(easymotion-F)
 " map <Leader>t <Plug>(easymotion-t)
