@@ -279,10 +279,10 @@ nmap Ä }
 omap Ä }
 nmap ß /
 omap ß /
-" noremap ää ]]
-" noremap öö [[
-" noremap öä []
-" noremap äö ][
+noremap ää ]]
+noremap öö [[
+noremap öä []
+noremap äö ][
 nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
 
@@ -291,8 +291,8 @@ let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 let g:EasyMotion_smartcase = 1
 nmap s <Plug>(easymotion-s2)
 nmap t <Plug>(easymotion-t2)
-" map  / <Plug>(easymotion-sn)
-" omap / <Plug>(easymotion-tn)
+nmap <leader>/ <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
 " These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
 " Without these mappings, `n` & `N` works fine. (These mappings just provide
 " different highlight method and have some other features )
