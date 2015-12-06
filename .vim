@@ -1,1 +1,1 @@
-/home/slendl/.config/nvim
+.config/nvim
