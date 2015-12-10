@@ -28,9 +28,9 @@ set noshowmode     " don't show the current mode (not needed with airline)
 Plug 'tpope/vim-surround'
 
 " Fuzzy file, buffer, mru, tag, etc finder.  http://kien.github.com/ctrlp.vim
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 " open file in new tab with <c-t> = default
-" let g:ctrlp_open_new_file = 't'
+let g:ctrlp_extensions = ['tag']
 nnoremap <leader>p :CtrlPTag<cr>
 
 " Vim plugin that displays tags in a window, ordered by scope
