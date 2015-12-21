@@ -21,10 +21,6 @@ Plug 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 set noshowmode     " don't show the current mode (not needed with airline)
 
-" Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc)
-" http://www.vim.org/scripts/script.php?script_id=273
-" Plug 'vim-scripts/taglist.vim'
-
 Plug 'tpope/vim-surround'
 
 " Fuzzy file, buffer, mru, tag, etc finder.  http://kien.github.com/ctrlp.vim
@@ -37,8 +33,8 @@ nnoremap <leader>p :CtrlPTag<cr>
 Plug 'majutsushi/tagbar'
 nnoremap <F6> :TagbarToggle<CR>
 
-" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-" nnoremap <F3> :NERDTreeToggle<CR>
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+nnoremap <F3> :NERDTreeToggle<CR>
 " Plug 'jistr/vim-nerdtree-tabs'
 " let g:nerdtree_tabs_open_on_gui_startup = 0
 " let NERDTreeHijackNetrw=1
@@ -96,6 +92,8 @@ let g:pymode_python = 'python3'
 " let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
 " let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly 
 
+Plug 'vim-scripts/gtk-vim-syntax'
+
 Plug 'mileszs/ack.vim'
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
@@ -109,7 +107,19 @@ endif
 nnoremap <F5> :UndotreeToggle<cr>
 
 " adds support for ansi escape characters - useful for vimpager
-" Plug 'powerman/vim-plugin-AnsiEsc'
+Plug 'powerman/vim-plugin-AnsiEsc'
+
+" Load on nothing
+Plug 'SirVer/ultisnips', { 'on': [] }
+Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer'}
+
+" load ultisnips and YouCompleteMe first time you enter insert mode.
+augroup load_us_ycm
+  autocmd!
+  autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
+                     \| call youcompleteme#Enable() | autocmd! load_us_ycm
+augroup END
+
 
 " Plug 'jszakmeister/vim-togglecursor'
 " let g:togglecursor_insert='line'
