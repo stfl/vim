@@ -31,7 +31,7 @@ Plug 'tpope/vim-surround'
 Plug 'ctrlpvim/ctrlp.vim'
 " open file in new tab with <c-t> = default
 let g:ctrlp_extensions = ['tag']
-nnoremap <leader>p :CtrlPTag<cr>
+nmap <leader><c-p> :CtrlPTag<cr>
 
 " Vim plugin that displays tags in a window, ordered by scope
 Plug 'majutsushi/tagbar'
@@ -134,7 +134,7 @@ set autoread          " Set to auto read when a file is changed from the outside
 set autoindent
 set smartindent
 set expandtab  " tab expansion
-" set textwidth=80
+set textwidth=80
 set tabstop=3
 set shiftwidth=3
 set softtabstop=3
@@ -267,8 +267,6 @@ noremap <C-m> :nohl<CR>
 nnoremap <leader>* :Ack! <c-r><c-w><cr>
 
 " usefull keys from US-Keyboard - maped to German
-" for tags
-nmap ü <C-]>
 nmap ö [
 omap ö [
 nmap ä ]
@@ -283,6 +281,12 @@ noremap ää ]]
 noremap öö [[
 noremap öä []
 noremap äö ][
+
+" for tags
+nmap ü <C-]>
+" select from multiple found tags
+" alternativly use :tn :tp
+noremap gä g]
 nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
 
