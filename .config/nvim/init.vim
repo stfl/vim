@@ -2,6 +2,11 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" return 1 with Version $current is newer then version $min
+function! VerNewerThen(min, current)
+   return system("[  \"" + a:min + "\" = \"`echo -e \"" + a:min + "\n" + a:current + " | sort -V | head -n1`\" ] && echo 1 || echo 0")
+endfunction
+
 " set the runtime path to include Vundle and initialize
 " set rtp+=~/.vim/bundle/Vundle.vim
 " call vundle#begin()
@@ -21,10 +26,6 @@ Plug 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 set noshowmode     " don't show the current mode (not needed with airline)
 
-" Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc)
-" http://www.vim.org/scripts/script.php?script_id=273
-" Plug 'vim-scripts/taglist.vim'
-
 Plug 'tpope/vim-surround'
 
 " Fuzzy file, buffer, mru, tag, etc finder.  http://kien.github.com/ctrlp.vim
@@ -37,8 +38,8 @@ nmap <leader><c-p> :CtrlPTag<cr>
 Plug 'majutsushi/tagbar'
 nnoremap <F6> :TagbarToggle<CR>
 
-" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-" nnoremap <F3> :NERDTreeToggle<CR>
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+nnoremap <F3> :NERDTreeToggle<CR>
 " Plug 'jistr/vim-nerdtree-tabs'
 " let g:nerdtree_tabs_open_on_gui_startup = 0
 " let NERDTreeHijackNetrw=1
@@ -96,6 +97,8 @@ let g:pymode_python = 'python3'
 " let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
 " let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly 
 
+Plug 'vim-scripts/gtk-vim-syntax'
+
 Plug 'mileszs/ack.vim'
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
@@ -109,7 +112,27 @@ endif
 nnoremap <F5> :UndotreeToggle<cr>
 
 " adds support for ansi escape characters - useful for vimpager
-" Plug 'powerman/vim-plugin-AnsiEsc'
+Plug 'powerman/vim-plugin-AnsiEsc'
+
+" Load on nothing
+Plug 'SirVer/ultisnips', { 'on': [] }
+
+" load ultisnips first time you enter insert mode.
+augroup load_us
+  autocmd!
+  autocmd InsertEnter * call plug#load('ultisnips') | autocmd! load_us
+augroup END
+
+let cmake_version = system('cmake --version')
+if executable('cmake') && VerNewerThen("2.8.11", cmake_version[2])
+   Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer'}
+   augroup load_ycm
+      autocmd!
+      autocmd InsertEnter * call plug#load('YouCompleteMe')
+               \| call youcompleteme#Enable() | autocmd! load_ycm
+   augroup END
+endif
+
 
 " Plug 'jszakmeister/vim-togglecursor'
 " let g:togglecursor_insert='line'
@@ -397,6 +420,8 @@ set diffexpr=MyDiff()
                \  " > " . v:fname_out
    endfunction
 " endif
+
+
 " }}}
 
 " Frequentis specifics {{{
