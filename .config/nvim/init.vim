@@ -2,6 +2,11 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" return 1 with Version $current is newer then version $min
+function! VerNewerThen(min, current)
+   return system("[  \"" + a:min + "\" = \"`echo -e \"" + a:min + "\n" + a:current + " | sort -V | head -n1`\" ] && echo 1 || echo 0")
+endfunction
+
 " set the runtime path to include Vundle and initialize
 " set rtp+=~/.vim/bundle/Vundle.vim
 " call vundle#begin()
@@ -111,14 +116,22 @@ Plug 'powerman/vim-plugin-AnsiEsc'
 
 " Load on nothing
 Plug 'SirVer/ultisnips', { 'on': [] }
-Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer'}
 
-" load ultisnips and YouCompleteMe first time you enter insert mode.
-augroup load_us_ycm
+" load ultisnips first time you enter insert mode.
+augroup load_us
   autocmd!
-  autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
-                     \| call youcompleteme#Enable() | autocmd! load_us_ycm
+  autocmd InsertEnter * call plug#load('ultisnips') | autocmd! load_us
 augroup END
+
+let cmake_version = system('cmake --version')
+if executable('cmake') && VerNewerThen("2.8.11", cmake_version[2])
+   Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer'}
+   augroup load_ycm
+      autocmd!
+      autocmd InsertEnter * call plug#load('YouCompleteMe')
+               \| call youcompleteme#Enable() | autocmd! load_ycm
+   augroup END
+endif
 
 
 " Plug 'jszakmeister/vim-togglecursor'
@@ -403,6 +416,8 @@ set diffexpr=MyDiff()
                \  " > " . v:fname_out
    endfunction
 " endif
+
+
 " }}}
 
 " Frequentis specifics {{{
