@@ -2,9 +2,14 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" return 1 with Version $current is newer then version $min
+" return 1 with version $current is newer then version $min
 function! VerNewerThen(min, current)
-   return system("[  \"" + a:min + "\" = \"`echo -e \"" + a:min + "\n" + a:current + " | sort -V | head -n1`\" ] && echo 1 || echo 0")
+   if has('nvim')
+      " neovim makes sth wierd with the string in system()
+      return 1
+   else
+      return system("[  \"".a:min."\" = \"`echo -e \"".a:min."\\n".a:current." | sort -V | head -n1`\" ] && echo 1 || echo 0")
+   endif
 endfunction
 
 " set the runtime path to include Vundle and initialize
@@ -25,8 +30,6 @@ Plug 'vim-scripts/ZoomWin'
 Plug 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 set noshowmode     " don't show the current mode (not needed with airline)
-
-Plug 'tpope/vim-surround'
 
 " Fuzzy file, buffer, mru, tag, etc finder.  http://kien.github.com/ctrlp.vim
 Plug 'ctrlpvim/ctrlp.vim'
@@ -81,23 +84,14 @@ let g:svnj_browse_cache_all = 1
 Plug 'will133/vim-dirdiff'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
 
-" Syntax checking hacks for vim
-Plug 'scrooloose/syntastic'
-
 Plug 'Lokaltog/vim-easymotion'
 
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
-
-" Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box.
-Plug 'klen/python-mode', { 'for': 'python' }
-let g:pymode_python = 'python3'
 
 " Plug 'vim-scripts/Conque-GDB'
 " let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always with color
 " let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
 " let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly 
-
-Plug 'vim-scripts/gtk-vim-syntax'
 
 Plug 'mileszs/ack.vim'
 if executable('ag')
@@ -114,32 +108,125 @@ nnoremap <F5> :UndotreeToggle<cr>
 " adds support for ansi escape characters - useful for vimpager
 Plug 'powerman/vim-plugin-AnsiEsc'
 
-" Load on nothing
-Plug 'SirVer/ultisnips', { 'on': [] }
+" }}}
+" CODING Plugins {{{
 
-" load ultisnips first time you enter insert mode.
-augroup load_us
-  autocmd!
-  autocmd InsertEnter * call plug#load('ultisnips') | autocmd! load_us
-augroup END
+Plug 'tpope/vim-surround'
 
-let cmake_version = system('cmake --version')
-if executable('cmake') && VerNewerThen("2.8.11", cmake_version[2])
-   Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer'}
-   augroup load_ycm
-      autocmd!
-      autocmd InsertEnter * call plug#load('YouCompleteMe')
-               \| call youcompleteme#Enable() | autocmd! load_ycm
-   augroup END
+" Syntax checking hacks for vim
+Plug 'scrooloose/syntastic'
+
+" Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box.
+Plug 'klen/python-mode', { 'for': 'python' }
+" set this if compiled with both versions
+" let g:pymode_python = 'python3'
+
+Plug 'vim-scripts/gtk-vim-syntax'
+
+Plug 'Rip-Rip/clang_complete', { 'do': 'make install' }
+let g:clang_complete_auto = 1
+let g:clang_auto_select = 1
+let g:clang_default_keymappings = 0
+"let g:clang_use_library = 1
+" let g:clang_library_path='/usr/lib/x86_64-linux-gnu'
+" ln libclang.so.1 libclang.so
+
+if has('nvim') && has("python3")
+   " " sudo pip3 install neovim
+   Plug 'Shougo/deoplete.nvim' " , { 'on': 'DeopleteEnable' }
+   " " :UpdateRemotePlugins
+   let g:deoplete#enable_at_startup = 1   "enable deoplete at vim startup
+   let g:deoplete#enable_ignore_case = 1  "let matcher ignore case
+   let g:deoplete#enable_smart_case = 1   "smart case
+   " let g:deoplete#enable_fuzzy_completion = 1   "fuzzy match
+   let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})  "get default patterns where need to autocomplete
+   " let g:deoplete#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+   " let g:deoplete#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+   inoremap <expr><C-h> deolete#mappings#smart_close_popup()."\<C-h>"
+   inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
+endif
+" elseif version >= 703 && has('lua') {{{
+   " Plug 'Shougo/neocomplete.vim' " , { 'on': 'NeoCompleteEnable' }
+
+   " let g:neocomplete#enable_at_startup = 1
+   " " Use smartcase.
+   " let g:neocomplete#enable_smart_case = 1
+   " " Set minimum syntax keyword length.
+   " let g:neocomplete#sources#syntax#min_keyword_length = 3
+   " let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+   " " Define dictionary.
+   " let g:neocomplete#sources#dictionary#dictionaries = {
+            " \ 'default' : ''
+            " \ }
+
+   " " Define keyword.
+   " if !exists('g:neocomplete#keyword_patterns')
+      " let g:neocomplete#keyword_patterns = {}
+   " endif
+   " let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+   " inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+   " " <C-h>, <BS>: close popup and delete backword char.
+   " inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+   " inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+
+   " " Enable heavy omni completion.
+   " if !exists('g:neocomplete#sources#omni#input_patterns')
+      " let g:neocomplete#sources#omni#input_patterns = {}
+   " endif
+   " let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+   " let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" endif }}}
+
+Plug 'Shougo/neoinclude.vim'
+
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'honza/vim-snippets'
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+" \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
 endif
 
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
-" Plug 'jszakmeister/vim-togglecursor'
-" let g:togglecursor_insert='line'
-" let g:togglecursor_default='block'
-" let g:togglecursor_force='xterm'
-" try with disabling nvim settings!!!
-" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+" Load on nothing
+" Plug 'SirVer/ultisnips', { 'on': [] }
+" " load ultisnips first time you enter insert mode.
+" augroup load_us
+  " autocmd!
+  " autocmd InsertEnter * call plug#load('ultisnips') | autocmd! load_us
+" augroup END
+
+" let cmake_version = split(system('cmake --version'))
+" if executable('cmake') && VerNewerThen("2.8.11", cmake_version[2])
+   " Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer'}
+   " augroup load_ycm
+      " autocmd!
+      " autocmd InsertEnter * call plug#load('YouCompleteMe')
+               " \| call youcompleteme#Enable() | autocmd! load_ycm
+   " augroup END
+" endif
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -174,7 +261,7 @@ set ignorecase " Ignore case when searching
 set smartcase  " Ignore case if search pattern is all lc, cs or otherwise
 
 " syntax
-set encoding=utf-8    " Set utf-8 as standard encoding
+" set encoding=utf-8    " Set utf-8 as standard encoding
 set wildmenu          " completion menu in comand menu
 set wildmode=list:longest,list:full
 set bs=2              " make backspace bahve like normal
