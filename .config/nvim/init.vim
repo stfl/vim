@@ -37,6 +37,9 @@ Plug 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_extensions = ['tag']
 nnoremap <leader>p :CtrlPTag<cr>
 
+" let g:fzf_install = 'yes | ./install'
+" Plug 'junegunn/fzf', { 'do': g:fzf_install }
+
 " Vim plugin that displays tags in a window, ordered by scope
 Plug 'majutsushi/tagbar'
 nnoremap <F6> :TagbarToggle<CR>
@@ -51,6 +54,10 @@ nnoremap <F3> :NERDTreeToggle<CR>
 
 Plug 'scrooloose/nerdcommenter'
 let NERDSpaceDelims=1
+
+Plug 'junegunn/vim-easy-align'
+
+Plug 'bash-support.vim'
 
 " a Git wrapper so awesome, it should be illegal
 " http://www.vim.org/scripts/script.php?script_id=2975
@@ -84,7 +91,7 @@ let g:svnj_browse_cache_all = 1
 Plug 'will133/vim-dirdiff'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
 
-Plug 'Lokaltog/vim-easymotion'
+" Plug 'Lokaltog/vim-easymotion'
 
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
@@ -113,8 +120,34 @@ Plug 'powerman/vim-plugin-AnsiEsc'
 
 Plug 'tpope/vim-surround'
 
-" Syntax checking hacks for vim
-Plug 'scrooloose/syntastic'
+" if has('nvim')
+   " Plug 'benekastah/neomake'
+   " let g:neomake_logfile = resolve(expand("~/.vim/tmp/neomake.log"))
+   " let g:neomake_verbose = 2
+   " " let g:args = ['-fsyntax-only', '-Wall', '-Wextra']
+   " " call extend(g:args, split(system("pkg-config --cflags --libs gstreamer-1.0")))
+   " " let g:neomake_c_cpp_maker = {
+            " " \ 'args': g:args, 
+            " " \ 'errorformat':
+            " " \ '%-G%f:%s:,' .
+            " " \ '%-G%f:%l: %#error: %#(Each undeclared identifier is reported only%.%#,' .
+            " " \ '%-G%f:%l: %#error: %#for each function it appears%.%#,' .
+            " " \ '%-GIn file included%.%#,' .
+            " " \ '%-G %#from %f:%l\,,' .
+            " " \ '%f:%l:%c: %trror: %m,' .
+            " " \ '%f:%l:%c: %tarning: %m,' .
+            " " \ '%f:%l:%c: %m,' .
+            " " \ '%f:%l: %trror: %m,' .
+            " " \ '%f:%l: %tarning: %m,'.
+            " " \ '%f:%l: %m',
+            " " \ }
+   " " let g:neomake_c_enabled_makers = ['cpp']
+" else
+   " Syntax checking hacks for vim
+   Plug 'scrooloose/syntastic'
+   " let g:syntastic_debug = 1
+
+" endif
 
 " Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box.
 Plug 'klen/python-mode', { 'for': 'python' }
@@ -181,14 +214,16 @@ endif
 " endif }}}
 
 Plug 'Shougo/neoinclude.vim'
-
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
-Plug 'honza/vim-snippets'
-" Plugin key-mappings.
+Plug 'Shougo/neosnippet' | Plug 'Shougo/neosnippet-snippets' | Plug 'honza/vim-snippets'
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
+set tags=./tags,./TAGS,tags;TAGS;   " make vim look for tags file reverse-recursivly ;)
+let g:easytags_dynamic_files = 1    " make easytags use this file instead of global
+let g:easytags_async = 1            " make easytag update async
+
 
 " SuperTab like snippets behavior.
 "imap <expr><TAB>
@@ -303,9 +338,6 @@ nnoremap <leader><F7> :set list!<CR>
 
 " allow folding at markers
 set foldmethod=marker
-
-" make vim look for tags file reverse-recursivly ;)
-set tags=./tags,./TAGS,tags;TAGS;
 
 " vimdiff stuff
 " ignore whitespace
