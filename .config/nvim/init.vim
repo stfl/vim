@@ -37,8 +37,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_extensions = ['tag']
 nnoremap <leader>p :CtrlPTag<cr>
 
-" let g:fzf_install = 'yes | ./install'
-" Plug 'junegunn/fzf', { 'do': g:fzf_install }
+let g:fzf_install = 'yes | ./install'
+Plug 'junegunn/fzf', { 'do': g:fzf_install }
 
 " Vim plugin that displays tags in a window, ordered by scope
 Plug 'majutsushi/tagbar'
@@ -57,7 +57,7 @@ let NERDSpaceDelims=1
 
 Plug 'junegunn/vim-easy-align'
 
-Plug 'bash-support.vim'
+Plug 'chrisbra/vim-diff-enhanced'
 
 " a Git wrapper so awesome, it should be illegal
 " http://www.vim.org/scripts/script.php?script_id=2975
@@ -91,7 +91,7 @@ let g:svnj_browse_cache_all = 1
 Plug 'will133/vim-dirdiff'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
 
-" Plug 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion'
 
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
@@ -155,6 +155,8 @@ Plug 'klen/python-mode', { 'for': 'python' }
 " let g:pymode_python = 'python3'
 
 Plug 'vim-scripts/gtk-vim-syntax'
+
+Plug 'bash-support.vim'
 
 Plug 'Rip-Rip/clang_complete', { 'do': 'make install' }
 let g:clang_complete_auto = 1
@@ -273,6 +275,7 @@ call plug#end()
 
 " Settings {{{
 autocmd! bufwritepost .vimrc source % " automatic reload .vimrc
+autocmd! bufwritepost init.vim source %
 set autoread          " Set to auto read when a file is changed from the outside
 
 " format
@@ -407,6 +410,9 @@ noremap <C-m> :nohl<CR>
 
 " search for current word in project: acording to current dir!!
 nnoremap <leader>* :Ack! <c-r><c-w><cr>
+
+" map the F9 key to run make
+:map <f9> :make<CR>
 
 " usefull keys from US-Keyboard - maped to German
 " for tags
