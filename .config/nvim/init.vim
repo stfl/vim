@@ -52,6 +52,9 @@ nnoremap <F3> :NERDTreeToggle<CR>
 
 " Plug 'tpope/vim-vinegar'
 
+" vim plugin for tmux.conf
+Plug 'tmux-plugins/vim-tmux'
+
 Plug 'scrooloose/nerdcommenter'
 let NERDSpaceDelims=1
 
