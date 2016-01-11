@@ -159,7 +159,7 @@ Plug 'klen/python-mode', { 'for': 'python' }
 
 Plug 'vim-scripts/gtk-vim-syntax'
 
-Plug 'bash-support.vim'
+" Plug 'bash-support.vim'
 
 Plug 'Rip-Rip/clang_complete', { 'do': 'make install' }
 let g:clang_complete_auto = 1
