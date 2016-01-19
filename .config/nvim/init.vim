@@ -35,7 +35,7 @@ set noshowmode     " don't show the current mode (not needed with airline)
 Plug 'ctrlpvim/ctrlp.vim'
 " open file in new tab with <c-t> = default
 let g:ctrlp_extensions = ['tag']
-nnoremap <leader>p :CtrlPTag<cr>
+nmap <leader><c-p> :CtrlPTag<cr>
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
@@ -158,7 +158,7 @@ Plug 'klen/python-mode', { 'for': 'python' }
 
 Plug 'vim-scripts/gtk-vim-syntax'
 
-Plug 'bash-support.vim'
+" Plug 'bash-support.vim'
 
 Plug 'Rip-Rip/clang_complete', { 'do': 'make install' }
 let g:clang_complete_auto = 1
@@ -286,7 +286,7 @@ set autoread          " Set to auto read when a file is changed from the outside
 set autoindent
 set smartindent
 set expandtab  " tab expansion
-" set textwidth=80
+set textwidth=80
 set tabstop=3
 set shiftwidth=3
 set softtabstop=3
@@ -420,8 +420,6 @@ nnoremap <leader>* :Ack! <c-r><c-w><cr>
 :map <f9> :make<CR>
 
 " usefull keys from US-Keyboard - maped to German
-" for tags
-nmap ü <C-]>
 nmap ö [
 omap ö [
 nmap ä ]
@@ -436,6 +434,12 @@ noremap ää ]]
 noremap öö [[
 noremap öä []
 noremap äö ][
+
+" for tags
+nmap ü <C-]>
+" select from multiple found tags
+" alternativly use :tn :tp
+noremap gä g]
 nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
 
