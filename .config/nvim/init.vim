@@ -59,6 +59,11 @@ Plug 'scrooloose/nerdcommenter'
 let NERDSpaceDelims=1
 
 Plug 'junegunn/vim-easy-align'
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+"
+" " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 Plug 'chrisbra/vim-diff-enhanced'
 
