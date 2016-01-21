@@ -37,8 +37,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_extensions = ['tag']
 nmap <leader><c-p> :CtrlPTag<cr>
 
-let g:fzf_install = 'yes | ./install'
-Plug 'junegunn/fzf', { 'do': g:fzf_install }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " Vim plugin that displays tags in a window, ordered by scope
 Plug 'majutsushi/tagbar'
@@ -233,6 +232,8 @@ Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
 set tags=./tags,./TAGS,tags;TAGS;   " make vim look for tags file reverse-recursivly ;)
 let g:easytags_dynamic_files = 1    " make easytags use this file instead of global
 let g:easytags_async = 1            " make easytag update async
+let g:easytags_opts = ['--c-kinds=+defgpstuxm --fields=+iaS --extra=+q']
+nmap <F8> :UpdateTags<CR>
 
 
 " SuperTab like snippets behavior.
@@ -337,7 +338,6 @@ set cursorline   " Highlight current line
 set laststatus=2 " always show status line
 set showmatch    " Cursor shows matching ) and }
 " set showmode     " Show the current mode
-let mapleader = "-"  " rebmap the <Leader> key
 set timeoutlen=1000
 set ttimeoutlen=10  " timeout leaving Insert
 
@@ -388,6 +388,8 @@ endif
 " }}}
 
 " key mappings {{{
+" let mapleader = "\"  " rebmap the <Leader> key
+
 inoremap jk <Esc>
 inoremap <Esc> <nop>
 
@@ -409,7 +411,7 @@ vnoremap <C-Y> <Esc>:update<CR>
 inoremap <C-Y> <Esc>:update<CR>
 
 " easier moving of code blocks
-vnoremap < <gv " better indentation
+vnoremap < <gv
 vnoremap > >gv
 
 " map Ctrl-M to remove highlight from last search
