@@ -1,7 +1,4 @@
 " Plugins {{{
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
 " return 1 with version $current is newer then version $min
 function! VerNewerThen(min, current)
    if has('nvim')
@@ -12,13 +9,9 @@ function! VerNewerThen(min, current)
    endif
 endfunction
 
-" set the runtime path to include Vundle and initialize
-" set rtp+=~/.vim/bundle/Vundle.vim
-" call vundle#begin()
+set nocompatible              " be iMproved, required
+filetype off                  " required
 call plug#begin('~/.vim/plugged')
-
-" let Vundle manage Vundle, required
-" Plugin 'gmarik/Vundle.vim'
 
 Plug '~/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes', { 'for': 'ReleaseNotes' }
 
@@ -93,19 +86,50 @@ let g:svnj_browse_cache_all = 1
 Plug 'will133/vim-dirdiff'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
 
-Plug 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion' " {{{
+
+" vim-easymotion mappings
+let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
+let g:EasyMotion_smartcase = 1
+nmap s <Plug>(easymotion-s2)
+nmap t <Plug>(easymotion-t2)
+nmap <leader>/ <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
+" Without these mappings, `n` & `N` works fine. (These mappings just provide
+" different highlight method and have some other features )
+" map  n <Plug>(easymotion-next)
+" map  N <Plug>(easymotion-prev)
+
+" nnoremap <C-X>x <C-X>
+map <leader>l <Plug>(easymotion-lineforward)
+map <leader>j <Plug>(easymotion-j)
+map <leader>k <Plug>(easymotion-k)
+map <leader>h <Plug>(easymotion-linebackward)
+map <leader>n <Plug>(easymotion-n)
+map <leader>N <Plug>(easymotion-N)
+" map <Leader>f <Plug>(easymotion-f)
+" map <Leader>F <Plug>(easymotion-F)
+" map <Leader>t <Plug>(easymotion-t)
+" map <Leader>T <Plug>(easymotion-T)
+" map <Leader>w <Plug>(easymotion-w)
+" map <Leader>W <Plug>(easymotion-W)
+" }}}
 
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
 " Plug 'vim-scripts/Conque-GDB'
 " let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always with color
 " let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
-" let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly 
+" let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly
 
 Plug 'mileszs/ack.vim'
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+" search for current word in project: acording to current dir!!
+nnoremap <leader>* :Ack! <c-r><c-w><cr>
+nnoremap <leader>t :Ack! "TODO\|FIXME"<CR>
 
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 if has("persistent_undo")
@@ -117,19 +141,43 @@ nnoremap <F5> :UndotreeToggle<cr>
 " adds support for ansi escape characters - useful for vimpager
 Plug 'powerman/vim-plugin-AnsiEsc'
 
+Plug 'tpope/vim-surround'
+
 " }}}
 " CODING Plugins {{{
 
-Plug 'tpope/vim-surround'
+" Pandoc | Markdown {{{
 
-" if has('nvim')
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vim-pandoc/vim-pandoc-after'
+let g:pandoc#after#modules#enabled = ["unite", "ultisnips", "neosnippets"]
+
+" }}}
+
+" LaTeX {{{
+Plug 'lervag/vimtex'
+if has('nvim') && has('nvr')
+   let g:vimtex_latexmk_progname = 'nvr'
+endif
+
+" Plug 'vim-latex/vim-latex'
+" let g:Tex_DefaultTargetFormat = 'pdf'
+let g:tex_flavor = "latex"
+
+" rbonvall/snipmate-snippets-bib
+" Plug 'rbonvall/snipmate-snippets-bib'
+
+" }}}
+
+" if has('nvim') " {{{
    " Plug 'benekastah/neomake'
    " let g:neomake_logfile = resolve(expand("~/.vim/tmp/neomake.log"))
    " let g:neomake_verbose = 2
    " " let g:args = ['-fsyntax-only', '-Wall', '-Wextra']
    " " call extend(g:args, split(system("pkg-config --cflags --libs gstreamer-1.0")))
    " " let g:neomake_c_cpp_maker = {
-            " " \ 'args': g:args, 
+            " " \ 'args': g:args,
             " " \ 'errorformat':
             " " \ '%-G%f:%s:,' .
             " " \ '%-G%f:%l: %#error: %#(Each undeclared identifier is reported only%.%#,' .
@@ -144,44 +192,39 @@ Plug 'tpope/vim-surround'
             " " \ '%f:%l: %m',
             " " \ }
    " " let g:neomake_c_enabled_makers = ['cpp']
-" else
+" else }}}
    " Syntax checking hacks for vim
    Plug 'scrooloose/syntastic'
    " let g:syntastic_debug = 1
-
 " endif
 
-" Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box.
+" Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box."{{{
 Plug 'klen/python-mode', { 'for': 'python' }
 " set this if compiled with both versions
-" let g:pymode_python = 'python3'
+" let g:pymode_python = 'python3'"}}}
 
 Plug 'vim-scripts/gtk-vim-syntax'
 
-" Plug 'bash-support.vim'
+" Plug 'Rip-Rip/clang_complete', { 'do': 'make install' } " {{{
+" let g:clang_complete_auto = 1
+" let g:clang_auto_select = 1
+" let g:clang_default_keymappings = 0
+" "let g:clang_use_library = 1
+" " let g:clang_library_path='/usr/lib/x86_64-linux-gnu'
+" " ln libclang.so.1 libclang.so
 
-Plug 'Rip-Rip/clang_complete', { 'do': 'make install' }
-let g:clang_complete_auto = 1
-let g:clang_auto_select = 1
-let g:clang_default_keymappings = 0
-"let g:clang_use_library = 1
-" let g:clang_library_path='/usr/lib/x86_64-linux-gnu'
-" ln libclang.so.1 libclang.so
-
-if has('nvim') && has("python3")
-   " " sudo pip3 install neovim
-   Plug 'Shougo/deoplete.nvim' " , { 'on': 'DeopleteEnable' }
-   " " :UpdateRemotePlugins
-   let g:deoplete#enable_at_startup = 1   "enable deoplete at vim startup
-   let g:deoplete#enable_ignore_case = 1  "let matcher ignore case
-   let g:deoplete#enable_smart_case = 1   "smart case
-   " let g:deoplete#enable_fuzzy_completion = 1   "fuzzy match
-   let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})  "get default patterns where need to autocomplete
-   " let g:deoplete#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-   " let g:deoplete#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-   inoremap <expr><C-h> deolete#mappings#smart_close_popup()."\<C-h>"
-   inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
-endif
+" if has('nvim') && has("python3")
+   " " " sudo pip3 install neovim
+   " Plug 'Shougo/deoplete.nvim' " , { 'on': 'DeopleteEnable' }
+   " " " :UpdateRemotePlugins
+   " let g:deoplete#enable_at_startup = 1   "enable deoplete at vim startup
+   " let g:deoplete#enable_ignore_case = 1  "let matcher ignore case
+   " let g:deoplete#enable_smart_case = 1   "smart case
+   " " let g:deoplete#enable_fuzzy_completion = 1   "fuzzy match
+   " let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})  "get default patterns where need to autocomplete
+   " " inoremap <expr><C-h> deolete#mappings#smart_close_popup()."\<C-h>"
+   " " inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
+" endif
 " elseif version >= 703 && has('lua') {{{
    " Plug 'Shougo/neocomplete.vim' " , { 'on': 'NeoCompleteEnable' }
 
@@ -215,75 +258,64 @@ endif
    " let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
    " let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
-" endif }}}
+" endif }}} }}}
 
-Plug 'Shougo/neoinclude.vim'
-Plug 'Shougo/neosnippet' | Plug 'Shougo/neosnippet-snippets' | Plug 'honza/vim-snippets'
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
-set tags=./tags,./TAGS,tags;TAGS;   " make vim look for tags file reverse-recursivly ;)
-let g:easytags_dynamic_files = 1    " make easytags use this file instead of global
-let g:easytags_async = 1            " make easytag update async
-let g:easytags_opts = ['--c-kinds=+defgpstuxm --fields=+iaS --extra=+q']
-nmap <F8> :UpdateTags<CR>
-
-
-" SuperTab like snippets behavior.
-"imap <expr><TAB>
-" \ pumvisible() ? "\<C-n>" :
-" \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-" \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
+" YCM {{{
+let cmake_version = split(system('cmake --version'))
+if executable('cmake') && VerNewerThen("2.8.11", cmake_version[2])
+   Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer'}
+   augroup load_ycm
+      autocmd!
+      autocmd InsertEnter * call plug#load('YouCompleteMe')
+               \| call youcompleteme#Enable() | autocmd! load_ycm
+   augroup END
 endif
 
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" latex completion from vimtex
+let g:ycm_semantic_triggers = { 'tex': ['\v\\\a*(ref|cite)\a*([^]]*\])?\{([^}]*,)*[^}]*'] }
 
-" Load on nothing
-" Plug 'SirVer/ultisnips', { 'on': [] }
-" " load ultisnips first time you enter insert mode.
+
+Plug 'SirVer/ultisnips' ", { 'on': [] }  \" Load on nothing
+let g:UltiSnipsExpandTrigger="<c-k>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" load ultisnips first time you enter insert mode.
 " augroup load_us
   " autocmd!
   " autocmd InsertEnter * call plug#load('ultisnips') | autocmd! load_us
 " augroup END
+" }}}
 
-" let cmake_version = split(system('cmake --version'))
-" if executable('cmake') && VerNewerThen("2.8.11", cmake_version[2])
-   " Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer'}
-   " augroup load_ycm
-      " autocmd!
-      " autocmd InsertEnter * call plug#load('YouCompleteMe')
-               " \| call youcompleteme#Enable() | autocmd! load_ycm
-   " augroup END
-" endif
+" Plug 'Shougo/neoinclude.vim' " {{{
+" Plug 'Shougo/neosnippet'
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" xmap <C-k>     <Plug>(neosnippet_expand_target) "}}}
 
-" Add plugins to &runtimepath
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+" Plug 'Shougo/neosnippet-snippets'
+
+Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags' "{{{
+set tags=./tags,./TAGS,tags;TAGS;   " make vim look for tags file reverse-recursivly ;)
+let g:easytags_dynamic_files = 1    " make easytags use this file instead of global
+let g:easytags_async = 1            " make easytag update async
+let g:easytags_opts = ['--c-kinds=+defgpstuxm --fields=+iaS --extra=+q']
+nmap <F8> :UpdateTags<CR> "}}}
+
 call plug#end()
-
-" All of your Plugins must be added before the following line
-" call vundle#end()            " required
-" filetype plugin indent on    " required
 " }}}
 
 " Settings {{{
-autocmd! bufwritepost .vimrc source % " automatic reload .vimrc
+filetype plugin indent on
+
+" automatic reload .vimrc
+autocmd! bufwritepost .vimrc source %
 autocmd! bufwritepost init.vim source %
 set autoread          " Set to auto read when a file is changed from the outside
 
 " format
-set autoindent
+" set autoindent
+set copyindent " Copy the indentation of the previous line if autoindent doesn't know what to do (it's an eval, actually).
 set smartindent
 set expandtab  " tab expansion
 set textwidth=80
@@ -323,6 +355,10 @@ elseif version >= 703
    set clipboard+=unnamedplus " Use the OS clipboard by default
 endif
 
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
 
 syntax on        " Syntax highlighting
 set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
@@ -349,9 +385,14 @@ set foldmethod=marker
 " ignore whitespace
 set diffopt=filler,vertical,iwhite
 
-" if &diff
-   " set nolist
-" endif
+" Enable omni completion.
+set omnifunc=syntaxcomplete#Complete
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
 " }}}
 
 " colorization and styles {{{
@@ -413,9 +454,6 @@ vnoremap > >gv
 noremap <C-m> :nohl<CR>
 " maps <CR> to :nohl in vim - TODO
 
-" search for current word in project: acording to current dir!!
-nnoremap <leader>* :Ack! <c-r><c-w><cr>
-
 " map the F9 key to run make
 :map <f9> :make<CR>
 
@@ -442,33 +480,6 @@ nmap ü <C-]>
 noremap gä g]
 nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
-
-" vim-easymotion mappings
-let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-let g:EasyMotion_smartcase = 1
-nmap s <Plug>(easymotion-s2)
-nmap t <Plug>(easymotion-t2)
-nmap <leader>/ <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
-" Without these mappings, `n` & `N` works fine. (These mappings just provide
-" different highlight method and have some other features )
-" map  n <Plug>(easymotion-next)
-" map  N <Plug>(easymotion-prev)
-
-" nnoremap <C-X>x <C-X>
-map <leader>l <Plug>(easymotion-lineforward)
-map <leader>j <Plug>(easymotion-j)
-map <leader>k <Plug>(easymotion-k)
-map <leader>h <Plug>(easymotion-linebackward)
-map <leader>n <Plug>(easymotion-n)
-map <leader>N <Plug>(easymotion-N)
-" map <Leader>f <Plug>(easymotion-f)
-" map <Leader>F <Plug>(easymotion-F)
-" map <Leader>t <Plug>(easymotion-t)
-" map <Leader>T <Plug>(easymotion-T)
-" map <Leader>w <Plug>(easymotion-w)
-" map <Leader>W <Plug>(easymotion-W)
 
 " Search for selected text, forwards or backwards. first * then n/N ->
 vnoremap <silent> * :<C-U>
@@ -537,20 +548,35 @@ command! SmallerFont call SmallerFont()
 " This diff function uses "-w" instead of "-b", to ignore *all* whitespace
 " changes (not only non-leading whitespace)
 set diffexpr=MyDiff()
-" if !exists("*MyDiff")
-   function! MyDiff()
-      let opt = ""
-      if &diffopt =~ "icase"
-         let opt = opt . "-i "
-      endif
-      if &diffopt =~ "iwhite"
-         let opt = opt . "-w "
-      endif
-      silent execute "!diff -a --binary " . opt . v:fname_in . " " . v:fname_new .
-               \  " > " . v:fname_out
-   endfunction
-" endif
+function! MyDiff()
+   let opt = ""
+   if &diffopt =~ "icase"
+      let opt = opt . "-i "
+   endif
+   if &diffopt =~ "iwhite"
+      let opt = opt . "-w "
+   endif
+   silent execute "!diff -a --binary " . opt . v:fname_in . " " . v:fname_new .
+            \  " > " . v:fname_out
+endfunction
 
+" Highlight words to avoid in tech writing
+" =======================================
+"
+"   obviously, basically, simply, of course, clearly,
+"   just, everyone knows, However, So, easy
+
+"   http://css-tricks.com/words-avoid-educational-writing/
+
+highlight TechWordsToAvoid ctermbg=red ctermfg=white
+function! MatchTechWordsToAvoid()
+	match TechWordsToAvoid /\c\<\(obviously\|basically\|simply\|of\scourse\|clearly\|just\|everyone\sknows\|however\|so,\|easy\)\>/
+endfunction
+autocmd FileType markdown,latex call MatchTechWordsToAvoid()
+autocmd BufWinEnter *.md,*.tex call MatchTechWordsToAvoid()
+autocmd InsertEnter *.md,*.tex call MatchTechWordsToAvoid()
+autocmd InsertLeave *.md,*.tex call MatchTechWordsToAvoid()
+autocmd BufWinLeave *.md,*.tex call clearmatches()
 
 " }}}
 
@@ -562,6 +588,8 @@ autocmd BufRead MakePkg setlocal noexpandtab filetype=make
 
 command! TargetOn execute 'set scrolloff=15 | %s/t on="false/t on="true/gc | set scrolloff=5'
 command! TargetOff execute 'set scrolloff=15 | %s/t on="true/t on="false/gc | set scrolloff=15'
+
+
 
 " }}}
 
