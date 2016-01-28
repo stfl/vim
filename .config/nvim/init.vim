@@ -24,6 +24,21 @@ Plug 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 set noshowmode     " don't show the current mode (not needed with airline)
 
+Plug 'mileszs/ack.vim'
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+" search for current word in project: acording to current dir!!
+nnoremap <leader>* :Ack! <c-r><c-w><cr>
+nnoremap <leader>t :Ack! "TODO\|FIXME"<CR>
+
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+if has("persistent_undo")
+   set undodir=~/.vim/undodir
+   set undofile
+endif
+nnoremap <F5> :UndotreeToggle<cr>
+
 " Fuzzy file, buffer, mru, tag, etc finder.  http://kien.github.com/ctrlp.vim
 Plug 'ctrlpvim/ctrlp.vim'
 " open file in new tab with <c-t> = default
@@ -31,6 +46,8 @@ let g:ctrlp_extensions = ['tag']
 nmap <leader><c-p> :CtrlPTag<cr>
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+source ~/.config/nvim/unit.vim
 
 " Vim plugin that displays tags in a window, ordered by scope
 Plug 'majutsushi/tagbar'
@@ -59,12 +76,12 @@ Plug 'chrisbra/vim-diff-enhanced'
 Plug 'tpope/vim-fugitive'
 
 " A Vim plugin which shows a git diff in the gutter (sign column) and stages/reverts hunks.
-Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' }
-let g:gitgutter_enabled = 0 " default off
-" let g:gitgutter_sign_column_always = 1
-" If you experience a lag, you can trade speed for accuracy:
-" let g:gitgutter_realtime = 0
-" let g:gitgutter_eager = 0
+" Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' }
+" let g:gitgutter_enabled = 0 " default off
+
+" git diff as signs
+Plug 'mhinz/vim-signify'
+"FIXME
 
 " VIM SVN plugin ( subversion svn vim7)
 Plug 'juneedahamed/svnj.vim'
@@ -123,20 +140,6 @@ Plug 'jeffkreeftmeijer/vim-numbertoggle'
 " let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
 " let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly
 
-Plug 'mileszs/ack.vim'
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
-" search for current word in project: acording to current dir!!
-nnoremap <leader>* :Ack! <c-r><c-w><cr>
-nnoremap <leader>t :Ack! "TODO\|FIXME"<CR>
-
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
-if has("persistent_undo")
-   set undodir=~/.vim/undodir
-   set undofile
-endif
-nnoremap <F5> :UndotreeToggle<cr>
 
 " adds support for ansi escape characters - useful for vimpager
 Plug 'powerman/vim-plugin-AnsiEsc'
@@ -153,25 +156,24 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
 let g:pandoc#after#modules#enabled = ["unite", "ultisnips", "neosnippets"]
 
-" }}}
-
-" LaTeX {{{
+" LaTeX
 Plug 'lervag/vimtex'
-if has('nvim') && has('nvr')
+if has('nvim') && executable('nvr')
    let g:vimtex_latexmk_progname = 'nvr'
 endif
 
 " Plug 'vim-latex/vim-latex'
 " let g:Tex_DefaultTargetFormat = 'pdf'
 let g:tex_flavor = "latex"
+let g:tex_conceal = "adgm"
 
 " rbonvall/snipmate-snippets-bib
 " Plug 'rbonvall/snipmate-snippets-bib'
 
 " }}}
 
-" if has('nvim') " {{{
-   " Plug 'benekastah/neomake'
+" if has('nvim') 
+   " Plug 'benekastah/neomake' " {{{
    " let g:neomake_logfile = resolve(expand("~/.vim/tmp/neomake.log"))
    " let g:neomake_verbose = 2
    " " let g:args = ['-fsyntax-only', '-Wall', '-Wextra']
@@ -195,7 +197,6 @@ let g:tex_flavor = "latex"
 " else }}}
    " Syntax checking hacks for vim
    Plug 'scrooloose/syntastic'
-   " let g:syntastic_debug = 1
 " endif
 
 " Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box."{{{
@@ -277,7 +278,8 @@ let g:ycm_semantic_triggers = { 'tex': ['\v\\\a*(ref|cite)\a*([^]]*\])?\{([^}]*,
 
 Plug 'SirVer/ultisnips' ", { 'on': [] }  \" Load on nothing
 let g:UltiSnipsExpandTrigger="<c-k>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpForwardTrigger="<c-n>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 " load ultisnips first time you enter insert mode.
 " augroup load_us
   " autocmd!
@@ -429,17 +431,21 @@ endif
 inoremap jk <Esc>
 inoremap <Esc> <nop>
 
-" split naviagetion
 " split vertically
 nnoremap <leader>v :Vex<CR>
 " nnoremap <leader>v <C-w>v<C-w>l
 " split vertically
 nnoremap <leader>s :Sex<CR>
 " nnoremap <leader>s <C-w>s
+
+" split naviagetion
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+nnoremap ZAQ :qa!<CR>
+nnoremap ZAZ :wqa<CR>
 
 " map Ctrl - Y to save file
 nnoremap <silent> <C-y> :update<CR>
@@ -457,6 +463,8 @@ noremap <C-m> :nohl<CR>
 " map the F9 key to run make
 :map <f9> :make<CR>
 
+nnoremap <leader>ov :tabe $MYVIMRC<CR>
+
 " usefull keys from US-Keyboard - maped to German
 nmap ö [
 omap ö [
@@ -472,14 +480,12 @@ noremap ää ]]
 noremap öö [[
 noremap öä []
 noremap äö ][
-
 " for tags
 nmap ü <C-]>
 " select from multiple found tags
 " alternativly use :tn :tp
 noremap gä g]
-nnoremap ZAQ :qa!<CR>
-nnoremap ZAZ :wqa<CR>
+
 
 " Search for selected text, forwards or backwards. first * then n/N ->
 vnoremap <silent> * :<C-U>
