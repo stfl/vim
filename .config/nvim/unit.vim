@@ -1,5 +1,5 @@
 Plug 'Shougo/unite.vim'
-nnoremap <C-p> :Unite file_rec/async<cr>
+nnoremap <C-p> :Unite file_rec/async file_mru/async<cr>
 
 " yank history
 let g:unite_source_history_yank_enable = 1
