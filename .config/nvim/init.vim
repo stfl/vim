@@ -1,4 +1,8 @@
 " Plugins {{{
+
+" Note: Skip initialization for vim-tiny or vim-small.
+if 0 | endif
+
 " return 1 with version $current is newer then version $min
 function! VerNewerThen(min, current)
    if has('nvim')
@@ -9,22 +13,33 @@ function! VerNewerThen(min, current)
    endif
 endfunction
 
-set nocompatible              " be iMproved, required
-filetype off                  " required
-call plug#begin('~/.vim/plugged')
+if &compatible
+   set nocompatible               " Be iMproved
+endif
 
-Plug '~/mybin/Plugin-ReleaseNotes/Plugin-ReleaseNotes', { 'for': 'ReleaseNotes' }
+" Required:
+set runtimepath^=~/.config/nvim/bundle/neobundle.vim/
+call neobundle#begin(expand('~/.config/nvim/bundle/'))
 
-Plug 'altercation/vim-colors-solarized'
+NeoBundleFetch 'Shougo/neobundle.vim'
+let g:neobundle#install_process_timeout = 1500
+
+NeoBundle 'ReleaseNotes', {
+         \ 'uri' : 'http://svn.frequentis.frq/components/systemsw/software/dev-env/vim/trunk/Plugin-ReleaseNotes',
+         \ 'name' : 'ReleaseNotes',
+         \ 'on_ft' : 'ReleaseNotes',
+         \ 'type' : 'svn', }
+
+NeoBundle 'altercation/vim-colors-solarized'
 
 " zoom into one split windo with <c-w-o>
-Plug 'vim-scripts/ZoomWin'
+NeoBundle 'vim-scripts/ZoomWin'
 
-Plug 'bling/vim-airline'
+NeoBundle 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 set noshowmode     " don't show the current mode (not needed with airline)
 
-Plug 'mileszs/ack.vim'
+NeoBundle 'mileszs/ack.vim'
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
@@ -32,7 +47,7 @@ endif
 nnoremap <leader>* :Ack! <c-r><c-w><cr>
 nnoremap <leader>t :Ack! "TODO\|FIXME"<CR>
 
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+NeoBundle 'mbbill/undotree', { 'on_cmd': 'UndotreeToggle' }
 if has("persistent_undo")
    set undodir=~/.vim/undodir
    set undofile
@@ -40,56 +55,56 @@ endif
 nnoremap <F5> :UndotreeToggle<cr>
 
 " Fuzzy file, buffer, mru, tag, etc finder.  http://kien.github.com/ctrlp.vim
-Plug 'ctrlpvim/ctrlp.vim'
-" open file in new tab with <c-t> = default
-let g:ctrlp_extensions = ['tag']
-nmap <leader><c-p> :CtrlPTag<cr>
+" NeoBundle 'ctrlpvim/ctrlp.vim'
+" " open file in new tab with <c-t> = default
+" let g:ctrlp_extensions = ['tag']
+" nmap <leader><c-p> :CtrlPTag<cr>
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+NeoBundle 'junegunn/fzf' , { 'directory': '~/.fzf', 'build': './install --all' }
 
 source ~/.config/nvim/unit.vim
 
 " Vim plugin that displays tags in a window, ordered by scope
-Plug 'majutsushi/tagbar'
+NeoBundle 'majutsushi/tagbar'
 nnoremap <F6> :TagbarToggle<CR>
 
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+NeoBundle 'scrooloose/nerdtree' , { 'on_cmd':  'NERDTreeToggle' }
 nnoremap <F3> :NERDTreeToggle<CR>
-" Plug 'jistr/vim-nerdtree-tabs'
+" NeoBundle 'jistr/vim-nerdtree-tabs'
 " let g:nerdtree_tabs_open_on_gui_startup = 0
 " let NERDTreeHijackNetrw=1
 
-" Plug 'tpope/vim-vinegar'
+" NeoBundle 'tpope/vim-vinegar'
 
 " vim plugin for tmux.conf
-Plug 'tmux-plugins/vim-tmux'
+NeoBundle 'tmux-plugins/vim-tmux'
 
-Plug 'scrooloose/nerdcommenter'
+NeoBundle 'scrooloose/nerdcommenter'
 let NERDSpaceDelims=1
 
-Plug 'junegunn/vim-easy-align'
+NeoBundle 'junegunn/vim-easy-align'
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 "
 " " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-Plug 'chrisbra/vim-diff-enhanced'
+NeoBundle 'chrisbra/vim-diff-enhanced'
 
 " a Git wrapper so awesome, it should be illegal
 " http://www.vim.org/scripts/script.php?script_id=2975
-Plug 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive'}
 
 " A Vim plugin which shows a git diff in the gutter (sign column) and stages/reverts hunks.
-" Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' }
+" NeoBundle 'airblade/vim-gitgutter', { 'on_cmd': 'GitGutterToggle' }
 " let g:gitgutter_enabled = 0 " default off
 
 " git diff as signs
-Plug 'mhinz/vim-signify'
+NeoBundle 'mhinz/vim-signify'
 "FIXME
 
 " VIM SVN plugin ( subversion svn vim7)
-Plug 'juneedahamed/svnj.vim'
+NeoBundle 'juneedahamed/svnj.vim'
 let g:svnj_custom_statusbar_ops_hide = 1
    " Supported operations are listed on the status line of the svnj_window. With growing support for
    " many commands, recomend to hide it. You can still have a quick glance of supported operations by
@@ -99,16 +114,16 @@ let g:svnj_browse_cache_all = 1
    " A new directory svnj will be created in the specified directory.
 
 
-" Plug to toggle, display and navigate marks
+" NeoBundle to toggle, display and navigate marks
 " let g:SignatureMarkerTextHLDynamic=1
 " let g:SignatureMarksTextHLDynamic=1
-" Plug 'kshenoy/vim-signature'
+" NeoBundle 'kshenoy/vim-signature'
 " let g:SignatureEnabledAtStartup=1
 
-Plug 'will133/vim-dirdiff'
+NeoBundle 'will133/vim-dirdiff'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
 
-Plug 'Lokaltog/vim-easymotion' " {{{
+NeoBundle 'Lokaltog/vim-easymotion' " {{{
 
 " vim-easymotion mappings
 let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
@@ -138,7 +153,7 @@ map <leader>N <Plug>(easymotion-N)
 " map <Leader>W <Plug>(easymotion-W)
 " }}}
 
-Plug 'jeffkreeftmeijer/vim-numbertoggle'
+NeoBundle 'jeffkreeftmeijer/vim-numbertoggle'
 
 " Plug 'vim-scripts/Conque-GDB'
 " let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always with color
@@ -147,37 +162,31 @@ Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
 
 " adds support for ansi escape characters - useful for vimpager
-Plug 'powerman/vim-plugin-AnsiEsc'
+NeoBundle 'powerman/vim-plugin-AnsiEsc'
 
-Plug 'tpope/vim-surround'
+NeoBundle 'tpope/vim-surround'
 
 " }}}
 " CODING Plugins {{{
 
 " Pandoc | Markdown {{{
 
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'vim-pandoc/vim-pandoc-after'
+NeoBundle 'vim-pandoc/vim-pandoc', { 'on_ft' : 'markdown' }
+NeoBundle 'vim-pandoc/vim-pandoc-syntax', { 'on_ft' : 'markdown' }
+NeoBundle 'vim-pandoc/vim-pandoc-after', { 'on_ft' : 'markdown' }
 let g:pandoc#after#modules#enabled = ["unite", "ultisnips", "neosnippets"]
 
 " LaTeX
-Plug 'lervag/vimtex'
+NeoBundle 'lervag/vimtex', { 'on_ft' : 'latex' }
+let g:tex_flavor = "latex"
+let g:tex_conceal = "adgm"
 if has('nvim') && executable('nvr')
    let g:vimtex_latexmk_progname = 'nvr'
 endif
 
-" Plug 'vim-latex/vim-latex'
-" let g:Tex_DefaultTargetFormat = 'pdf'
-let g:tex_flavor = "latex"
-let g:tex_conceal = "adgm"
-
-" rbonvall/snipmate-snippets-bib
-" Plug 'rbonvall/snipmate-snippets-bib'
-
 " }}}
 
-" if has('nvim') 
+" if has('nvim')
    " Plug 'benekastah/neomake' " {{{
    " let g:neomake_logfile = resolve(expand("~/.vim/tmp/neomake.log"))
    " let g:neomake_verbose = 2
@@ -201,15 +210,15 @@ let g:tex_conceal = "adgm"
    " " let g:neomake_c_enabled_makers = ['cpp']
 " else }}}
    " Syntax checking hacks for vim
-   Plug 'scrooloose/syntastic'
+   NeoBundle 'scrooloose/syntastic'
 " endif
 
 " Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box."{{{
-Plug 'klen/python-mode', { 'for': 'python' }
+NeoBundle 'klen/python-mode', { 'on_ft': 'python' }
 " set this if compiled with both versions
 " let g:pymode_python = 'python3'"}}}
 
-Plug 'vim-scripts/gtk-vim-syntax'
+NeoBundle 'vim-scripts/gtk-vim-syntax'
 
 " Plug 'Rip-Rip/clang_complete', { 'do': 'make install' } " {{{
 " let g:clang_complete_auto = 1
@@ -269,10 +278,19 @@ Plug 'vim-scripts/gtk-vim-syntax'
 " YCM {{{
 let cmake_version = split(system('cmake --version'))
 if executable('cmake') && VerNewerThen("2.8.11", cmake_version[2])
-   Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer'}
+   " NeoBundle 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer'}
+   NeoBundleLazy 'Valloric/YouCompleteMe', {
+            \ 'augroup': 'youcompletemeStart',
+            \ 'build' : {
+            \     'mac' : './install.sh --clang-completer',
+            \     'unix' : './install.sh --clang-completer',
+            \     'windows' : './install.sh --clang-completer',
+            \     'cygwin' : './install.sh --clang-complete'
+            \    }
+            \ }
    augroup load_ycm
       autocmd!
-      autocmd InsertEnter * call plug#load('YouCompleteMe')
+      autocmd InsertEnter * call neobundle#source('YouCompleteMe')
                \| call youcompleteme#Enable() | autocmd! load_ycm
    augroup END
 endif
@@ -280,41 +298,39 @@ endif
 " latex completion from vimtex
 let g:ycm_semantic_triggers = { 'tex': ['\v\\\a*(ref|cite)\a*([^]]*\])?\{([^}]*,)*[^}]*'] }
 
-
-Plug 'SirVer/ultisnips' ", { 'on': [] }  \" Load on nothing
-let g:UltiSnipsExpandTrigger="<c-k>"
-let g:UltiSnipsJumpForwardTrigger="<c-n>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-" load ultisnips first time you enter insert mode.
-" augroup load_us
-  " autocmd!
-  " autocmd InsertEnter * call plug#load('ultisnips') | autocmd! load_us
-" augroup END
+" NeoBundle 'SirVer/ultisnips'
+" let g:UltiSnipsExpandTrigger="<c-k>"
+" let g:UltiSnipsJumpForwardTrigger="<c-k>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 " }}}
 
-" Plug 'Shougo/neoinclude.vim' " {{{
-" Plug 'Shougo/neosnippet'
-" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" xmap <C-k>     <Plug>(neosnippet_expand_target) "}}}
+NeoBundle 'Shougo/neoinclude.vim' " {{{
+NeoBundle 'Shougo/neosnippet'
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target) "}}}
 
-" Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
-" Plug 'Shougo/neosnippet-snippets'
+NeoBundle 'honza/vim-snippets'
+NeoBundle 'Shougo/neosnippet-snippets'
 
-Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags' "{{{
+NeoBundle 'xolox/vim-easytags', { 'depends' : 'xolox/vim-misc' } "{{{
 set tags=./tags,./TAGS,tags;TAGS;   " make vim look for tags file reverse-recursivly ;)
 let g:easytags_dynamic_files = 1    " make easytags use this file instead of global
 let g:easytags_async = 1            " make easytag update async
 let g:easytags_opts = ['--c-kinds=+defgpstuxm --fields=+iaS --extra=+q']
 nmap <F8> :UpdateTags<CR> "}}}
 
-call plug#end()
+call neobundle#end()
+filetype plugin indent on
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+if has('nvim')
+   NeoBundleCheck
+endif
 " }}}
 
 " Settings {{{
-filetype plugin indent on
-
 " automatic reload .vimrc
 autocmd! bufwritepost .vimrc source %
 autocmd! bufwritepost init.vim source %
