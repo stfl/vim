@@ -427,9 +427,17 @@ endif
 
 " key mappings {{{
 " let mapleader = "\"  " rebmap the <Leader> key
+let mapleader = ","  " rebmap the <Leader> key
 
 inoremap jk <Esc>
 inoremap <Esc> <nop>
+nnoremap Q <nop>
+
+noremap <silent> j gj
+noremap <silent> k gk
+
+" nnoremap ; :
+" nnoremap : ;
 
 " split vertically
 nnoremap <leader>v :Vex<CR>
@@ -439,10 +447,10 @@ nnoremap <leader>s :Sex<CR>
 " nnoremap <leader>s <C-w>s
 
 " split naviagetion
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+" nnoremap <C-h> <C-w>h
+" nnoremap <C-j> <C-w>j
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-l> <C-w>l
 
 nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
