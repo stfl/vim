@@ -509,6 +509,15 @@ vnoremap <silent> # :<C-U>
 " }}}
 
 " Functions {{{
+
+" Remember cursor position between vim sessions
+autocmd BufReadPost *
+         \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+         \   exe "normal! g'\"" |
+         \ endif
+" center buffer around cursor when opening files
+autocmd BufRead * normal zz
+
 function! CopyMatches(reg)
   let hits = []
   %s//\=len(add(hits, submatch(0))) ? submatch(0) : ''/ge
