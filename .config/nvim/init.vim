@@ -24,11 +24,18 @@ call neobundle#begin(expand('~/.config/nvim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 let g:neobundle#install_process_timeout = 1500
 
-NeoBundle 'ReleaseNotes', {
-         \ 'uri' : 'http://svn.frequentis.frq/components/systemsw/software/dev-env/vim/trunk/Plugin-ReleaseNotes',
-         \ 'name' : 'ReleaseNotes',
-         \ 'on_ft' : 'ReleaseNotes',
-         \ 'type' : 'svn', }
+silent !ping svn.frequentis.com -c 1 &>/dev/null
+echo v:shell_error
+if v:shell_error == 0
+   NeoBundle 'ReleaseNotes', {
+            \ 'external_commands' : 'svn',
+            \ 'disabled' : !executable('svn'),
+            \ 'uri' : 'http://svn.frequentis.frq/components/systemsw/software/dev-env/vim/trunk/Plugin-ReleaseNotes',
+            \ 'name' : 'ReleaseNotes',
+            \ 'on_ft' : 'ReleaseNotes',
+            \ 'type' : 'svn'
+            \ }
+endif
 
 NeoBundle 'altercation/vim-colors-solarized'
 
@@ -41,7 +48,7 @@ set noshowmode     " don't show the current mode (not needed with airline)
 
 NeoBundle 'mileszs/ack.vim'
 if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
+   let g:ackprg = 'ag --vimgrep'
 endif
 " search for current word in project: acording to current dir!!
 nnoremap <leader>* :Ack! <c-r><c-w><cr>
@@ -60,7 +67,8 @@ nnoremap <F5> :UndotreeToggle<cr>
 " let g:ctrlp_extensions = ['tag']
 " nmap <leader><c-p> :CtrlPTag<cr>
 
-NeoBundle 'junegunn/fzf' , { 'directory': '~/.fzf', 'build': './install --all' }
+NeoBundle 'junegunn/fzf', { 'build': './install --all' }
+NeoBundle 'junegunn/fzf.vim'
 
 source ~/.config/nvim/unit.vim
 
@@ -85,7 +93,6 @@ let NERDSpaceDelims=1
 NeoBundle 'junegunn/vim-easy-align'
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
-"
 " " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
@@ -106,12 +113,12 @@ NeoBundle 'mhinz/vim-signify'
 " VIM SVN plugin ( subversion svn vim7)
 NeoBundle 'juneedahamed/svnj.vim'
 let g:svnj_custom_statusbar_ops_hide = 1
-   " Supported operations are listed on the status line of the svnj_window. With growing support for
-   " many commands, recomend to hide it. You can still have a quick glance of supported operations by
-   " pressing ? (question-mark)
+" Supported operations are listed on the status line of the svnj_window. With growing support for
+" many commands, recomend to hide it. You can still have a quick glance of supported operations by
+" pressing ? (question-mark)
 let g:svnj_browse_cache_all = 1
-   " This enables caching, Listing of files will be faster, On MAC/Unix the default location is $HOME/.cache.
-   " A new directory svnj will be created in the specified directory.
+" This enables caching, Listing of files will be faster, On MAC/Unix the default location is $HOME/.cache.
+" A new directory svnj will be created in the specified directory.
 
 
 " NeoBundle to toggle, display and navigate marks
@@ -415,6 +422,9 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
 
 " }}}
 

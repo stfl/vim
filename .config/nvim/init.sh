@@ -9,19 +9,25 @@
    # else # use wget
       # mkdir -p ~/.vim/autload
       # wget -P ~/.vim/autoload --no-check-certificate\
-         # https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 
+         # https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
    # fi
    # ls -s ~/.vim/autoload ~/.config/nvim
 # fi
 
+echo -e "\n$(color green)Installing NeoBundle$(color)"
 if command -v curl &>/dev/null; then
    curl -o ~/.config/nvim/neobundleinstall.sh \
       https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh
 else
-   wget -O ~/.config/nvim/neobundleinstall.sh \
+   wget -O ~/.config/nvim/neobundleinstall.sh --no-check-certificate \
       https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh
 fi
 sh ~/.config/nvim/neobundleinstall.sh
+
+if [ ! -e ~/.config/nvim/bundle/vimproc.vim ]; then
+   git clone https://github.com/Shougo/vimproc.vim.git ~/.vim/bundle/vimproc.vim
+   (cd ~/.config/nvim/bundle/vimproc.vim; make)
+fi
 
 echo -e "\n$(color green)updateing vim Plugins$(color)"
 vim +NeoBundleInstall +qall
