@@ -25,7 +25,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 let g:neobundle#install_process_timeout = 1500
 
 silent !ping svn.frequentis.com -c 1 &>/dev/null
-echo v:shell_error
 if v:shell_error == 0
    NeoBundle 'ReleaseNotes', {
             \ 'external_commands' : 'svn',
@@ -69,6 +68,7 @@ nnoremap <F5> :UndotreeToggle<cr>
 
 NeoBundle 'junegunn/fzf', { 'build': './install --all' }
 NeoBundle 'junegunn/fzf.vim'
+nnoremap <c-p> :FZF<CR>
 
 source ~/.config/nvim/unit.vim
 
@@ -108,7 +108,7 @@ NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive'}
 
 " git diff as signs
 NeoBundle 'mhinz/vim-signify'
-"FIXME
+autocmd User Fugitive SignifyRefresh
 
 " VIM SVN plugin ( subversion svn vim7)
 NeoBundle 'juneedahamed/svnj.vim'
@@ -162,12 +162,6 @@ map <leader>N <Plug>(easymotion-N)
 
 NeoBundle 'jeffkreeftmeijer/vim-numbertoggle'
 
-" Plug 'vim-scripts/Conque-GDB'
-" let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always with color
-" let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
-" let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly
-
-
 " adds support for ansi escape characters - useful for vimpager
 NeoBundle 'powerman/vim-plugin-AnsiEsc'
 
@@ -181,10 +175,10 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-pandoc/vim-pandoc', { 'on_ft' : 'markdown' }
 NeoBundle 'vim-pandoc/vim-pandoc-syntax', { 'on_ft' : 'markdown' }
 NeoBundle 'vim-pandoc/vim-pandoc-after', { 'on_ft' : 'markdown' }
-let g:pandoc#after#modules#enabled = ["unite", "ultisnips", "neosnippets"]
+let g:pandoc#after#modules#enabled = ["unite", "neosnippets"]
 
 " LaTeX
-NeoBundle 'lervag/vimtex', { 'on_ft' : 'latex' }
+NeoBundle 'lervag/vimtex' ", { 'on_ft' : 'latex' }
 let g:tex_flavor = "latex"
 let g:tex_conceal = "adgm"
 if has('nvim') && executable('nvr')
@@ -423,8 +417,67 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
+" enable spelling in markdown and latex
+autocmd FileType markdown,latex setlocal spell textwidth=120 colorcolumn=120
+autocmd BufRead *.md,*.tex setlocal spell textwidth=120 colorcolumn=120
+
+" Unite config{{{
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
+
+if has('nvim')
+   " nnoremap <C-p> :Unite file_rec/neovim <cr>
+else
+   " nnoremap <C-p> :Unite file_rec/async <cr>
+endif
+
+" yank history
+let g:unite_source_history_yank_enable = 1
+nnoremap <space>y :Unite history/yank<cr>
+
+" like ack / ag 
+nnoremap <space>/ :Unite grep:.<cr>
+
+" switching buffers
+nnoremap <space>s :Unite -quick-match buffer<cr>
+
+" let g:unite_source_menu_menus.git = {
+    " \ 'description' : '            gestionar repositorios git
+        " \                            ⌘ [espacio]g',
+    " \}
+" let g:unite_source_menu_menus.git.command_candidates = [
+    " \['▷ tig                                                        ⌘ ,gt',
+        " \'normal ,gt'],
+    " \['▷ git status       (Fugitive)                                ⌘ ,gs',
+        " \'Gstatus'],
+    " \['▷ git diff         (Fugitive)                                ⌘ ,gd',
+        " \'Gdiff'],
+    " \['▷ git commit       (Fugitive)                                ⌘ ,gc',
+        " \'Gcommit'],
+    " \['▷ git log          (Fugitive)                                ⌘ ,gl',
+        " \'exe "silent Glog | Unite quickfix"'],
+    " \['▷ git blame        (Fugitive)                                ⌘ ,gb',
+        " \'Gblame'],
+    " \['▷ git stage        (Fugitive)                                ⌘ ,gw',
+        " \'Gwrite'],
+    " \['▷ git checkout     (Fugitive)                                ⌘ ,go',
+        " \'Gread'],
+    " \['▷ git rm           (Fugitive)                                ⌘ ,gr',
+        " \'Gremove'],
+    " \['▷ git mv           (Fugitive)                                ⌘ ,gm',
+        " \'exe "Gmove " input("destino: ")'],
+    " \['▷ git push         (Fugitive, salida por buffer)             ⌘ ,gp',
+        " \'Git! push'],
+    " \['▷ git pull         (Fugitive, salida por buffer)             ⌘ ,gP',
+        " \'Git! pull'],
+    " \['▷ git prompt       (Fugitive, salida por buffer)             ⌘ ,gi',
+        " \'exe "Git! " input("comando git: ")'],
+    " \['▷ git cd           (Fugitive)',
+        " \'Gcd'],
+    " \]
+" nnoremap <leader>g :Unite -silent -start-insert menu:git<CR>
+
+" }}}
 
 " }}}
 
@@ -432,6 +485,7 @@ call unite#filters#sorter_default#use(['sorter_rank'])
 let g:solarized_contrast = "high"
 " let g:solarized_diffmode = "high"
 let g:solarized_visibility = "low"
+highlight SignColumn guibg=#131313
 if has('gui_running')
    set background=light
    set guifont=Anonymous\ Pro\ for\ Powerline\ 11
@@ -615,13 +669,7 @@ function! MyDiff()
 endfunction
 
 " Highlight words to avoid in tech writing
-" =======================================
-"
-"   obviously, basically, simply, of course, clearly,
-"   just, everyone knows, However, So, easy
-
-"   http://css-tricks.com/words-avoid-educational-writing/
-
+" http://css-tricks.com/words-avoid-educational-writing/
 highlight TechWordsToAvoid ctermbg=red ctermfg=white
 function! MatchTechWordsToAvoid()
 	match TechWordsToAvoid /\c\<\(obviously\|basically\|simply\|of\scourse\|clearly\|just\|everyone\sknows\|however\|so,\|easy\)\>/
