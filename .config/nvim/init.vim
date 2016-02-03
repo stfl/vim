@@ -505,6 +505,13 @@ else
 endif
 colorscheme solarized
 
+" fix wierd display of Sign Column Color
+if has('gui_running')
+   highlight SignColumn ctermbg=white
+else
+   highlight SignColumn ctermbg=black
+endif
+
 if version >= 703
    set colorcolumn=80
    let g:solarized_hitrail = 1
