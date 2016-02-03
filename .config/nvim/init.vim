@@ -110,6 +110,8 @@ NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive'}
 " git diff as signs
 NeoBundle 'mhinz/vim-signify'
 autocmd User Fugitive SignifyRefresh
+let g:signify_sign_change            = '~'
+let g:signify_update_on_focusgained  = 1
 
 " VIM SVN plugin ( subversion svn vim7)
 NeoBundle 'juneedahamed/svnj.vim'
