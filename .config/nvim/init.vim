@@ -41,7 +41,8 @@ NeoBundle 'altercation/vim-colors-solarized'
 " zoom into one split windo with <c-w-o>
 NeoBundle 'vim-scripts/ZoomWin'
 
-NeoBundle 'bling/vim-airline'
+NeoBundle 'vim-airline/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
 set noshowmode     " don't show the current mode (not needed with airline)
 
@@ -560,6 +561,7 @@ noremap <ESC> :nohl<CR>
 :map <f9> :make<CR>
 
 nnoremap <leader>ov :tabe $MYVIMRC<CR>
+nnoremap <leader>oz :tabe ~/.zshrc<CR>
 
 " usefull keys from US-Keyboard - maped to German
 nmap ö [
