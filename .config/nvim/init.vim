@@ -181,6 +181,7 @@ let g:pandoc#after#modules#enabled = ["unite", "neosnippets"]
 NeoBundle 'lervag/vimtex' ", { 'on_ft' : 'latex' }
 let g:tex_flavor = "latex"
 let g:tex_conceal = "adgm"
+let g:vimtex_fold_enabled = 1
 if has('nvim') && executable('nvr')
    let g:vimtex_latexmk_progname = 'nvr'
 endif
@@ -404,6 +405,7 @@ nnoremap <leader><F7> :set list!<CR>
 
 " allow folding at markers
 set foldmethod=marker
+set foldcolumn=1
 
 " vimdiff stuff
 " ignore whitespace
@@ -418,8 +420,8 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " enable spelling in markdown and latex
-autocmd FileType markdown,latex setlocal spell textwidth=120 colorcolumn=120
-autocmd BufRead *.md,*.tex setlocal spell textwidth=120 colorcolumn=120
+autocmd FileType markdown,latex setlocal spell textwidth=100 colorcolumn=100
+autocmd BufRead *.md,*.tex setlocal spell textwidth=100 colorcolumn=100
 
 " Unite config{{{
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
@@ -551,6 +553,7 @@ vnoremap > >gv
 
 " map Ctrl-M to remove highlight from last search
 noremap <C-m> :nohl<CR>
+noremap <ESC> :nohl<CR>
 " maps <CR> to :nohl in vim - TODO
 
 " map the F9 key to run make
