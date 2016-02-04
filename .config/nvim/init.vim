@@ -125,10 +125,10 @@ let g:svnj_browse_cache_all = 1
 
 
 " NeoBundle to toggle, display and navigate marks
-" let g:SignatureMarkerTextHLDynamic=1
-" let g:SignatureMarksTextHLDynamic=1
-" NeoBundle 'kshenoy/vim-signature'
-" let g:SignatureEnabledAtStartup=1
+let g:SignatureMarkerTextHLDynamic=1
+let g:SignatureMarksTextHLDynamic=1
+NeoBundle 'kshenoy/vim-signature'
+let g:SignatureEnabledAtStartup=1
 
 NeoBundle 'will133/vim-dirdiff'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
