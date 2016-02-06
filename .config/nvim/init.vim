@@ -110,6 +110,8 @@ NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive'}
 " git diff as signs
 NeoBundle 'mhinz/vim-signify'
 autocmd User Fugitive SignifyRefresh
+let g:signify_sign_change            = '~'
+let g:signify_update_on_focusgained  = 1
 
 " VIM SVN plugin ( subversion svn vim7)
 NeoBundle 'juneedahamed/svnj.vim'
@@ -123,10 +125,10 @@ let g:svnj_browse_cache_all = 1
 
 
 " NeoBundle to toggle, display and navigate marks
-" let g:SignatureMarkerTextHLDynamic=1
-" let g:SignatureMarksTextHLDynamic=1
-" NeoBundle 'kshenoy/vim-signature'
-" let g:SignatureEnabledAtStartup=1
+let g:SignatureMarkerTextHLDynamic=1
+let g:SignatureMarksTextHLDynamic=1
+NeoBundle 'kshenoy/vim-signature'
+let g:SignatureEnabledAtStartup=1
 
 NeoBundle 'will133/vim-dirdiff'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
@@ -509,6 +511,13 @@ else
    let &t_Co=256
 endif
 colorscheme solarized
+
+" fix wierd display of Sign Column Color
+if has('gui_running')
+   highlight SignColumn ctermbg=white
+else
+   highlight SignColumn ctermbg=black
+endif
 
 if version >= 703
    set colorcolumn=80
