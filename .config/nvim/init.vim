@@ -221,6 +221,9 @@ NeoBundle 'klen/python-mode', { 'on_ft': 'python' }
 " set this if compiled with both versions
 " let g:pymode_python = 'python3'"}}}
 
+NeoBundle 'fatih/vim-go'
+NeoBundle 'garyburd/go-explorer'
+
 NeoBundle 'vim-scripts/gtk-vim-syntax'
 
 " Plug 'Rip-Rip/clang_complete', { 'do': 'make install' } " {{{
