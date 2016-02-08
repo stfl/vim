@@ -171,8 +171,8 @@ NeoBundle 'powerman/vim-plugin-AnsiEsc'
 NeoBundle 'tpope/vim-surround'
 
 NeoBundle 'terryma/vim-expand-region'
-map K <Plug>(expand_region_expand)
-map J <Plug>(expand_region_shrink)
+map gk <Plug>(expand_region_expand)
+map gj <Plug>(expand_region_shrink)
 
 " }}}
 " CODING Plugins {{{
@@ -700,7 +700,7 @@ autocmd BufWinLeave *.md,*.tex call clearmatches()
 " Frequentis specifics {{{
 
 "adds user and timestamp to end of line
-nmap <F4> :r! echo "(slendl on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
+nnoremap <F4> :r! echo "(slendl on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
 autocmd BufRead MakePkg setlocal noexpandtab filetype=make
 
 command! TargetOn execute 'set scrolloff=15 | %s/t on="false/t on="true/gc | set scrolloff=5'
