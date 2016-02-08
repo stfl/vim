@@ -170,6 +170,10 @@ NeoBundle 'powerman/vim-plugin-AnsiEsc'
 
 NeoBundle 'tpope/vim-surround'
 
+NeoBundle 'terryma/vim-expand-region'
+map K <Plug>(expand_region_expand)
+map J <Plug>(expand_region_shrink)
+
 " }}}
 " CODING Plugins {{{
 
