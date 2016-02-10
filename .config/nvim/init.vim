@@ -112,6 +112,13 @@ NeoBundle 'mhinz/vim-signify'
 autocmd User Fugitive SignifyRefresh
 let g:signify_sign_change            = '~'
 let g:signify_update_on_focusgained  = 1
+" ignore whitespaces in git
+let g:signify_vcs_cmds = {
+         \ 'git': 'git diff --no-color --no-ext-diff -U0 -w -- %f',
+         \ 'svn': 'svn diff --diff-cmd %d -x -U0 -w -- %f'
+         \ }
+
+" let g:signify_diffoptions = { 'git': '-w' }
 
 " VIM SVN plugin ( subversion svn vim7)
 NeoBundle 'juneedahamed/svnj.vim'
@@ -173,6 +180,8 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'terryma/vim-expand-region'
 map gk <Plug>(expand_region_expand)
 map gj <Plug>(expand_region_shrink)
+
+NeoBundle 'terryma/vim-multiple-cursors'
 
 " }}}
 " CODING Plugins {{{
@@ -349,7 +358,7 @@ set autoread          " Set to auto read when a file is changed from the outside
 set copyindent " Copy the indentation of the previous line if autoindent doesn't know what to do (it's an eval, actually).
 set smartindent
 set expandtab  " tab expansion
-set textwidth=80
+set textwidth=100
 set tabstop=3
 set shiftwidth=3
 set softtabstop=3
@@ -372,7 +381,7 @@ set wildmode=list:longest,list:full
 set bs=2              " make backspace bahve like normal
 set mouse=a           " Enable mouse in all modes
 if exists('$TMUX') && !has('nvim')
-  set ttymouse=xterm2 " Support resizing in tmux
+   set ttymouse=xterm2 " Support resizing in tmux
 endif
 
 " better copy & pase behabour
@@ -388,7 +397,7 @@ endif
 
 " For conceal markers.
 if has('conceal')
-  set conceallevel=2 concealcursor=niv
+   set conceallevel=2 concealcursor=niv
 endif
 
 syntax on        " Syntax highlighting
@@ -442,46 +451,46 @@ endif
 let g:unite_source_history_yank_enable = 1
 nnoremap <space>y :Unite history/yank<cr>
 
-" like ack / ag 
+" like ack / ag
 nnoremap <space>/ :Unite grep:.<cr>
 
 " switching buffers
 nnoremap <space>s :Unite -quick-match buffer<cr>
 
 " let g:unite_source_menu_menus.git = {
-    " \ 'description' : '            gestionar repositorios git
-        " \                            ⌘ [espacio]g',
-    " \}
+" \ 'description' : '            gestionar repositorios git
+" \                            ⌘ [espacio]g',
+" \}
 " let g:unite_source_menu_menus.git.command_candidates = [
-    " \['▷ tig                                                        ⌘ ,gt',
-        " \'normal ,gt'],
-    " \['▷ git status       (Fugitive)                                ⌘ ,gs',
-        " \'Gstatus'],
-    " \['▷ git diff         (Fugitive)                                ⌘ ,gd',
-        " \'Gdiff'],
-    " \['▷ git commit       (Fugitive)                                ⌘ ,gc',
-        " \'Gcommit'],
-    " \['▷ git log          (Fugitive)                                ⌘ ,gl',
-        " \'exe "silent Glog | Unite quickfix"'],
-    " \['▷ git blame        (Fugitive)                                ⌘ ,gb',
-        " \'Gblame'],
-    " \['▷ git stage        (Fugitive)                                ⌘ ,gw',
-        " \'Gwrite'],
-    " \['▷ git checkout     (Fugitive)                                ⌘ ,go',
-        " \'Gread'],
-    " \['▷ git rm           (Fugitive)                                ⌘ ,gr',
-        " \'Gremove'],
-    " \['▷ git mv           (Fugitive)                                ⌘ ,gm',
-        " \'exe "Gmove " input("destino: ")'],
-    " \['▷ git push         (Fugitive, salida por buffer)             ⌘ ,gp',
-        " \'Git! push'],
-    " \['▷ git pull         (Fugitive, salida por buffer)             ⌘ ,gP',
-        " \'Git! pull'],
-    " \['▷ git prompt       (Fugitive, salida por buffer)             ⌘ ,gi',
-        " \'exe "Git! " input("comando git: ")'],
-    " \['▷ git cd           (Fugitive)',
-        " \'Gcd'],
-    " \]
+" \['▷ tig                                                        ⌘ ,gt',
+" \'normal ,gt'],
+" \['▷ git status       (Fugitive)                                ⌘ ,gs',
+" \'Gstatus'],
+" \['▷ git diff         (Fugitive)                                ⌘ ,gd',
+" \'Gdiff'],
+" \['▷ git commit       (Fugitive)                                ⌘ ,gc',
+" \'Gcommit'],
+" \['▷ git log          (Fugitive)                                ⌘ ,gl',
+" \'exe "silent Glog | Unite quickfix"'],
+" \['▷ git blame        (Fugitive)                                ⌘ ,gb',
+" \'Gblame'],
+" \['▷ git stage        (Fugitive)                                ⌘ ,gw',
+" \'Gwrite'],
+" \['▷ git checkout     (Fugitive)                                ⌘ ,go',
+" \'Gread'],
+" \['▷ git rm           (Fugitive)                                ⌘ ,gr',
+" \'Gremove'],
+" \['▷ git mv           (Fugitive)                                ⌘ ,gm',
+" \'exe "Gmove " input("destino: ")'],
+" \['▷ git push         (Fugitive, salida por buffer)             ⌘ ,gp',
+" \'Git! push'],
+" \['▷ git pull         (Fugitive, salida por buffer)             ⌘ ,gP',
+" \'Git! pull'],
+" \['▷ git prompt       (Fugitive, salida por buffer)             ⌘ ,gi',
+" \'exe "Git! " input("comando git: ")'],
+" \['▷ git cd           (Fugitive)',
+" \'Gcd'],
+" \]
 " nnoremap <leader>g :Unite -silent -start-insert menu:git<CR>
 
 " }}}
@@ -492,7 +501,6 @@ nnoremap <space>s :Unite -quick-match buffer<cr>
 let g:solarized_contrast = "high"
 " let g:solarized_diffmode = "high"
 let g:solarized_visibility = "low"
-highlight SignColumn guibg=#131313
 if has('gui_running')
    set background=light
    set guifont=Anonymous\ Pro\ for\ Powerline\ 11
@@ -519,7 +527,7 @@ else
 endif
 
 if version >= 703
-   set colorcolumn=80
+   set colorcolumn=100
    let g:solarized_hitrail = 1
 endif
 " }}}
@@ -563,8 +571,14 @@ inoremap <C-Y> <Esc>:update<CR>
 vnoremap < <gv
 vnoremap > >gv
 
+" find {} even if not in the first column
+map [[ ?{<CR>w99[{
+map ][ /}<CR>b99]}
+map ]] j0[[%/{<CR>
+map [] k$][%?}<CR>
+
 " map Ctrl-M to remove highlight from last search
-noremap <C-m> :nohl<CR>
+noremap <ESC> :nohl<CR>
 " maps <CR> to :nohl in vim - TODO
 
 " map the F9 key to run make
@@ -573,7 +587,7 @@ noremap <C-m> :nohl<CR>
 nnoremap <leader>ov :tabe $MYVIMRC<CR>
 nnoremap <leader>oz :tabe ~/.zshrc<CR>
 
-" usefull keys from US-Keyboard - maped to German
+" usefull keys from US-Keyboard - maped to German"{{{
 nmap ö [
 omap ö [
 nmap ä ]
@@ -593,8 +607,10 @@ nmap ü <C-]>
 " select from multiple found tags
 " alternativly use :tn :tp
 noremap gä g]
+" }}}
+" }}}
 
-
+" Functions {{{
 " Search for selected text, forwards or backwards. first * then n/N ->
 vnoremap <silent> * :<C-U>
   \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
@@ -606,9 +622,6 @@ vnoremap <silent> # :<C-U>
   \gvy?<C-R><C-R>=substitute(
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
-" }}}
-
-" Functions {{{
 
 " Remember cursor position between vim sessions
 autocmd BufReadPost *
@@ -687,7 +700,7 @@ endfunction
 " http://css-tricks.com/words-avoid-educational-writing/
 highlight TechWordsToAvoid ctermbg=red ctermfg=white
 function! MatchTechWordsToAvoid()
-	match TechWordsToAvoid /\c\<\(obviously\|basically\|simply\|of\scourse\|clearly\|just\|everyone\sknows\|however\|so,\|easy\)\>/
+   match TechWordsToAvoid /\c\<\(obviously\|basically\|simply\|of\scourse\|clearly\|just\|everyone\sknows\|however\|so,\|easy\)\>/
 endfunction
 autocmd FileType markdown,latex call MatchTechWordsToAvoid()
 autocmd BufWinEnter *.md,*.tex call MatchTechWordsToAvoid()
@@ -698,15 +711,12 @@ autocmd BufWinLeave *.md,*.tex call clearmatches()
 " }}}
 
 " Frequentis specifics {{{
-
 "adds user and timestamp to end of line
-nnoremap <F4> :r! echo "(slendl on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>k J
+nnoremap <F4> :r! echo "(slendl on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>kJ
 autocmd BufRead MakePkg setlocal noexpandtab filetype=make
+"textwidth=80 colorcolumn=80
 
 command! TargetOn execute 'set scrolloff=15 | %s/t on="false/t on="true/gc | set scrolloff=5'
-command! TargetOff execute 'set scrolloff=15 | %s/t on="true/t on="false/gc | set scrolloff=15'
-
-
-
+command! TargetOff execute 'set scrolloff=15 | %s/t on="true/t on="false/gc | set scrolloff=5'
 " }}}
 
