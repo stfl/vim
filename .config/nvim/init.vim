@@ -578,11 +578,11 @@ map ]] j0[[%/{<CR>
 map [] k$][%?}<CR>
 
 " map Ctrl-M to remove highlight from last search
-noremap <ESC> :nohl<CR>
+nnoremap <C-M> :nohl<CR>
 " maps <CR> to :nohl in vim - TODO
 
 " map the F9 key to run make
-:map <f9> :make<CR>
+:map <F9> :make<CR>
 
 nnoremap <leader>ov :tabe $MYVIMRC<CR>
 nnoremap <leader>oz :tabe ~/.zshrc<CR>
