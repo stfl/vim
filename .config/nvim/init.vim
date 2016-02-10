@@ -111,10 +111,12 @@ NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive'}
 NeoBundle 'mhinz/vim-signify'
 autocmd User Fugitive SignifyRefresh
 let g:signify_sign_change            = '~'
-let g:signify_update_on_focusgained  = 1
+" let g:signify_update_on_focusgained  = 1
 " ignore whitespaces in git
-let g:signify_vcs_cmds = { 'git': 'git diff --no-color --no-ext-diff -U0 -w -- %f' }
-" let g:signify_vcs_cmds = { 'svn': 'svn diff --diff-cmd %d -x -U0 -- %f' }
+if !exists('g:signify_vcs_cmds')
+   let g:signify_vcs_cmds = { 'git': 'git diff --no-color --no-ext-diff -U0 -w -- %f' }
+   " let g:signify_vcs_cmds = { 'svn': 'svn diff --diff-cmd %d -x -U0 -- %f' }
+endif
 
 " VIM SVN plugin ( subversion svn vim7)
 NeoBundle 'juneedahamed/svnj.vim'
@@ -497,6 +499,7 @@ nnoremap <space>s :Unite -quick-match buffer<cr>
 let g:solarized_contrast = "high"
 " let g:solarized_diffmode = "high"
 let g:solarized_visibility = "low"
+highlight SignColumn guibg=#131313
 if has('gui_running')
    set background=light
    set guifont=Anonymous\ Pro\ for\ Powerline\ 11
@@ -580,6 +583,7 @@ nnoremap <C-M> :nohl<CR>
 " map the F9 key to run make
 :map <F9> :make<CR>
 
+nnoremap <leader>sv :so $MYVIMRC<CR>:e<CR>
 nnoremap <leader>ov :tabe $MYVIMRC<CR>
 nnoremap <leader>oz :tabe ~/.zshrc<CR>
 
@@ -710,7 +714,7 @@ autocmd BufWinLeave *.md,*.tex call clearmatches()
 "adds user and timestamp to end of line
 nnoremap <F4> :r! echo "(slendl on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>kJ
 autocmd BufRead MakePkg setlocal noexpandtab filetype=make
-"textwidth=80 colorcolumn=80
+autocmd BufRead ReleaseNotes setlocal textwidth=80 colorcolumn=80 spell
 
 command! TargetOn execute 'set scrolloff=15 | %s/t on="false/t on="true/gc | set scrolloff=5'
 command! TargetOff execute 'set scrolloff=15 | %s/t on="true/t on="false/gc | set scrolloff=5'
