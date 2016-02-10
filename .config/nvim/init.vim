@@ -24,16 +24,16 @@ call neobundle#begin(expand('~/.config/nvim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 let g:neobundle#install_process_timeout = 1500
 
-silent !ping frequentis.com -c 1 &>/dev/null
-if v:shell_error == 0
+if !empty(glob("~/.zprofile.frq"))
    NeoBundleLazy 'ReleaseNotes', {
             \ 'external_commands' : 'svn',
-            \ 'disabled' : !executable('svn'),
             \ 'uri' : 'http://svn.frequentis.frq/components/systemsw/software/dev-env/vim/trunk/Plugin-ReleaseNotes',
             \ 'name' : 'ReleaseNotes',
             \ 'on_ft' : 'ReleaseNotes',
+            \ 'disabled' : empty(glob("~/.zprofile.frq")),
             \ 'type' : 'svn'
             \ }
+            " \ 'disabled' : !executable('svn'),
 endif
 
 NeoBundle 'altercation/vim-colors-solarized'
