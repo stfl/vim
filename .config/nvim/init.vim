@@ -113,12 +113,8 @@ autocmd User Fugitive SignifyRefresh
 let g:signify_sign_change            = '~'
 let g:signify_update_on_focusgained  = 1
 " ignore whitespaces in git
-let g:signify_vcs_cmds = {
-         \ 'git': 'git diff --no-color --no-ext-diff -U0 -w -- %f',
-         \ 'svn': 'svn diff --diff-cmd %d -x -U0 -w -- %f'
-         \ }
-
-" let g:signify_diffoptions = { 'git': '-w' }
+let g:signify_vcs_cmds = { 'git': 'git diff --no-color --no-ext-diff -U0 -w -- %f' }
+" let g:signify_vcs_cmds = { 'svn': 'svn diff --diff-cmd %d -x -U0 -- %f' }
 
 " VIM SVN plugin ( subversion svn vim7)
 NeoBundle 'juneedahamed/svnj.vim'
