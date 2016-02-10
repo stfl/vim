@@ -24,9 +24,9 @@ call neobundle#begin(expand('~/.config/nvim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 let g:neobundle#install_process_timeout = 1500
 
-silent !ping svn.frequentis.com -c 1 &>/dev/null
+silent !ping frequentis.com -c 1 &>/dev/null
 if v:shell_error == 0
-   NeoBundle 'ReleaseNotes', {
+   NeoBundleLazy 'ReleaseNotes', {
             \ 'external_commands' : 'svn',
             \ 'disabled' : !executable('svn'),
             \ 'uri' : 'http://svn.frequentis.frq/components/systemsw/software/dev-env/vim/trunk/Plugin-ReleaseNotes',
