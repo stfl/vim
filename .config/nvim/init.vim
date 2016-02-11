@@ -174,14 +174,22 @@ NeoBundle 'tpope/vim-surround'
 " CODING Plugins {{{
 
 " Pandoc | Markdown {{{
+NeoBundle 'vim-pandoc/vim-pandoc-syntax'
+NeoBundle 'vim-pandoc/vim-pandoc'
+let g:pandoc#command#latex_engine = 'pdflatex'
+let g:pandoc#command#autoexec_on_writes = '1'
+" let g:pandoc#command#autoexec_command = 'Pandoc pdf -s -S --number-sections --toc'
+autocmd FileType pandoc nnoremap <F9> :Pandoc pdf -s -S --number-sections<CR>
 
-NeoBundle 'vim-pandoc/vim-pandoc', { 'on_ft' : 'markdown' }
-NeoBundle 'vim-pandoc/vim-pandoc-syntax', { 'on_ft' : 'markdown' }
-NeoBundle 'vim-pandoc/vim-pandoc-after', { 'on_ft' : 'markdown' }
+" enable spelling in markdown and latex
+autocmd FileType markdown,latex,pandoc setlocal spell textwidth=100 colorcolumn=100
+autocmd BufRead *.md,*.tex,*.pdc setlocal spell textwidth=100 colorcolumn=100
+
+NeoBundle 'vim-pandoc/vim-pandoc-after'
 let g:pandoc#after#modules#enabled = ["unite", "neosnippets"]
 
 " LaTeX
-NeoBundle 'lervag/vimtex' ", { 'on_ft' : 'latex' }
+NeoBundle 'lervag/vimtex'
 let g:tex_flavor = "latex"
 let g:tex_conceal = "adgm"
 let g:vimtex_fold_enabled = 1
@@ -386,9 +394,9 @@ elseif version >= 703
    set clipboard+=unnamedplus " Use the OS clipboard by default
 endif
 
-" For conceal markers.
 if has('conceal')
-  set conceallevel=2 concealcursor=niv
+  set conceallevel=2
+  set concealcursor=vn " show conceal in normal and visual
 endif
 
 syntax on        " Syntax highlighting
@@ -425,9 +433,6 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
-" enable spelling in markdown and latex
-autocmd FileType markdown,latex setlocal spell textwidth=100 colorcolumn=100
-autocmd BufRead *.md,*.tex setlocal spell textwidth=100 colorcolumn=100
 
 " Unite config{{{
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
