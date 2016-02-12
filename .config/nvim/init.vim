@@ -130,10 +130,12 @@ let g:svnj_browse_cache_all = 1
 
 
 " NeoBundle to toggle, display and navigate marks
+NeoBundle 'kshenoy/vim-signature'
 let g:SignatureMarkerTextHLDynamic=1
 let g:SignatureMarksTextHLDynamic=1
-NeoBundle 'kshenoy/vim-signature'
 let g:SignatureEnabledAtStartup=1
+" nnoremap mm :ToggleMarkAtLine<CR>
+let g:SignatureMap = { 'ToggleMarkAtLine'   :  "mm" }
 
 NeoBundle 'will133/vim-dirdiff'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
@@ -188,9 +190,13 @@ NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'vim-pandoc/vim-pandoc-syntax'
 NeoBundle 'vim-pandoc/vim-pandoc'
 let g:pandoc#command#latex_engine = 'pdflatex'
-let g:pandoc#command#autoexec_on_writes = '1'
-let g:pandoc#command#autoexec_command = 'Pandoc pdf -s -S --number-sections --toc'
-autocmd FileType pandoc nnoremap <F9> :Pandoc pdf -s -S --number-sections<CR>
+" let g:pandoc#command#autoexec_on_writes = '1'
+" let g:pandoc#command#autoexec_command = 'Pandoc pdf -s'
+augroup filetype_pandoc
+    autocmd!
+    autocmd FileType pandoc nnoremap <F9> :Pandoc pdf -s -S --number-sections<CR>
+    " autocmd BufWrite *.pdc :Pandoc pdf -s
+ augroup END
 
 " enable spelling in markdown and latex
 autocmd FileType markdown,latex,pandoc setlocal spell textwidth=100 colorcolumn=100
