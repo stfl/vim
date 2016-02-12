@@ -189,7 +189,7 @@ NeoBundle 'vim-pandoc/vim-pandoc-syntax'
 NeoBundle 'vim-pandoc/vim-pandoc'
 let g:pandoc#command#latex_engine = 'pdflatex'
 let g:pandoc#command#autoexec_on_writes = '1'
-" let g:pandoc#command#autoexec_command = 'Pandoc pdf -s -S --number-sections --toc'
+let g:pandoc#command#autoexec_command = 'Pandoc pdf -s -S --number-sections --toc'
 autocmd FileType pandoc nnoremap <F9> :Pandoc pdf -s -S --number-sections<CR>
 
 " enable spelling in markdown and latex
@@ -406,7 +406,7 @@ elseif version >= 703
 endif
 
 if has('conceal')
-   set conceallevel=2 concealcursor=niv
+   set conceallevel=2 concealcursor=nv
 endif
 
 syntax on        " Syntax highlighting
