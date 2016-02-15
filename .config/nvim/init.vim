@@ -39,7 +39,7 @@ endif
 NeoBundle 'altercation/vim-colors-solarized'
 
 " zoom into one split windo with <c-w-o>
-NeoBundle 'vim-scripts/ZoomWin'
+" NeoBundle 'vim-scripts/ZoomWin'
 
 NeoBundle 'vim-airline/vim-airline'
 NeoBundle 'vim-airline/vim-airline-themes'
@@ -130,42 +130,30 @@ let g:svnj_browse_cache_all = 1
 
 
 " NeoBundle to toggle, display and navigate marks
+NeoBundle 'kshenoy/vim-signature'
 let g:SignatureMarkerTextHLDynamic=1
 let g:SignatureMarksTextHLDynamic=1
-NeoBundle 'kshenoy/vim-signature'
 let g:SignatureEnabledAtStartup=1
+" nnoremap mm :ToggleMarkAtLine<CR>
+let g:SignatureMap = { 'ToggleMarkAtLine'   :  "mm" }
 
 NeoBundle 'will133/vim-dirdiff'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
 
 NeoBundle 'Lokaltog/vim-easymotion' " {{{
-
-" vim-easymotion mappings
+let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 let g:EasyMotion_smartcase = 1
 nmap s <Plug>(easymotion-s2)
-nmap t <Plug>(easymotion-t2)
-nmap <leader>/ <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
-" Without these mappings, `n` & `N` works fine. (These mappings just provide
-" different highlight method and have some other features )
-" map  n <Plug>(easymotion-next)
-" map  N <Plug>(easymotion-prev)
-
-" nnoremap <C-X>x <C-X>
-map <leader>l <Plug>(easymotion-lineforward)
 map <leader>j <Plug>(easymotion-j)
 map <leader>k <Plug>(easymotion-k)
-map <leader>h <Plug>(easymotion-linebackward)
-map <leader>n <Plug>(easymotion-n)
-map <leader>N <Plug>(easymotion-N)
-" map <Leader>f <Plug>(easymotion-f)
-" map <Leader>F <Plug>(easymotion-F)
-" map <Leader>t <Plug>(easymotion-t)
-" map <Leader>T <Plug>(easymotion-T)
-" map <Leader>w <Plug>(easymotion-w)
-" map <Leader>W <Plug>(easymotion-W)
+
+NeoBundle 'unblevable/quick-scope'
+" let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+" NeoBundle 'justinmk/vim-sneak'
+" let g:sneak#use_ic_scs = 1
+" let g:sneak#streak = 1
 " }}}
 
 NeoBundle 'jeffkreeftmeijer/vim-numbertoggle'
@@ -184,13 +172,17 @@ NeoBundle 'terryma/vim-multiple-cursors'
 " }}}
 " CODING Plugins {{{
 
-" Pandoc | Markdown {{{
+" Pandoc | Markdown
 NeoBundle 'vim-pandoc/vim-pandoc-syntax'
 NeoBundle 'vim-pandoc/vim-pandoc'
 let g:pandoc#command#latex_engine = 'pdflatex'
 let g:pandoc#command#autoexec_on_writes = '1'
-" let g:pandoc#command#autoexec_command = 'Pandoc pdf -s -S --number-sections --toc'
-autocmd FileType pandoc nnoremap <F9> :Pandoc pdf -s -S --number-sections<CR>
+let g:pandoc#command#autoexec_command = 'Pandoc pdf -s'
+" augroup filetype_pandoc
+    " autocmd!
+    " autocmd FileType pandoc nnoremap <F9> :Pandoc pdf -s -S --number-sections<CR>
+    " " autocmd BufWritePost *.pdc :Pandoc pdf -s
+ " augroup END
 
 " enable spelling in markdown and latex
 autocmd FileType markdown,latex,pandoc setlocal spell textwidth=100 colorcolumn=100
@@ -204,11 +196,14 @@ NeoBundle 'lervag/vimtex'
 let g:tex_flavor = "latex"
 let g:tex_conceal = "adgm"
 let g:vimtex_fold_enabled = 1
+let g:vimtex_format_enabled = 1 " formating with gq considers comments
+let g:vimtex_view_method = 'zathura'
+" let g:vimtex_latexmk_continuous = 1
+let g:vimtex_latexmk_background = 1
+let g:vimtex_latexmk_callback = 1
 if has('nvim') && executable('nvr')
    let g:vimtex_latexmk_progname = 'nvr'
 endif
-
-" }}}
 
 " if has('nvim')
    " Plug 'benekastah/neomake' " {{{
@@ -323,22 +318,19 @@ if executable('cmake') && VerNewerThen("2.8.11", cmake_version[2])
 endif
 
 " latex completion from vimtex
-let g:ycm_semantic_triggers = { 'tex': ['\v\\\a*(ref|cite)\a*([^]]*\])?\{([^}]*,)*[^}]*'] }
+" let g:ycm_semantic_triggers = { 'tex': ['\v\\\a*(ref|cite)\a*([^]]*\])?\{([^}]*,)*[^}]*'] }
 
-" NeoBundle 'SirVer/ultisnips'
-" let g:UltiSnipsExpandTrigger="<c-k>"
-" let g:UltiSnipsJumpForwardTrigger="<c-k>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 " }}}
 
 NeoBundle 'Shougo/neoinclude.vim' " {{{
 NeoBundle 'Shougo/neosnippet'
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target) "}}}
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'Shougo/neosnippet-snippets'
+"}}}
 
 NeoBundle 'xolox/vim-easytags', { 'depends' : 'xolox/vim-misc' } "{{{
 set tags=./tags,./TAGS,tags;TAGS;   " make vim look for tags file reverse-recursivly ;)
@@ -352,15 +344,18 @@ filetype plugin indent on
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
-if has('nvim')
+" if has('nvim')
    NeoBundleCheck
-endif
+" endif
 " }}}
 
 " Settings {{{
 " automatic reload .vimrc
-autocmd! bufwritepost .vimrc source %
-autocmd! bufwritepost init.vim source %
+augroup source_vimrc
+    autocmd!
+    autocmd! bufwritepost .vimrc source %
+    autocmd! bufwritepost init.vim source %
+augroup END
 set autoread          " Set to auto read when a file is changed from the outside
 
 " format
@@ -411,7 +406,7 @@ elseif version >= 703
 endif
 
 if has('conceal')
-   set conceallevel=2 concealcursor=niv
+   set conceallevel=2 concealcursor=nv
 endif
 
 syntax on        " Syntax highlighting
@@ -435,6 +430,7 @@ nnoremap <leader><F7> :set list!<CR>
 " allow folding at markers
 set foldmethod=marker
 set foldcolumn=1
+set foldnestmax=3
 
 " vimdiff stuff
 " ignore whitespace
@@ -589,10 +585,11 @@ vnoremap < <gv
 vnoremap > >gv
 
 " find {} even if not in the first column
-map [[ ?{<CR>w99[{
-map ][ /}<CR>b99]}
-map ]] j0[[%/{<CR>
-map [] k$][%?}<CR>
+" map [[ ?{<CR>w99[{:nohl<cr>
+" map ][ /}<CR>b99]}:nohl<cr>
+" map ]] j0[[%/{<CR>:nohl<cr>
+" map [] k$][%?}<CR>:nohl<cr>
+
 
 " map Ctrl-M to remove highlight from last search
 nnoremap <C-M> :nohl<CR>
@@ -720,11 +717,14 @@ highlight TechWordsToAvoid ctermbg=red ctermfg=white
 function! MatchTechWordsToAvoid()
    match TechWordsToAvoid /\c\<\(obviously\|basically\|simply\|of\scourse\|clearly\|just\|everyone\sknows\|however\|so,\|easy\)\>/
 endfunction
-autocmd FileType markdown,latex call MatchTechWordsToAvoid()
-autocmd BufWinEnter *.md,*.tex call MatchTechWordsToAvoid()
-autocmd InsertEnter *.md,*.tex call MatchTechWordsToAvoid()
-autocmd InsertLeave *.md,*.tex call MatchTechWordsToAvoid()
-autocmd BufWinLeave *.md,*.tex call clearmatches()
+augroup tech_words
+   autocmd!
+   autocmd FileType markdown,latex call MatchTechWordsToAvoid()
+   autocmd BufWinEnter *.md,*.tex call MatchTechWordsToAvoid()
+   autocmd InsertEnter *.md,*.tex call MatchTechWordsToAvoid()
+   autocmd InsertLeave *.md,*.tex call MatchTechWordsToAvoid()
+   autocmd BufWinLeave *.md,*.tex call clearmatches()
+augroup END
 
 " }}}
 
