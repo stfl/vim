@@ -364,15 +364,16 @@ autocmd! bufwritepost init.vim source %
 set autoread          " Set to auto read when a file is changed from the outside
 
 " format
-" set autoindent
-set copyindent " Copy the indentation of the previous line if autoindent doesn't know what to do (it's an eval, actually).
+set copyindent     " Copy the indentation of the previous line
 set smartindent
-set expandtab  " tab expansion
-set textwidth=100
+set expandtab      " tab expansion to spaces
+" set smarttab
 set tabstop=3
 set shiftwidth=3
 set softtabstop=3
-set scrolloff=5  " scroll offset for searching
+set scrolloff=5    " scroll offset at begining and end of line
+set tabpagemax=100 " max number of tabs open with -p
+set textwidth=100  " line break after 100 char
 
 set backup
 set backupdir=~/.vim/tmp,.  " save backup file (*~) somewhere else
@@ -391,7 +392,11 @@ set wildmode=list:longest,list:full
 set bs=2              " make backspace bahve like normal
 set mouse=a           " Enable mouse in all modes
 if exists('$TMUX') && !has('nvim')
-   set ttymouse=xterm2 " Support resizing in tmux
+   if has("mouse_sgr")
+      set ttymouse=sgr
+   else
+      set ttymouse=xterm2 " Support resizing in tmux
+   endif
 endif
 
 " better copy & pase behabour
@@ -508,7 +513,7 @@ nnoremap <space>s :Unite -quick-match buffer<cr>
 let g:solarized_contrast = "high"
 " let g:solarized_diffmode = "high"
 let g:solarized_visibility = "low"
-highlight SignColumn guibg=#131313
+" highlight SignColumn guibg=#131313
 if has('gui_running')
    set background=light
    set guifont=Anonymous\ Pro\ for\ Powerline\ 11
@@ -526,6 +531,10 @@ else
    let &t_Co=256
 endif
 colorscheme solarized
+
+" make search in Gray and white.
+hi Search term=reverse cterm=reverse ctermfg=10 ctermbg=15 guibg=DarkGrey
+" hi Search term=bold cterm=bold ctermfg=15 ctermbg=10 guibg=DarkGrey
 
 " fix wierd display of Sign Column Color
 if has('gui_running')
