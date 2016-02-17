@@ -413,7 +413,7 @@ set cursorline   " Highlight current line
 set laststatus=2 " always show status line
 set showmatch    " Cursor shows matching ) and }
 " set showmode     " Show the current mode
-set timeoutlen=1000
+set timeoutlen=1500
 set ttimeoutlen=10  " timeout leaving Insert
 
 " show whitespaces
