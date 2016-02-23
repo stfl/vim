@@ -102,6 +102,8 @@ NeoBundle 'chrisbra/vim-diff-enhanced'
 " a Git wrapper so awesome, it should be illegal
 " http://www.vim.org/scripts/script.php?script_id=2975
 NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive'}
+" Fugitive extension to manage and merge Git branches
+NeoBundle 'idanarye/vim-merginal', { 'augroup' : 'fugitive'}
 
 " A Vim plugin which shows a git diff in the gutter (sign column) and stages/reverts hunks.
 " NeoBundle 'airblade/vim-gitgutter', { 'on_cmd': 'GitGutterToggle' }
@@ -567,10 +569,10 @@ nnoremap <leader>s :Sex<CR>
 " nnoremap <leader>s <C-w>s
 
 " split naviagetion
-" nnoremap <C-h> <C-w>h
-" nnoremap <C-j> <C-w>j
-" nnoremap <C-k> <C-w>k
-" nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
@@ -583,6 +585,15 @@ inoremap <C-Y> <Esc>:update<CR>
 " easier moving of code blocks
 vnoremap < <gv
 vnoremap > >gv
+
+" diffpu and optain for Vim Fugitive conflicts
+nmap <expr> ]c  &diff ? ']czz' : ']c'
+nmap <expr> [c  &diff ? '[czz' : '[c'
+" nmap <expr> <C-J>  &diff ? ']cz' : '<C-J>'
+" nmap <expr> <C-K>  &diff ? '[cz' : '<C-K>'
+nmap <expr> du  &diff ? ':diffupdate<CR>' : 'du'
+nmap <expr> 2do  &diff ? ':diffget //2<CR>' : '2do'
+nmap <expr> 3do  &diff ? ':diffget //3<CR>' : '3do'
 
 " find {} even if not in the first column
 " map [[ ?{<CR>w99[{:nohl<cr>
