@@ -231,11 +231,25 @@ endif
    " Syntax checking hacks for vim
    NeoBundle 'scrooloose/syntastic'
 " endif
+" let g:syntastic_python_checkers=['flake8']
+" let g:syntastic_python_flake8_args='--ignore=E501,E225'
 
 " Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box."{{{
 NeoBundle 'klen/python-mode', { 'on_ft': 'python' }
 " set this if compiled with both versions
-" let g:pymode_python = 'python3'"}}}
+if has('pyton3')
+   let g:pymode_python = 'python3'
+endif
+let g:pymode_rope_completion = 1
+let g:pymode_rope_complete_on_dot = 1
+let g:pymode_lint_ignore = "E501"
+
+augroup python_aug
+   autocmd!
+   autocmd FileType python setlocal textwidth=79 colorcolumn=79
+augroup END
+
+"}}}
 
 NeoBundle 'fatih/vim-go'
 NeoBundle 'garyburd/go-explorer'
@@ -359,8 +373,8 @@ augroup END
 set autoread          " Set to auto read when a file is changed from the outside
 
 " format
-set copyindent     " Copy the indentation of the previous line
-set smartindent
+" set copyindent     " Copy the indentation of the previous line
+" set smartindent
 set expandtab      " tab expansion to spaces
 " set smarttab
 set tabstop=3
@@ -417,6 +431,7 @@ set ruler        " Show the cursor position all the time
 set cursorline   " Highlight current line
 set laststatus=2 " always show status line
 set showmatch    " Cursor shows matching ) and }
+set splitright   " make vsplit to the right
 " set showmode     " Show the current mode
 set timeoutlen=1500
 set ttimeoutlen=10  " timeout leaving Insert
@@ -429,7 +444,7 @@ nnoremap <leader><F7> :set list!<CR>
 
 " allow folding at markers
 set foldmethod=marker
-set foldcolumn=1
+set foldcolumn=2
 set foldnestmax=3
 
 " vimdiff stuff
@@ -601,6 +616,17 @@ nnoremap <C-M> :nohl<CR>
 nnoremap <leader>sv :so $MYVIMRC<CR>:e<CR>
 nnoremap <leader>ov :tabe $MYVIMRC<CR>
 nnoremap <leader>oz :tabe ~/.zshrc<CR>
+
+" Terminal mappings
+if has('nvim')
+   nnoremap <leader><C-T> :vsp term://zsh<cr>
+   tnoremap <Esc> <C-\><C-n>
+   tnoremap <C-h> <C-\><C-n><C-w>h
+   tnoremap <C-j> <C-\><C-n><C-w>j
+   tnoremap <C-k> <C-\><C-n><C-w>k
+   tnoremap <C-l> <C-\><C-n><C-w>l
+   tnoremap <C-w><C-w> <C-\><C-n><C-w><c-w>
+endif
 
 " usefull keys from US-Keyboard - maped to German"{{{
 nmap ö [
