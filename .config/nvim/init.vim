@@ -87,6 +87,7 @@ nnoremap <F3> :NERDTreeToggle<CR>
 
 " vim plugin for tmux.conf
 NeoBundle 'tmux-plugins/vim-tmux'
+NeoBundle 'tmux-plugins/vim-tmux-focus-events'
 
 NeoBundle 'scrooloose/nerdcommenter'
 let NERDSpaceDelims=1
@@ -178,17 +179,17 @@ NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'vim-pandoc/vim-pandoc-syntax'
 NeoBundle 'vim-pandoc/vim-pandoc'
 let g:pandoc#command#latex_engine = 'pdflatex'
-let g:pandoc#command#autoexec_on_writes = '1'
 let g:pandoc#command#autoexec_command = 'Pandoc pdf -s'
-" augroup filetype_pandoc
-    " autocmd!
-    " autocmd FileType pandoc nnoremap <F9> :Pandoc pdf -s -S --number-sections<CR>
-    " " autocmd BufWritePost *.pdc :Pandoc pdf -s
- " augroup END
+" let g:pandoc#command#autoexec_on_writes = '1'
+augroup filetype_pandoc
+    autocmd!
+    autocmd FileType pandoc nnoremap <F9> :Pandoc pdf -s --number-sections <CR>
+    autocmd FileType pandoc,markdown nnoremap <localleader>aa :autocmd BufWritePost *.pdc :Pandoc pdf -s<CR>
 
-" enable spelling in markdown and latex
-autocmd FileType markdown,latex,pandoc setlocal spell textwidth=100 colorcolumn=100
-autocmd BufRead *.md,*.tex,*.pdc setlocal spell textwidth=100 colorcolumn=100
+    " enable spelling in markdown and latex
+    autocmd FileType markdown,latex,pandoc setlocal spell textwidth=100 colorcolumn=100
+    autocmd BufRead *.md,*.tex,*.pdc setlocal spell textwidth=100 colorcolumn=100
+augroup END
 
 NeoBundle 'vim-pandoc/vim-pandoc-after'
 let g:pandoc#after#modules#enabled = ["unite", "neosnippets"]
@@ -446,7 +447,7 @@ nnoremap <leader><F7> :set list!<CR>
 
 " allow folding at markers
 set foldmethod=marker
-set foldcolumn=2
+" set foldcolumn=3
 set foldnestmax=3
 
 " vimdiff stuff
