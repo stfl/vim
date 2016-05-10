@@ -83,7 +83,7 @@ nnoremap <F3> :NERDTreeToggle<CR>
 " let g:nerdtree_tabs_open_on_gui_startup = 0
 " let NERDTreeHijackNetrw=1
 
-" NeoBundle 'tpope/vim-vinegar'
+NeoBundle 'tpope/vim-vinegar'
 
 " vim plugin for tmux.conf
 NeoBundle 'tmux-plugins/vim-tmux'
@@ -152,6 +152,8 @@ map <leader>j <Plug>(easymotion-j)
 map <leader>k <Plug>(easymotion-k)
 
 NeoBundle 'unblevable/quick-scope'
+nmap <leader>q <plug>(QuickScopeToggle)
+vmap <leader>q <plug>(QuickScopeToggle)
 " let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " NeoBundle 'justinmk/vim-sneak'
