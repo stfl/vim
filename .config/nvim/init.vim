@@ -1,29 +1,24 @@
-" Plugins {{{
-
+" Plugins
+" Init {{{
 " Note: Skip initialization for vim-tiny or vim-small.
 if 0 | endif
-
+function! VerNewerThen(min, current) "{{{
 " return 1 with version $current is newer then version $min
-function! VerNewerThen(min, current)
    if has('nvim')
       " neovim makes sth wierd with the string in system()
       return 1
    else
       return system("[  \"".a:min."\" = \"`echo -e \"".a:min."\\n".a:current." | sort -V | head -n1`\" ] && echo 1 || echo 0")
    endif
-endfunction
+endfunction "}}}
 
-if &compatible
-   set nocompatible               " Be iMproved
-endif
-
-" Required:
+set nocompatible               " Be iMproved
 set runtimepath^=~/.config/nvim/bundle/neobundle.vim/
 call neobundle#begin(expand('~/.config/nvim/bundle/'))
-
+" }}}
 NeoBundleFetch 'Shougo/neobundle.vim'
 let g:neobundle#install_process_timeout = 1500
-
+" ReleaseNotes {{{
 if !empty(glob("~/.zprofile.frq"))
    NeoBundleLazy 'ReleaseNotes', {
             \ 'external_commands' : 'svn',
@@ -34,84 +29,61 @@ if !empty(glob("~/.zprofile.frq"))
             \ 'type' : 'svn'
             \ }
             " \ 'disabled' : !executable('svn'),
-endif
-
+endif "}}}
 NeoBundle 'altercation/vim-colors-solarized'
-
-" zoom into one split windo with <c-w-o>
-" NeoBundle 'vim-scripts/ZoomWin'
-
-NeoBundle 'vim-airline/vim-airline'
+NeoBundle 'vim-airline/vim-airline' "{{{
 NeoBundle 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
 set noshowmode     " don't show the current mode (not needed with airline)
-
-NeoBundle 'mileszs/ack.vim'
+"}}}
+NeoBundle 'mileszs/ack.vim' "{{{
 if executable('ag')
    let g:ackprg = 'ag --vimgrep'
 endif
 " search for current word in project: acording to current dir!!
 nnoremap <leader>* :Ack! <c-r><c-w><cr>
-nnoremap <leader>t :Ack! "TODO\|FIXME"<CR>
-
-NeoBundle 'mbbill/undotree', { 'on_cmd': 'UndotreeToggle' }
+" nnoremap <leader>t :Ack! "TODO\|FIXME"<CR>
+"}}}
+NeoBundle 'mbbill/undotree', { 'on_cmd': 'UndotreeToggle' } " {{{
 if has("persistent_undo")
    set undodir=~/.vim/undodir
    set undofile
 endif
 nnoremap <F5> :UndotreeToggle<cr>
-
-" Fuzzy file, buffer, mru, tag, etc finder.  http://kien.github.com/ctrlp.vim
-" NeoBundle 'ctrlpvim/ctrlp.vim'
+"}}}
+" NeoBundle 'ctrlpvim/ctrlp.vim' "{{{
 " " open file in new tab with <c-t> = default
 " let g:ctrlp_extensions = ['tag']
 " nmap <leader><c-p> :CtrlPTag<cr>
-
-NeoBundle 'junegunn/fzf', { 'build': './install --all' }
+"}}}
+NeoBundle 'junegunn/fzf', { 'build': './install --all' } "{{{
 NeoBundle 'junegunn/fzf.vim'
 nnoremap <c-p> :FZF<CR>
-
+"}}}
 source ~/.config/nvim/unit.vim
-
-" Vim plugin that displays tags in a window, ordered by scope
-NeoBundle 'majutsushi/tagbar'
+NeoBundle 'majutsushi/tagbar'                      " Vim plugin that displays tags in a window, ordered by scope {{{
 nnoremap <F6> :TagbarToggle<CR>
-
-NeoBundle 'scrooloose/nerdtree' , { 'on_cmd':  'NERDTreeToggle' }
+"}}}
+NeoBundle 'scrooloose/nerdtree' , { 'on_cmd':  'NERDTreeToggle' } "{{{
 nnoremap <F3> :NERDTreeToggle<CR>
 " NeoBundle 'jistr/vim-nerdtree-tabs'
 " let g:nerdtree_tabs_open_on_gui_startup = 0
-" let NERDTreeHijackNetrw=1
-
+" let NERDTreeHijackNetrw=1"}}}
 NeoBundle 'tpope/vim-vinegar'
-
-" vim plugin for tmux.conf
-NeoBundle 'tmux-plugins/vim-tmux'
+NeoBundle 'tmux-plugins/vim-tmux'                  " vim plugin for tmux.conf
 NeoBundle 'tmux-plugins/vim-tmux-focus-events'
-
 NeoBundle 'scrooloose/nerdcommenter'
 let NERDSpaceDelims=1
-
-NeoBundle 'junegunn/vim-easy-align'
+NeoBundle 'junegunn/vim-easy-align' "{{{
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
-
+"}}}
 NeoBundle 'chrisbra/vim-diff-enhanced'
-
-" a Git wrapper so awesome, it should be illegal
-" http://www.vim.org/scripts/script.php?script_id=2975
-NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive'}
-" Fugitive extension to manage and merge Git branches
-NeoBundle 'idanarye/vim-merginal', { 'augroup' : 'fugitive'}
-
-" A Vim plugin which shows a git diff in the gutter (sign column) and stages/reverts hunks.
-" NeoBundle 'airblade/vim-gitgutter', { 'on_cmd': 'GitGutterToggle' }
-" let g:gitgutter_enabled = 0 " default off
-
-" git diff as signs
-NeoBundle 'mhinz/vim-signify'
+NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive'} " a Git wrapper so awesome, it should be illegal
+NeoBundle 'idanarye/vim-merginal', { 'augroup' : 'fugitive'} " Fugitive extension to manage and merge Git branches
+NeoBundle 'mhinz/vim-signify'                      " git diff as signs {{{
 autocmd User Fugitive SignifyRefresh
 let g:signify_sign_change            = '~'
 " let g:signify_update_on_focusgained  = 1
@@ -119,10 +91,8 @@ let g:signify_sign_change            = '~'
 if !exists('g:signify_vcs_cmds')
    let g:signify_vcs_cmds = { 'git': 'git diff --no-color --no-ext-diff -U0 -w -- %f' }
    " let g:signify_vcs_cmds = { 'svn': 'svn diff --diff-cmd %d -x -U0 -- %f' }
-endif
-
-" VIM SVN plugin ( subversion svn vim7)
-NeoBundle 'juneedahamed/svnj.vim'
+endif "}}}
+NeoBundle 'juneedahamed/svnj.vim'                  " VIM SVN plugin ( subversion svn vim7) {{{
 let g:svnj_custom_statusbar_ops_hide = 1
 " Supported operations are listed on the status line of the svnj_window. With growing support for
 " many commands, recomend to hide it. You can still have a quick glance of supported operations by
@@ -130,19 +100,16 @@ let g:svnj_custom_statusbar_ops_hide = 1
 let g:svnj_browse_cache_all = 1
 " This enables caching, Listing of files will be faster, On MAC/Unix the default location is $HOME/.cache.
 " A new directory svnj will be created in the specified directory.
-
-
-" NeoBundle to toggle, display and navigate marks
-NeoBundle 'kshenoy/vim-signature'
+"}}}
+NeoBundle 'kshenoy/vim-signature'                  " toggle, display and navigate marks {{{
 let g:SignatureMarkerTextHLDynamic=1
 let g:SignatureMarksTextHLDynamic=1
 let g:SignatureEnabledAtStartup=1
 " nnoremap mm :ToggleMarkAtLine<CR>
 let g:SignatureMap = { 'ToggleMarkAtLine'   :  "mm" }
-
+"}}}
 NeoBundle 'will133/vim-dirdiff'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
-
 NeoBundle 'Lokaltog/vim-easymotion' " {{{
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
@@ -160,24 +127,17 @@ vmap <leader>q <plug>(QuickScopeToggle)
 " let g:sneak#use_ic_scs = 1
 " let g:sneak#streak = 1
 " }}}
-
 NeoBundle 'jeffkreeftmeijer/vim-numbertoggle'
-
-" adds support for ansi escape characters - useful for vimpager
-NeoBundle 'powerman/vim-plugin-AnsiEsc'
-
+NeoBundle 'powerman/vim-plugin-AnsiEsc'            " adds support for ansi escape characters - useful for vimpager
 NeoBundle 'tpope/vim-surround'
-
-NeoBundle 'terryma/vim-expand-region'
-map gk <Plug>(expand_region_expand)
-map gj <Plug>(expand_region_shrink)
-
+" NeoBundle 'terryma/vim-expand-region' "{{{
+" map gk <Plug>(expand_region_expand)
+" map gj <Plug>(expand_region_shrink)
+"}}}
 NeoBundle 'terryma/vim-multiple-cursors'
 
-" }}}
-" CODING Plugins {{{
-
-" Pandoc | Markdown
+" CODING Plugins
+" Pandoc | Markdown {{{
 NeoBundle 'vim-pandoc/vim-pandoc-syntax'
 NeoBundle 'vim-pandoc/vim-pandoc'
 let g:pandoc#command#latex_engine = 'pdflatex'
@@ -195,8 +155,8 @@ augroup END
 
 NeoBundle 'vim-pandoc/vim-pandoc-after'
 let g:pandoc#after#modules#enabled = ["unite", "neosnippets"]
-
-" LaTeX
+" }}}
+" LaTeX {{{
 NeoBundle 'lervag/vimtex'
 let g:tex_flavor = "latex"
 let g:tex_conceal = "adgm"
@@ -209,9 +169,10 @@ let g:vimtex_latexmk_callback = 1
 if has('nvim') && executable('nvr')
    let g:vimtex_latexmk_progname = 'nvr'
 endif
-
+" }}}
+" syntastic {{{
 " if has('nvim')
-   " Plug 'benekastah/neomake' " {{{
+   " Plug 'benekastah/neomake' 
    " let g:neomake_logfile = resolve(expand("~/.vim/tmp/neomake.log"))
    " let g:neomake_verbose = 2
    " " let g:args = ['-fsyntax-only', '-Wall', '-Wextra']
@@ -232,13 +193,13 @@ endif
             " " \ '%f:%l: %m',
             " " \ }
    " " let g:neomake_c_enabled_makers = ['cpp']
-" else }}}
+" else
    " Syntax checking hacks for vim
    NeoBundle 'scrooloose/syntastic'
 " endif
 " let g:syntastic_python_checkers=['flake8']
 " let g:syntastic_python_flake8_args='--ignore=E501,E225'
-
+" }}}
 " Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box."{{{
 NeoBundle 'klen/python-mode', { 'on_ft': 'python' }
 " set this if compiled with both versions
@@ -255,12 +216,9 @@ augroup python_aug
 augroup END
 
 "}}}
-
 NeoBundle 'fatih/vim-go'
 NeoBundle 'garyburd/go-explorer'
-
 NeoBundle 'vim-scripts/gtk-vim-syntax'
-
 " Plug 'Rip-Rip/clang_complete', { 'do': 'make install' } " {{{
 " let g:clang_complete_auto = 1
 " let g:clang_auto_select = 1
@@ -315,7 +273,6 @@ NeoBundle 'vim-scripts/gtk-vim-syntax'
    " let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " endif }}} }}}
-
 " YCM {{{
 let cmake_version = split(system('cmake --version'))
 if executable('cmake') && VerNewerThen("2.8.11", cmake_version[2])
@@ -340,8 +297,8 @@ endif
 " let g:ycm_semantic_triggers = { 'tex': ['\v\\\a*(ref|cite)\a*([^]]*\])?\{([^}]*,)*[^}]*'] }
 
 " }}}
-
-NeoBundle 'Shougo/neoinclude.vim' " {{{
+" snippets {{{
+NeoBundle 'Shougo/neoinclude.vim'
 NeoBundle 'Shougo/neosnippet'
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -350,22 +307,22 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'Shougo/neosnippet-snippets'
 "}}}
-
 NeoBundle 'xolox/vim-easytags', { 'depends' : 'xolox/vim-misc' } "{{{
 set tags=./tags,./TAGS,tags;TAGS;   " make vim look for tags file reverse-recursivly ;)
 let g:easytags_dynamic_files = 1    " make easytags use this file instead of global
 let g:easytags_async = 1            " make easytag update async
 let g:easytags_opts = ['--c-kinds=+defgpstuxm --fields=+iaS --extra=+q']
-nmap <F8> :UpdateTags<CR> "}}}
-
+nmap <F8> :UpdateTags<CR>
+"}}}
+" LucHermitte/lh-brackets {{{
+" NeoBundle 'LucHermitte/lh-vim-lib'
+" NeoBundle 'LucHermitte/lh-tags'
+" NeoBundle 'LucHermitte/lh-dev'
+" NeoBundle 'LucHermitte/lh-brackets'
+" }}}
 call neobundle#end()
 filetype plugin indent on
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-" if has('nvim')
-   NeoBundleCheck
-" endif
+NeoBundleCheck                 " this will conveniently prompt you to install them.
 " }}}
 
 " Settings {{{
@@ -451,10 +408,9 @@ nnoremap <leader><F7> :set list!<CR>
 set foldmethod=marker
 " set foldcolumn=3
 set foldnestmax=3
+se fillchars="vert:|,diff: ,fold: "
 
-" vimdiff stuff
-" ignore whitespace
-set diffopt=filler,vertical,iwhite
+set diffopt=filler,vertical,iwhite  " ignore whitespace
 
 " Enable omni completion.
 set omnifunc=syntaxcomplete#Complete
@@ -524,7 +480,6 @@ nnoremap <space>s :Unite -quick-match buffer<cr>
 " }}}
 
 " }}}
-
 " colorization and styles {{{
 let g:solarized_contrast = "high"
 " let g:solarized_diffmode = "high"
@@ -551,6 +506,7 @@ colorscheme solarized
 " make search in Gray and white.
 hi Search term=reverse cterm=reverse ctermfg=10 ctermbg=15 guibg=DarkGrey
 " hi Search term=bold cterm=bold ctermfg=15 ctermbg=10 guibg=DarkGrey
+hi Folded term=bold cterm=bold
 
 " fix wierd display of Sign Column Color
 if has('gui_running')
@@ -564,7 +520,6 @@ if version >= 703
    let g:solarized_hitrail = 1
 endif
 " }}}
-
 " key mappings {{{
 " let mapleader = "\"  " rebmap the <Leader> key
 let mapleader = ","  " rebmap the <Leader> key
@@ -667,8 +622,8 @@ noremap gä g]
 " }}}
 " }}}
 
-" Functions {{{
-" Search for selected text, forwards or backwards. first * then n/N ->
+" Functions
+" Search for selected text, forwards or backwards. first * then n/N ->"{{{
 vnoremap <silent> * :<C-U>
   \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
   \gvy/<C-R><C-R>=substitute(
@@ -679,24 +634,24 @@ vnoremap <silent> # :<C-U>
   \gvy?<C-R><C-R>=substitute(
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
-
-" Remember cursor position between vim sessions
+"}}}
+" Remember cursor position between vim sessions"{{{
 autocmd BufReadPost *
          \ if line("'\"") > 0 && line ("'\"") <= line("$") |
          \   exe "normal! g'\"" |
          \ endif
 " center buffer around cursor when opening files
 autocmd BufRead * normal zz
-
-function! CopyMatches(reg)
+"}}}
+function! CopyMatches(reg) "{{{
   let hits = []
   %s//\=len(add(hits, submatch(0))) ? submatch(0) : ''/ge
   let reg = empty(a:reg) ? '+' : a:reg
   execute 'let @'.reg.' = join(hits, "\n") . "\n"'
 endfunction
 command! -register CopyMatches call CopyMatches(<q-reg>)
-
-function! TogleVisibility()
+"}}}
+function! TogleVisibility() "{{{
    if (&list == 0)
       set list
    else
@@ -707,8 +662,8 @@ function! TogleVisibility()
       endif
       colorscheme solarized
    endif
-endfunction
-
+endfunction "}}}
+" Font Size{{{
 " Change font size quickly - http://vim.wikia.com/wiki/Change_font_size_quickly
 nnoremap <leader>+ :LargerFont<cr>
 nnoremap <leader>- :SmallerFont<cr>
@@ -736,8 +691,8 @@ function! SmallerFont()
   call AdjustFontSize(-1)
 endfunction
 command! SmallerFont call SmallerFont()
-
-
+"}}}
+" MyDiff{{{
 " This diff function uses "-w" instead of "-b", to ignore *all* whitespace
 " changes (not only non-leading whitespace)
 set diffexpr=MyDiff()
@@ -752,8 +707,8 @@ function! MyDiff()
    silent execute "!diff -a --binary " . opt . v:fname_in . " " . v:fname_new .
             \  " > " . v:fname_out
 endfunction
-
-" Highlight words to avoid in tech writing
+"}}}
+" Highlight words to avoid in tech writing"{{{
 " http://css-tricks.com/words-avoid-educational-writing/
 highlight TechWordsToAvoid ctermbg=red ctermfg=white
 function! MatchTechWordsToAvoid()
@@ -767,8 +722,7 @@ augroup tech_words
    autocmd InsertLeave *.md,*.tex call MatchTechWordsToAvoid()
    autocmd BufWinLeave *.md,*.tex call clearmatches()
 augroup END
-
-" }}}
+"}}}
 
 " Frequentis specifics {{{
 "adds user and timestamp to end of line
