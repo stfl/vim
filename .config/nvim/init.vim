@@ -64,12 +64,12 @@ source ~/.config/nvim/unit.vim
 NeoBundle 'majutsushi/tagbar'                      " Vim plugin that displays tags in a window, ordered by scope {{{
 nnoremap <F6> :TagbarToggle<CR>
 "}}}
-NeoBundle 'scrooloose/nerdtree' , { 'on_cmd':  'NERDTreeToggle' } "{{{
-nnoremap <F3> :NERDTreeToggle<CR>
+" NeoBundle 'scrooloose/nerdtree' , { 'on_cmd':  'NERDTreeToggle' } "{{{
+" nnoremap <F3> :NERDTreeToggle<CR>
 " NeoBundle 'jistr/vim-nerdtree-tabs'
 " let g:nerdtree_tabs_open_on_gui_startup = 0
 " let NERDTreeHijackNetrw=1"}}}
-NeoBundle 'tpope/vim-vinegar'
+" NeoBundle 'tpope/vim-vinegar'
 NeoBundle 'tmux-plugins/vim-tmux'                  " vim plugin for tmux.conf
 NeoBundle 'tmux-plugins/vim-tmux-focus-events'
 NeoBundle 'scrooloose/nerdcommenter'
@@ -130,6 +130,15 @@ vmap <leader>q <plug>(QuickScopeToggle)
 NeoBundle 'jeffkreeftmeijer/vim-numbertoggle'
 NeoBundle 'powerman/vim-plugin-AnsiEsc'            " adds support for ansi escape characters - useful for vimpager
 NeoBundle 'tpope/vim-surround'
+
+NeoBundle 'Shougo/vimfiler.vim', {
+         \ 'depends': 'unite.vim',
+         \ 'on_map': [['n', '<Plug>']],
+         \ 'on_if': "isdirectory(bufname('%'))",
+         \ 'hook_post_source': 'source '.$HOME.'.config/nvim/vimfiler.vim'
+         \ }
+NeoBundle 'Shougo/neossh.vim', {'on_ft': 'vimfiler', 'sources': 'ssh'}
+
 " NeoBundle 'terryma/vim-expand-region' "{{{
 " map gk <Plug>(expand_region_expand)
 " map gj <Plug>(expand_region_shrink)
@@ -201,21 +210,64 @@ endif
 " let g:syntastic_python_flake8_args='--ignore=E501,E225'
 " }}}
 " Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box."{{{
-NeoBundle 'klen/python-mode', { 'on_ft': 'python' }
-" set this if compiled with both versions
-if has('pyton3')
-   let g:pymode_python = 'python3'
-endif
-let g:pymode_rope_completion = 1
-let g:pymode_rope_complete_on_dot = 1
-let g:pymode_lint_ignore = "E501"
+" NeoBundle 'klen/python-mode', { 'on_ft': 'python' }
+" " set this if compiled with both versions
+" if has('pyton3')
+   " let g:pymode_python = 'python3'
+" endif
+" let g:pymode_rope_completion = 1
+" let g:pymode_rope_complete_on_dot = 1
+" let g:pymode_lint_ignore = "E501"
 
-augroup python_aug
-   autocmd!
-   autocmd FileType python setlocal textwidth=79 colorcolumn=79
-augroup END
+" augroup python_aug
+   " autocmd!
+   " autocmd FileType python setlocal textwidth=79 colorcolumn=79
+" augroup END
 
 "}}}
+NeoBundle 'davidhalter/jedi-vim', {'on_ft': 'python'} " {{{
+NeoBundle 'zchee/deoplete-jedi', {'on_ft': 'python', 'on_i': 1}
+
+let g:jedi#force_py_version = 3
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#use_tag_stack = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#show_call_signatures = 0
+let g:jedi#max_doc_height = 45
+let g:jedi#use_splits_not_buffers = 'right'
+let g:jedi#completions_command = ''
+let g:jedi#goto_command = '<leader>d'
+let g:jedi#goto_assignments_command = '<leader>a'
+let g:jedi#documentation_command = 'K'
+let g:jedi#rename_command = '<leader>r'
+let g:jedi#usages_command = '<leader>n'
+
+if ! has('nvim')
+   setlocal completeopt=menuone,longest
+   autocmd MyAutoCmd FileType python
+            \ if has('python') || has('python3') |
+            \   setlocal omnifunc=jedi#completions |
+            \ else |
+            \   setlocal omnifunc= |
+            \ endif
+endif
+
+"}}}
+NeoBundle 'othree/yajs.vim', {'on_ft': 'javascript'}
+NeoBundle 'gavocanov/vim-js-indent', {'on_ft': 'javascript'}
+NeoBundle 'othree/javascript-libraries-syntax.vim', {'on_ft': 'javascript'}
+NeoBundle 'othree/jspc.vim', {'on_ft': 'javascript'}
+NeoBundle 'heavenshell/vim-jsdoc', {'on_ft': 'javascript'}
+NeoBundle 'moll/vim-node', {'on_ft': 'javascript'}
+NeoBundle 'carlitux/deoplete-ternjs', {
+         \ 'if': 'executable("tern")',
+         \ 'on_ft': 'javascript',
+         \ 'on_i': 1
+         \ }
+
 NeoBundle 'fatih/vim-go'
 NeoBundle 'garyburd/go-explorer'
 NeoBundle 'vim-scripts/gtk-vim-syntax'
@@ -227,8 +279,20 @@ NeoBundle 'vim-scripts/gtk-vim-syntax'
 " " let g:clang_library_path='/usr/lib/x86_64-linux-gnu'
 " " ln libclang.so.1 libclang.so
 
-" if has('nvim') && has("python3")
-   " " " sudo pip3 install neovim
+NeoBundle 'Shougo/context_filetype.vim'
+" NeoBundle 'Shougo/deoplete.nvim', {
+   " \ 'if': 'has("nvim")',
+   " \ }
+" source ~/.config/nvim/deoplete.vim
+
+NeoBundle 'Shougo/deoplete.nvim', {
+   \ 'depends': 'context_filetype.vim',
+   \ 'if': 'has("nvim")',
+   \ 'on_i': 1,
+   \ 'hook_source': 'let g:deoplete#enable_at_startup = 1'
+   \   .' | source '.$HOME.'/.config/nvim/deoplete.vim'
+   \ }
+
    " Plug 'Shougo/deoplete.nvim' " , { 'on': 'DeopleteEnable' }
    " " " :UpdateRemotePlugins
    " let g:deoplete#enable_at_startup = 1   "enable deoplete at vim startup
@@ -273,30 +337,30 @@ NeoBundle 'vim-scripts/gtk-vim-syntax'
    " let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " endif }}} }}}
-" YCM {{{
-let cmake_version = split(system('cmake --version'))
-if executable('cmake') && VerNewerThen("2.8.11", cmake_version[2])
-   " NeoBundle 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer'}
-   NeoBundleLazy 'Valloric/YouCompleteMe', {
-            \ 'augroup': 'youcompletemeStart',
-            \ 'build' : {
-            \     'mac' : './install.sh --clang-completer',
-            \     'unix' : './install.sh --clang-completer',
-            \     'windows' : './install.sh --clang-completer',
-            \     'cygwin' : './install.sh --clang-complete'
-            \    }
-            \ }
-   augroup load_ycm
-      autocmd!
-      autocmd InsertEnter * call neobundle#source('YouCompleteMe')
-               \| call youcompleteme#Enable() | autocmd! load_ycm
-   augroup END
-endif
+" " YCM {{{
+" let cmake_version = split(system('cmake --version'))
+" if executable('cmake') && VerNewerThen("2.8.11", cmake_version[2])
+   " " NeoBundle 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer'}
+   " NeoBundleLazy 'Valloric/YouCompleteMe', {
+            " \ 'augroup': 'youcompletemeStart',
+            " \ 'build' : {
+            " \     'mac' : './install.sh --clang-completer',
+            " \     'unix' : './install.sh --clang-completer',
+            " \     'windows' : './install.sh --clang-completer',
+            " \     'cygwin' : './install.sh --clang-complete'
+            " \    }
+            " \ }
+   " augroup load_ycm
+      " autocmd!
+      " autocmd InsertEnter * call neobundle#source('YouCompleteMe')
+               " \| call youcompleteme#Enable() | autocmd! load_ycm
+   " augroup END
+" endif
 
-" latex completion from vimtex
-" let g:ycm_semantic_triggers = { 'tex': ['\v\\\a*(ref|cite)\a*([^]]*\])?\{([^}]*,)*[^}]*'] }
+" " latex completion from vimtex
+" " let g:ycm_semantic_triggers = { 'tex': ['\v\\\a*(ref|cite)\a*([^]]*\])?\{([^}]*,)*[^}]*'] }
 
-" }}}
+" " }}}
 " snippets {{{
 NeoBundle 'Shougo/neoinclude.vim'
 NeoBundle 'Shougo/neosnippet'
