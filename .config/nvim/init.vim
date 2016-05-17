@@ -75,6 +75,7 @@ NeoBundle 'tmux-plugins/vim-tmux-focus-events'
 NeoBundle 'christoomey/vim-tmux-navigator'
 NeoBundle 'scrooloose/nerdcommenter'
 let NERDSpaceDelims=1
+" 'tyru/caw.vim'
 NeoBundle 'junegunn/vim-easy-align' "{{{
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -285,11 +286,6 @@ NeoBundle 'vim-scripts/gtk-vim-syntax'
 " " ln libclang.so.1 libclang.so
 
 NeoBundle 'Shougo/context_filetype.vim'
-" NeoBundle 'Shougo/deoplete.nvim', {
-   " \ 'if': 'has("nvim")',
-   " \ }
-" source ~/.config/nvim/deoplete.vim
-
 NeoBundle 'Shougo/deoplete.nvim', {
    \ 'depends': 'context_filetype.vim',
    \ 'if': 'has("nvim")',
@@ -297,6 +293,7 @@ NeoBundle 'Shougo/deoplete.nvim', {
    \ 'hook_source': 'let g:deoplete#enable_at_startup = 1'
    \   .' | source '.$HOME.'/.config/nvim/deoplete.vim'
    \ }
+" :UpdateRemotePlugins
 
    " Plug 'Shougo/deoplete.nvim' " , { 'on': 'DeopleteEnable' }
    " " " :UpdateRemotePlugins
@@ -383,6 +380,10 @@ let g:easytags_async = 1            " make easytag update async
 let g:easytags_opts = ['--c-kinds=+defgpstuxm --fields=+iaS --extra=+q']
 nmap <F8> :UpdateTags<CR>
 "}}}
+NeoBundle 'Raimondi/delimitMate', {
+         \ 'on_i': 1,
+         \ 'hook_source': 'let g:delimitMate_expand_cr = 1',
+         \ }
 " LucHermitte/lh-brackets {{{
 " NeoBundle 'LucHermitte/lh-vim-lib'
 " NeoBundle 'LucHermitte/lh-tags'
