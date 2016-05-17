@@ -72,6 +72,7 @@ nnoremap <F6> :TagbarToggle<CR>
 " NeoBundle 'tpope/vim-vinegar'
 NeoBundle 'tmux-plugins/vim-tmux'                  " vim plugin for tmux.conf
 NeoBundle 'tmux-plugins/vim-tmux-focus-events'
+NeoBundle 'christoomey/vim-tmux-navigator'
 NeoBundle 'scrooloose/nerdcommenter'
 let NERDSpaceDelims=1
 NeoBundle 'junegunn/vim-easy-align' "{{{
@@ -130,7 +131,7 @@ vmap <leader>q <plug>(QuickScopeToggle)
 NeoBundle 'jeffkreeftmeijer/vim-numbertoggle'
 NeoBundle 'powerman/vim-plugin-AnsiEsc'            " adds support for ansi escape characters - useful for vimpager
 NeoBundle 'tpope/vim-surround'
-
+" vimfiler {{{
 NeoBundle 'Shougo/vimfiler.vim', {
          \ 'depends': 'unite.vim',
          \ 'on_map': [['n', '<Plug>']],
@@ -138,6 +139,8 @@ NeoBundle 'Shougo/vimfiler.vim', {
          \ 'hook_post_source': 'source '.$HOME.'.config/nvim/vimfiler.vim'
          \ }
 NeoBundle 'Shougo/neossh.vim', {'on_ft': 'vimfiler', 'sources': 'ssh'}
+
+" }}}
 
 " NeoBundle 'terryma/vim-expand-region' "{{{
 " map gk <Plug>(expand_region_expand)
@@ -256,6 +259,7 @@ if ! has('nvim')
 endif
 
 "}}}
+" Javascript {{{
 NeoBundle 'othree/yajs.vim', {'on_ft': 'javascript'}
 NeoBundle 'gavocanov/vim-js-indent', {'on_ft': 'javascript'}
 NeoBundle 'othree/javascript-libraries-syntax.vim', {'on_ft': 'javascript'}
@@ -268,6 +272,7 @@ NeoBundle 'carlitux/deoplete-ternjs', {
          \ 'on_i': 1
          \ }
 
+" }}}
 NeoBundle 'fatih/vim-go'
 NeoBundle 'garyburd/go-explorer'
 NeoBundle 'vim-scripts/gtk-vim-syntax'
@@ -606,10 +611,10 @@ nnoremap <leader>s :Sex<CR>
 " nnoremap <leader>s <C-w>s
 
 " split naviagetion
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+" nnoremap <C-h> <C-w>h
+" nnoremap <C-j> <C-w>j
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-l> <C-w>l
 
 nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
