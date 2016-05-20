@@ -630,10 +630,10 @@ vnoremap < <gv
 vnoremap > >gv
 
 " diffpu and optain for Vim Fugitive conflicts
-nmap <expr> ]c  &diff ? ']czz' : ']c'
-nmap <expr> [c  &diff ? '[czz' : '[c'
-nmap <expr> <C-J>  &diff ? ']czz' : '<C-J>'
-nmap <expr> <C-K>  &diff ? '[czz' : '<C-K>'
+" nmap <expr> ]c  &diff ? ']czz' : ']c'
+" nmap <expr> [c  &diff ? '[czz' : '[c'
+" nmap <expr> <C-J>  &diff ? ']czz' : '<C-J>'
+" nmap <expr> <C-K>  &diff ? '[czz' : '<C-K>'
 nmap <expr> du  &diff ? ':diffupdate<CR>' : 'du'
 nnoremap <expr> do  &diff ? 'do]czz' : 'do'
 nnoremap <expr> dp  &diff ? 'dp]czz' : 'dp'
