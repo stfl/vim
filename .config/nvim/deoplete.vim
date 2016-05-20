@@ -1,7 +1,7 @@
 " deoplete for nvim
 " ---
 
-autocmd CompleteDone * pclose!
+autocmd MyAutoCmd CompleteDone * pclose!
 
 set completeopt+=noinsert,noselect
 
@@ -20,6 +20,8 @@ let g:deoplete#sources#jedi#enable_cache = 1
 let g:deoplete#sources#jedi#statement_length = 30
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#short_types = 1
+
+autocmd MyAutoCmd FileType python setlocal omnifunc=
 
 let g:deoplete#omni#functions = get(g:, 'deoplete#omni#functions', {})
 let g:deoplete#omni#functions.php = 'phpcomplete_extended#CompletePHP'
@@ -76,6 +78,7 @@ smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
 	\ : deoplete#mappings#manual_complete()))
 
 inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
+
 
 function! s:is_whitespace() "{{{
 	let col = col('.') - 1

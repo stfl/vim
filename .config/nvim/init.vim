@@ -1,4 +1,4 @@
-" Plugins
+" Plugins {{{
 " Init {{{
 " Note: Skip initialization for vim-tiny or vim-small.
 if 0 | endif
@@ -34,7 +34,6 @@ NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'vim-airline/vim-airline' "{{{
 NeoBundle 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
-set noshowmode     " don't show the current mode (not needed with airline)
 "}}}
 NeoBundle 'mileszs/ack.vim' "{{{
 if executable('ag')
@@ -45,10 +44,6 @@ nnoremap <leader>* :Ack! <c-r><c-w><cr>
 " nnoremap <leader>t :Ack! "TODO\|FIXME"<CR>
 "}}}
 NeoBundle 'mbbill/undotree', { 'on_cmd': 'UndotreeToggle' } " {{{
-if has("persistent_undo")
-   set undodir=~/.vim/undodir
-   set undofile
-endif
 nnoremap <F5> :UndotreeToggle<cr>
 "}}}
 " NeoBundle 'ctrlpvim/ctrlp.vim' "{{{
@@ -251,12 +246,14 @@ let g:jedi#usages_command = '<leader>n'
 
 if ! has('nvim')
    setlocal completeopt=menuone,longest
-   autocmd MyAutoCmd FileType python
-            \ if has('python') || has('python3') |
-            \   setlocal omnifunc=jedi#completions |
-            \ else |
-            \   setlocal omnifunc= |
-            \ endif
+   augroup MyAutoCmd
+      autocmd FileType python
+               \ if has('python') || has('python3') |
+               \   setlocal omnifunc=jedi#completions |
+               \ else |
+               \   setlocal omnifunc= |
+               \ endif
+   augroup END
 endif
 
 "}}}
@@ -394,7 +391,6 @@ call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck                 " this will conveniently prompt you to install them.
 " }}}
-
 " Settings {{{
 " automatic reload .vimrc
 augroup source_vimrc
@@ -404,33 +400,116 @@ augroup source_vimrc
 augroup END
 set autoread          " Set to auto read when a file is changed from the outside
 
-" format
-" set copyindent     " Copy the indentation of the previous line
-" set smartindent
+" Tabs and Indents {{{
+
+set smartindent
 set expandtab      " tab expansion to spaces
-" set smarttab
-set tabstop=3
-set shiftwidth=3
-set softtabstop=3
+set smarttab
+set tabstop=2
+set shiftwidth=2
+set shiftround      " Round indent to multiple of 'shiftwidth'
+set softtabstop=2
 set scrolloff=5    " scroll offset at begining and end of line
-set tabpagemax=100 " max number of tabs open with -p
 set textwidth=100  " line break after 100 char
 
-set backup
+if has('patch-7.3.541')
+	set formatoptions+=j       " Remove comment leader when joining lines
+endif
+
+" }}}
+" Searching {{{
+" ---------
+set ignorecase      " Search ignoring case
+set smartcase       " Keep case when searching with *
+set infercase
+set incsearch       " Incremental search
+set hlsearch        " Highlight search results
+set wrapscan        " Searches wrap around the end of the file
+set showmatch       " Jump to matching bracket
+set matchpairs+=<:> " Add HTML brackets to pair matching
+set matchtime=1     " Tenths of a second to show the matching paren
+set cpoptions-=m    " showmatch will wait 0.5s or until a char is typed
+" }}}
+" General {{{
+
+set history=500              " Search and commands remembered
+set synmaxcol=1000           " Don't syntax highlight long lines
+set formatoptions+=1         " Don't break lines after a one-letter word
+set formatoptions-=t         " Don't auto-wrap text
+
+set modeline                 " automatically setting options from modelines
+set report=0                 " Don't report on line changes
+set errorbells               " Trigger bell on error
+set visualbell               " Use visual bell instead of beeping
+set hidden                   " hide buffers when abandoned instead of unload
+set fileformats=unix,dos,mac " Use Unix as the standard file type
+set magic                    " For regular expressions turn magic on
+
+if has('vim_starting')
+	set encoding=utf-8
+	scriptencoding utf-8
+endif
+
+" }}}
+" Vim Directories {{{
+" ---------------
+if has('nvim')
+   set shada='30,/100,:50,<10,@10,s50,h,n~/.vim/shada
+else
+   set viminfo='30,/100,:500,<10,@10,s10,h,n~/.vim/viminfo
+endif
+set undofile swapfile backup
+set undodir=~/.vim/undodir
 set backupdir=~/.vim/tmp,.  " save backup file (*~) somewhere else
 set directory=~/.vim/tmp,.
+let g:session_directory = '~/.vim/session/'
 
-" searching
-set hlsearch   " Search highlighting
-set incsearch  " Incremental search
-set ignorecase " Ignore case when searching
-set smartcase  " Ignore case if search pattern is all lc, cs or otherwise
+" Don't backup files in temp directories or shm
+if exists('&backupskip')
+   set backupskip+=/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim
+endif
 
-" syntax
-" set encoding=utf-8    " Set utf-8 as standard encoding
-set wildmenu          " completion menu in comand menu
-set wildmode=list:longest,list:full
-set bs=2              " make backspace bahve like normal
+" Don't keep swap files in temp directories or shm
+augroup swapskip
+   autocmd!
+   silent! autocmd BufNewFile,BufReadPre
+            \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim
+            \ setlocal noswapfile
+augroup END
+
+" Don't keep undo files in temp directories or shm
+if has('persistent_undo')
+   augroup undoskip
+      autocmd!
+      silent! autocmd BufWritePre
+               \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim
+               \ setlocal noundofile
+   augroup END
+endif
+
+" Don't keep viminfo for files in temp directories or shm
+augroup viminfoskip
+   autocmd!
+   silent! autocmd BufNewFile,BufReadPre
+            \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim
+            \ setlocal viminfo=
+augroup END
+
+" }}}
+" Wildmenu {{{
+
+if has('wildmenu')
+   set wildmenu
+   set wildmode=list:longest,full
+   set wildoptions=tagfile
+   set wildignorecase
+   set wildignore+=.git,*.pyc,*.spl,*.o,*.out,*~,#*#,%*
+   set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store
+endif
+
+" }}}
+" Mouse {{{
+
 set mouse=a           " Enable mouse in all modes
 if exists('$TMUX') && !has('nvim')
    if has("mouse_sgr")
@@ -440,47 +519,90 @@ if exists('$TMUX') && !has('nvim')
    endif
 endif
 
-" better copy & pase behabour
-set pastetoggle=<F2>
-" inoremap <F2> <Esc>:set toggle!<CR>i
-if has('nvim')
-   if (executable('pbcopy') || executable('xclip') || executable('xsel')) && has('clipboard')
-      set clipboard+=unnamedplus " Use the OS clipboard by default
-   endif
-elseif version >= 703
-   set clipboard+=unnamedplus " Use the OS clipboard by default
+" }}}
+" clipboard {{{
+
+set pastetoggle=<F2>      " better copy & pase behabour
+if ( ! has('nvim') || $DISPLAY !=? '') && has('clipboard')
+	if has('unnamedplus')
+		set clipboard& clipboard+=unnamedplus
+	else
+		set clipboard& clipboard+=unnamed
+	endif
 endif
 
-if has('conceal')
-   set conceallevel=2 concealcursor=nv
-endif
+" }}}
+" Behavior {{{
 
 syntax on        " Syntax highlighting
-set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
-set number       " Show line numbers
-set showcmd      " Show the (partial) command as it's being typed
-set ruler        " Show the cursor position all the time
-set cursorline   " Highlight current line
-set laststatus=2 " always show status line
-set showmatch    " Cursor shows matching ) and }
-set splitright   " make vsplit to the right
-" set showmode     " Show the current mode
-set timeoutlen=1500
-set ttimeoutlen=10  " timeout leaving Insert
-
-" show whitespaces
-set list
-set listchars=tab:»\ ,eol:¬,trail:·,extends:>,precedes:<
-nnoremap <F7> :call TogleVisibility()<CR>
-nnoremap <leader><F7> :set list!<CR>
-
-" allow folding at markers
-set foldmethod=marker
+" set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
+set complete=.
+set foldmethod=marker            " allow folding at markers
 " set foldcolumn=3
 set foldnestmax=3
-se fillchars="vert:|,diff: ,fold: "
-
 set diffopt=filler,vertical,iwhite  " ignore whitespace
+set splitbelow splitright       " Splits open bottom right
+set switchbuf=usetab,split      " Switch buffer behavior
+set backspace=indent,eol,start  " Intuitive backspacing in insert mode
+set showfulltag                 " Show tag and tidy search in completion
+set completeopt=menuone         " Show menu even for one item
+set linebreak                   " Break long lines at 'breakat'
+set breakat=\ \	;:,!?           " Long lines break chars
+set nostartofline               " Cursor in same column for few commands
+set whichwrap+=h,l,<,>,[,],~    " Move to following line on certain keys
+
+" }}}
+" Editor UI Appearance {{{
+
+set list              " show whitespaces
+set listchars=tab:»\ ,eol:¬,trail:·,extends:>,precedes:<
+set cursorline          " Highlight current line
+set number              " Show line numbers
+set showcmd             " Show the (partial) command as it's being typed
+set noruler             " don't show the cursor position all the time
+set laststatus=2        " always show status line
+set noshowmode          " don't Show the current mode
+set shortmess=aoOTI     " Shorten messages and don't show intro
+
+set showtabline=2       " Always show the tabs line
+set tabpagemax=30       " Maximum number of tab pages
+set winwidth=30         " Minimum width for current window
+set winheight=1         " Minimum height for current window
+set previewheight=8     " Completion preview height
+set helpheight=12       " Minimum help window height
+
+set fillchars="vert:|,diff: ,fold: "     " make folds prettier"
+
+" Do not display completion messages
+" Patch: https://groups.google.com/forum/#!topic/vim_dev/WeBBjkXE8H8
+if has('patch-7.4.314')
+	set shortmess+=c
+endif
+
+" Do not display message when editing files
+if has('patch-7.4.1570')
+	set shortmess+=F
+endif
+
+" For snippet_complete marker
+if has('conceal') && v:version >= 703
+	set conceallevel=2 concealcursor=niv
+endif
+
+" }}}
+" Time {{{
+" --------
+set timeout ttimeout
+set timeoutlen=1000  " Time out on mappings
+set ttimeoutlen=250  " Time out on key codes
+set updatetime=1500  " Idle time to write swap and trigger CursorHold
+
+if has('nvim')
+	" https://github.com/neovim/neovim/issues/2017
+	set ttimeoutlen=-1
+endif
+
+" }}}
 
 " Enable omni completion.
 set omnifunc=syntaxcomplete#Complete
@@ -489,7 +611,6 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
 
 " Unite config{{{
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
@@ -510,44 +631,6 @@ nnoremap <space>/ :Unite grep:.<cr>
 
 " switching buffers
 nnoremap <space>s :Unite -quick-match buffer<cr>
-
-" let g:unite_source_menu_menus.git = {
-" \ 'description' : '            gestionar repositorios git
-" \                            ⌘ [espacio]g',
-" \}
-" let g:unite_source_menu_menus.git.command_candidates = [
-" \['▷ tig                                                        ⌘ ,gt',
-" \'normal ,gt'],
-" \['▷ git status       (Fugitive)                                ⌘ ,gs',
-" \'Gstatus'],
-" \['▷ git diff         (Fugitive)                                ⌘ ,gd',
-" \'Gdiff'],
-" \['▷ git commit       (Fugitive)                                ⌘ ,gc',
-" \'Gcommit'],
-" \['▷ git log          (Fugitive)                                ⌘ ,gl',
-" \'exe "silent Glog | Unite quickfix"'],
-" \['▷ git blame        (Fugitive)                                ⌘ ,gb',
-" \'Gblame'],
-" \['▷ git stage        (Fugitive)                                ⌘ ,gw',
-" \'Gwrite'],
-" \['▷ git checkout     (Fugitive)                                ⌘ ,go',
-" \'Gread'],
-" \['▷ git rm           (Fugitive)                                ⌘ ,gr',
-" \'Gremove'],
-" \['▷ git mv           (Fugitive)                                ⌘ ,gm',
-" \'exe "Gmove " input("destino: ")'],
-" \['▷ git push         (Fugitive, salida por buffer)             ⌘ ,gp',
-" \'Git! push'],
-" \['▷ git pull         (Fugitive, salida por buffer)             ⌘ ,gP',
-" \'Git! pull'],
-" \['▷ git prompt       (Fugitive, salida por buffer)             ⌘ ,gi',
-" \'exe "Git! " input("comando git: ")'],
-" \['▷ git cd           (Fugitive)',
-" \'Gcd'],
-" \]
-" nnoremap <leader>g :Unite -silent -start-insert menu:git<CR>
-
-" }}}
 
 " }}}
 " colorization and styles {{{
@@ -590,6 +673,7 @@ if version >= 703
    let g:solarized_hitrail = 1
 endif
 " }}}
+" }}}
 " key mappings {{{
 " let mapleader = "\"  " rebmap the <Leader> key
 let mapleader = ","  " rebmap the <Leader> key
@@ -601,8 +685,8 @@ nnoremap Q <nop>
 noremap <silent> j gj
 noremap <silent> k gk
 
-" nnoremap ; :
-" nnoremap : ;
+nnoremap <F7> :call TogleVisibility()<CR>
+nnoremap <leader><F7> :set list!<CR>
 
 " split vertically
 nnoremap <leader>v :Vex<CR>
@@ -691,8 +775,7 @@ nmap ü <C-]>
 noremap gä g]
 " }}}
 " }}}
-
-" Functions
+" Functions {{{
 " Search for selected text, forwards or backwards. first * then n/N ->"{{{
 vnoremap <silent> * :<C-U>
   \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
@@ -803,4 +886,4 @@ autocmd BufRead ReleaseNotes setlocal textwidth=80 colorcolumn=80 spell
 command! TargetOn execute 'set scrolloff=15 | %s/t on="false/t on="true/gc | set scrolloff=5'
 command! TargetOff execute 'set scrolloff=15 | %s/t on="true/t on="false/gc | set scrolloff=5'
 " }}}
-
+" }}}
