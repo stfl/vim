@@ -236,7 +236,7 @@ let g:jedi#popup_select_first = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#show_call_signatures = 0
 let g:jedi#max_doc_height = 45
-let g:jedi#use_splits_not_buffers = 'right'
+let g:jedi#use_splits_not_buffers = 'bottom'
 let g:jedi#completions_command = ''
 let g:jedi#goto_command = '<leader>d'
 let g:jedi#goto_assignments_command = '<leader>a'
@@ -287,9 +287,10 @@ NeoBundle 'Shougo/deoplete.nvim', {
    \ 'depends': 'context_filetype.vim',
    \ 'if': 'has("nvim")',
    \ 'on_i': 1,
-   \ 'hook_source': 'let g:deoplete#enable_at_startup = 1'
-   \   .' | source '.$HOME.'/.config/nvim/deoplete.vim'
    \ }
+   " \ 'hook_source': 'let g:deoplete#enable_at_startup = 1'
+   " \   .' | source '.$HOME.'/.config/nvim/deoplete.vim'
+source $HOME/.config/nvim/deoplete.vim
 " :UpdateRemotePlugins
 
    " Plug 'Shougo/deoplete.nvim' " , { 'on': 'DeopleteEnable' }
@@ -535,8 +536,8 @@ endif
 " Behavior {{{
 
 syntax on        " Syntax highlighting
-" set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
-set complete=.
+set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
+" set complete=.
 set foldmethod=marker            " allow folding at markers
 " set foldcolumn=3
 set foldnestmax=3
@@ -562,7 +563,7 @@ set showcmd             " Show the (partial) command as it's being typed
 set noruler             " don't show the cursor position all the time
 set laststatus=2        " always show status line
 set noshowmode          " don't Show the current mode
-set shortmess=aoOTI     " Shorten messages and don't show intro
+" set shortmess=aoOTI     " Shorten messages and don't show intro
 
 set showtabline=2       " Always show the tabs line
 set tabpagemax=30       " Maximum number of tab pages
@@ -575,9 +576,9 @@ set fillchars="vert:|,diff: ,fold: "     " make folds prettier"
 
 " Do not display completion messages
 " Patch: https://groups.google.com/forum/#!topic/vim_dev/WeBBjkXE8H8
-if has('patch-7.4.314')
-	set shortmess+=c
-endif
+" if has('patch-7.4.314')
+	" set shortmess+=c
+" endif
 
 " Do not display message when editing files
 if has('patch-7.4.1570')
@@ -605,12 +606,12 @@ endif
 " }}}
 
 " Enable omni completion.
-set omnifunc=syntaxcomplete#Complete
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" set omnifunc=syntaxcomplete#Complete
+" autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+" autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Unite config{{{
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
