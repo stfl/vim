@@ -180,7 +180,7 @@ endif
 " }}}
 " syntastic {{{
 " if has('nvim')
-   " Plug 'benekastah/neomake' 
+   " Plug 'benekastah/neomake'
    " let g:neomake_logfile = resolve(expand("~/.vim/tmp/neomake.log"))
    " let g:neomake_verbose = 2
    " " let g:args = ['-fsyntax-only', '-Wall', '-Wextra']
@@ -524,12 +524,15 @@ endif
 " clipboard {{{
 
 set pastetoggle=<F2>      " better copy & pase behabour
-if ( ! has('nvim') || $DISPLAY !=? '') && has('clipboard')
-	if has('unnamedplus')
+if ( ! has('nvim') && has('clipboard'))
+	if has('unnamedplus') || executable('pbcopy') || executable('xclip') || executable('xsel')
 		set clipboard& clipboard+=unnamedplus
 	else
 		set clipboard& clipboard+=unnamed
 	endif
+elseif (executable('pbcopy') || executable('xclip') || executable('xsel'))
+  " nvim
+  set clipboard& clipboard+=unnamedplus
 endif
 
 " }}}
@@ -604,14 +607,6 @@ if has('nvim')
 endif
 
 " }}}
-
-" Enable omni completion.
-" set omnifunc=syntaxcomplete#Complete
-" autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-" autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Unite config{{{
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
