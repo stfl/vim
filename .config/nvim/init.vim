@@ -274,13 +274,7 @@ NeoBundle 'carlitux/deoplete-ternjs', {
 NeoBundle 'fatih/vim-go'
 NeoBundle 'garyburd/go-explorer'
 NeoBundle 'vim-scripts/gtk-vim-syntax'
-" Plug 'Rip-Rip/clang_complete', { 'do': 'make install' } " {{{
-" let g:clang_complete_auto = 1
-" let g:clang_auto_select = 1
-" let g:clang_default_keymappings = 0
-" "let g:clang_use_library = 1
-" " let g:clang_library_path='/usr/lib/x86_64-linux-gnu'
-" " ln libclang.so.1 libclang.so
+
 
 NeoBundle 'Shougo/context_filetype.vim'
 NeoBundle 'Shougo/deoplete.nvim', {
@@ -293,50 +287,14 @@ NeoBundle 'Shougo/deoplete.nvim', {
 source $HOME/.config/nvim/deoplete.vim
 " :UpdateRemotePlugins
 
-   " Plug 'Shougo/deoplete.nvim' " , { 'on': 'DeopleteEnable' }
-   " " " :UpdateRemotePlugins
-   " let g:deoplete#enable_at_startup = 1   "enable deoplete at vim startup
-   " let g:deoplete#enable_ignore_case = 1  "let matcher ignore case
-   " let g:deoplete#enable_smart_case = 1   "smart case
-   " " let g:deoplete#enable_fuzzy_completion = 1   "fuzzy match
-   " let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})  "get default patterns where need to autocomplete
-   " " inoremap <expr><C-h> deolete#mappings#smart_close_popup()."\<C-h>"
-   " " inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
-" endif
-" elseif version >= 703 && has('lua') {{{
-   " Plug 'Shougo/neocomplete.vim' " , { 'on': 'NeoCompleteEnable' }
-
-   " let g:neocomplete#enable_at_startup = 1
-   " " Use smartcase.
-   " let g:neocomplete#enable_smart_case = 1
-   " " Set minimum syntax keyword length.
-   " let g:neocomplete#sources#syntax#min_keyword_length = 3
-   " let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-   " " Define dictionary.
-   " let g:neocomplete#sources#dictionary#dictionaries = {
-            " \ 'default' : ''
-            " \ }
-
-   " " Define keyword.
-   " if !exists('g:neocomplete#keyword_patterns')
-      " let g:neocomplete#keyword_patterns = {}
-   " endif
-   " let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-   " inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-   " " <C-h>, <BS>: close popup and delete backword char.
-   " inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-   " inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-
-   " " Enable heavy omni completion.
-   " if !exists('g:neocomplete#sources#omni#input_patterns')
-      " let g:neocomplete#sources#omni#input_patterns = {}
-   " endif
-   " let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-   " let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" endif }}} }}}
+NeoBundle 'Rip-Rip/clang_complete', { 'build': 'make install' } " {{{
+let g:clang_complete_auto = 1
+let g:clang_auto_select = 1
+let g:clang_default_keymappings = 0
+let g:clang_use_library = 1
+" ln libclang.so.1 libclang.so
+" check out clang completion database.. cmake can produce such a database
+" }}}
 " " YCM {{{
 " let cmake_version = split(system('cmake --version'))
 " if executable('cmake') && VerNewerThen("2.8.11", cmake_version[2])
