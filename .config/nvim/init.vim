@@ -291,7 +291,10 @@ NeoBundle 'Rip-Rip/clang_complete', { 'build': 'make install' } " {{{
 let g:clang_complete_auto = 1
 let g:clang_auto_select = 1
 let g:clang_default_keymappings = 0
+let g:clang_jumpto_declaration_key = "<c-[>"
 let g:clang_use_library = 1
+" let g:clang_auto_user_options = ".clang_complete"
+let g:clang_library_path = "/home_vie/slendl/.linuxbrew/lib"
 " ln libclang.so.1 libclang.so
 " check out clang completion database.. cmake can produce such a database
 " }}}
@@ -497,21 +500,25 @@ endif
 " Behavior {{{
 
 syntax on        " Syntax highlighting
-set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
-" set complete=.
+" set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
+set complete=.,kspell
 set foldmethod=marker            " allow folding at markers
 " set foldcolumn=3
 set foldnestmax=3
 set diffopt=filler,vertical,iwhite  " ignore whitespace
-set splitbelow splitright       " Splits open bottom right
-set switchbuf=usetab,split      " Switch buffer behavior
-set backspace=indent,eol,start  " Intuitive backspacing in insert mode
-set showfulltag                 " Show tag and tidy search in completion
-set completeopt=menuone         " Show menu even for one item
-set linebreak                   " Break long lines at 'breakat'
-set breakat=\ \	;:,!?           " Long lines break chars
-set nostartofline               " Cursor in same column for few commands
-set whichwrap+=h,l,<,>,[,],~    " Move to following line on certain keys
+set splitbelow splitright        " Splits open bottom right
+set switchbuf=usetab,split       " Switch buffer behavior
+set backspace=indent,eol,start   " Intuitive backspacing in insert mode
+set showfulltag                  " Show tag and tidy search in completion
+set linebreak                    " Break long lines at 'breakat'
+set breakat=\ \	;:,!?            " Long lines break chars
+set nostartofline                " Cursor in same column for few commands
+set whichwrap+=h,l,<,>,[,],~     " Move to following line on certain keys
+set completeopt=menuone          " Show menu even for one item
+set completeopt+=noselect        " Do not select a match in the menu
+if has('patch-7.4.775')
+	set completeopt+=noinsert     " do not insert the selected
+endif
 
 " }}}
 " Editor UI Appearance {{{

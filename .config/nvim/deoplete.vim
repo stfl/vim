@@ -5,11 +5,9 @@ let g:deoplete#enable_at_startup = 1
 
 autocmd CompleteDone * pclose!
 
-set completeopt+=noinsert,noselect
-
-let g:deoplete#enable_refresh_always = 1
+" let g:deoplete#enable_refresh_always = 1
 let g:deoplete#enable_camel_case = 1
-let g:deoplete#auto_complete_start_length = 2
+let g:deoplete#auto_complete_start_length = 3
 
 let g:deoplete#keyword_patterns = {}
 let g:deoplete#keyword_patterns._ = '[a-zA-Z_]\k*\(?'
