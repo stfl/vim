@@ -80,6 +80,13 @@ nmap ga <Plug>(EasyAlign)
 NeoBundle 'chrisbra/vim-diff-enhanced'
 NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive'} " a Git wrapper so awesome, it should be illegal
 NeoBundle 'idanarye/vim-merginal', { 'augroup' : 'fugitive'} " Fugitive extension to manage and merge Git branches
+NeoBundle 'lambdalisue/vim-gista'
+" git config github.user {username}
+"
+NeoBundle 'lambdalisue/vim-gista-unite', {
+    \ 'depends': 'vim-gista',
+    \ }
+
 NeoBundle 'mhinz/vim-signify'                      " git diff as signs {{{
 autocmd User Fugitive SignifyRefresh
 let g:signify_sign_change            = '~'
@@ -588,9 +595,8 @@ if has('patch-7.4.1570')
 	set shortmess+=F
 endif
 
-" For snippet_complete marker
 if has('conceal') && v:version >= 703
-	set conceallevel=2 concealcursor=niv
+	set conceallevel=2 concealcursor=nv
 endif
 
 " }}}
