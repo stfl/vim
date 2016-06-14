@@ -281,13 +281,7 @@ NeoBundle 'carlitux/deoplete-ternjs', {
 NeoBundle 'fatih/vim-go'
 NeoBundle 'garyburd/go-explorer'
 NeoBundle 'vim-scripts/gtk-vim-syntax'
-" Plug 'Rip-Rip/clang_complete', { 'do': 'make install' } " {{{
-" let g:clang_complete_auto = 1
-" let g:clang_auto_select = 1
-" let g:clang_default_keymappings = 0
-" "let g:clang_use_library = 1
-" " let g:clang_library_path='/usr/lib/x86_64-linux-gnu'
-" " ln libclang.so.1 libclang.so
+
 
 NeoBundle 'Shougo/context_filetype.vim'
 NeoBundle 'Shougo/deoplete.nvim', {
@@ -300,50 +294,17 @@ NeoBundle 'Shougo/deoplete.nvim', {
 source $HOME/.config/nvim/deoplete.vim
 " :UpdateRemotePlugins
 
-   " Plug 'Shougo/deoplete.nvim' " , { 'on': 'DeopleteEnable' }
-   " " " :UpdateRemotePlugins
-   " let g:deoplete#enable_at_startup = 1   "enable deoplete at vim startup
-   " let g:deoplete#enable_ignore_case = 1  "let matcher ignore case
-   " let g:deoplete#enable_smart_case = 1   "smart case
-   " " let g:deoplete#enable_fuzzy_completion = 1   "fuzzy match
-   " let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})  "get default patterns where need to autocomplete
-   " " inoremap <expr><C-h> deolete#mappings#smart_close_popup()."\<C-h>"
-   " " inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
-" endif
-" elseif version >= 703 && has('lua') {{{
-   " Plug 'Shougo/neocomplete.vim' " , { 'on': 'NeoCompleteEnable' }
-
-   " let g:neocomplete#enable_at_startup = 1
-   " " Use smartcase.
-   " let g:neocomplete#enable_smart_case = 1
-   " " Set minimum syntax keyword length.
-   " let g:neocomplete#sources#syntax#min_keyword_length = 3
-   " let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-   " " Define dictionary.
-   " let g:neocomplete#sources#dictionary#dictionaries = {
-            " \ 'default' : ''
-            " \ }
-
-   " " Define keyword.
-   " if !exists('g:neocomplete#keyword_patterns')
-      " let g:neocomplete#keyword_patterns = {}
-   " endif
-   " let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-   " inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-   " " <C-h>, <BS>: close popup and delete backword char.
-   " inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-   " inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-
-   " " Enable heavy omni completion.
-   " if !exists('g:neocomplete#sources#omni#input_patterns')
-      " let g:neocomplete#sources#omni#input_patterns = {}
-   " endif
-   " let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-   " let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" endif }}} }}}
+NeoBundle 'Rip-Rip/clang_complete', { 'build': 'make install' } " {{{
+let g:clang_complete_auto = 1
+let g:clang_auto_select = 1
+let g:clang_default_keymappings = 0
+let g:clang_jumpto_declaration_key = "<c-[>"
+let g:clang_use_library = 1
+" let g:clang_auto_user_options = ".clang_complete"
+let g:clang_library_path = "/home_vie/slendl/.linuxbrew/lib"
+" ln libclang.so.1 libclang.so
+" check out clang completion database.. cmake can produce such a database
+" }}}
 " " YCM {{{
 " let cmake_version = split(system('cmake --version'))
 " if executable('cmake') && VerNewerThen("2.8.11", cmake_version[2])
@@ -413,10 +374,10 @@ set autoread          " Set to auto read when a file is changed from the outside
 set smartindent
 set expandtab      " tab expansion to spaces
 set smarttab
-set tabstop=2
-set shiftwidth=2
+set tabstop=3
+set shiftwidth=3
 set shiftround      " Round indent to multiple of 'shiftwidth'
-set softtabstop=2
+set softtabstop=3
 set scrolloff=5    " scroll offset at begining and end of line
 set textwidth=100  " line break after 100 char
 
@@ -546,21 +507,25 @@ endif
 " Behavior {{{
 
 syntax on        " Syntax highlighting
-set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
-" set complete=.
+" set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
+set complete=.,kspell
 set foldmethod=marker            " allow folding at markers
 " set foldcolumn=3
 set foldnestmax=3
 set diffopt=filler,vertical,iwhite  " ignore whitespace
-set splitbelow splitright       " Splits open bottom right
-set switchbuf=usetab,split      " Switch buffer behavior
-set backspace=indent,eol,start  " Intuitive backspacing in insert mode
-set showfulltag                 " Show tag and tidy search in completion
-set completeopt=menuone         " Show menu even for one item
-set linebreak                   " Break long lines at 'breakat'
-set breakat=\ \	;:,!?           " Long lines break chars
-set nostartofline               " Cursor in same column for few commands
-set whichwrap+=h,l,<,>,[,],~    " Move to following line on certain keys
+set splitbelow splitright        " Splits open bottom right
+set switchbuf=usetab,split       " Switch buffer behavior
+set backspace=indent,eol,start   " Intuitive backspacing in insert mode
+set showfulltag                  " Show tag and tidy search in completion
+set linebreak                    " Break long lines at 'breakat'
+set breakat=\ \	;:,!?            " Long lines break chars
+set nostartofline                " Cursor in same column for few commands
+set whichwrap+=h,l,<,>,[,],~     " Move to following line on certain keys
+set completeopt=menuone          " Show menu even for one item
+set completeopt+=noselect        " Do not select a match in the menu
+if has('patch-7.4.775')
+	set completeopt+=noinsert     " do not insert the selected
+endif
 
 " }}}
 " Editor UI Appearance {{{
@@ -698,10 +663,10 @@ nnoremap <leader>s :Sex<CR>
 " nnoremap <leader>s <C-w>s
 
 " split naviagetion
-" nnoremap <C-h> <C-w>h
-" nnoremap <C-j> <C-w>j
-" nnoremap <C-k> <C-w>k
-" nnoremap <C-l> <C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 
 nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
