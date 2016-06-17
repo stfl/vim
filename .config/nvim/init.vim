@@ -82,7 +82,6 @@ NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive'} " a Git wrapper so awe
 NeoBundle 'idanarye/vim-merginal', { 'augroup' : 'fugitive'} " Fugitive extension to manage and merge Git branches
 NeoBundle 'lambdalisue/vim-gista'
 " git config github.user {username}
-"
 NeoBundle 'lambdalisue/vim-gista-unite', {
     \ 'depends': 'vim-gista',
     \ }
@@ -135,14 +134,34 @@ NeoBundle 'jeffkreeftmeijer/vim-numbertoggle'
 NeoBundle 'powerman/vim-plugin-AnsiEsc'            " adds support for ansi escape characters - useful for vimpager
 NeoBundle 'tpope/vim-surround'
 " vimfiler {{{
+NeoBundle 'Shougo/neossh.vim' ", {'on_ft': 'vimfiler', 'sources': 'ssh'}
 NeoBundle 'Shougo/vimfiler.vim', {
          \ 'depends': 'unite.vim',
-         \ 'on_map': [['n', '<Plug>']],
-         \ 'on_if': "isdirectory(bufname('%'))",
-         \ 'hook_post_source': 'source '.$HOME.'.config/nvim/vimfiler.vim'
          \ }
-NeoBundle 'Shougo/neossh.vim', {'on_ft': 'vimfiler', 'sources': 'ssh'}
+         " \ 'on_map': [['n', '<Plug>']],
+         " \ 'on_if': "isdirectory(bufname('%'))",
+         " \ 'hook_post_source': 'source '.$HOME.'.config/nvim/vimfiler.vim'
 
+let g:vimfiler_as_default_explorer = 1
+let g:vimfiler_restore_alternate_file = 1
+"let g:vimfiler_preview_action = 'auto_preview'
+
+let g:vimfiler_ignore_pattern =
+         \ '^\%(\.git\|\.svn|\.idea\|\.DS_Store\|\.vagrant\|\.stversions\|\.tmp'
+         \ .'\|node_modules\|.*\.pyc\|.*\.egg-info\|__pycache__\)$'
+
+" call vimfiler#custom#profile('default', 'context', {
+         " \  'safe': 0,
+         " \  'explorer': 1,
+         " \  'winwidth': 25,
+         " \  'split': 1,
+         " \  'direction': 'topleft',
+         " \  'auto_expand': 1,
+         " \  'no_quit': 1,
+         " \  'force_hide': 1,
+         " \  'parent': 0,
+         " \  'toggle': 1,
+         " \ })
 " }}}
 
 " NeoBundle 'terryma/vim-expand-region' "{{{
