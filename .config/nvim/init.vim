@@ -68,6 +68,14 @@ nnoremap <F6> :TagbarToggle<CR>
 NeoBundle 'tmux-plugins/vim-tmux'                  " vim plugin for tmux.conf
 NeoBundle 'tmux-plugins/vim-tmux-focus-events'
 NeoBundle 'christoomey/vim-tmux-navigator'
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
+" nnoremap <silent> <A-\> :TmuxNavigatePrevious<cr>
+
 NeoBundle 'scrooloose/nerdcommenter'
 let NERDSpaceDelims=1
 " 'tyru/caw.vim'
@@ -681,11 +689,11 @@ nnoremap <leader>v :Vex<CR>
 nnoremap <leader>s :Sex<CR>
 " nnoremap <leader>s <C-w>s
 
-" split naviagetion
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
+" " split naviagetion
+" nnoremap <A-h> <C-w>h
+" nnoremap <A-j> <C-w>j
+" nnoremap <A-k> <C-w>k
+" nnoremap <A-l> <C-w>l
 
 nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
