@@ -553,6 +553,10 @@ set completeopt+=noselect        " Do not select a match in the menu
 if has('patch-7.4.775')
 	set completeopt+=noinsert     " do not insert the selected
 endif
+if has('cscope')
+  set cscopetag                  " use cscope db when C-]
+  set cscopeverbose
+endif
 
 " }}}
 " Editor UI Appearance {{{
