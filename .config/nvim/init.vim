@@ -305,10 +305,9 @@ NeoBundle 'carlitux/deoplete-ternjs', {
          \ }
 
 " }}}
-NeoBundle 'fatih/vim-go'
-NeoBundle 'garyburd/go-explorer'
+" NeoBundle 'fatih/vim-go'
+" NeoBundle 'garyburd/go-explorer'
 NeoBundle 'vim-scripts/gtk-vim-syntax'
-
 
 NeoBundle 'Shougo/context_filetype.vim'
 NeoBundle 'Shougo/deoplete.nvim', {
