@@ -30,6 +30,7 @@ if !empty(glob("~/.zprofile.frq"))
             \ }
             " \ 'disabled' : !executable('svn'),
 endif "}}}
+NeoBundle 'kergoth/vim-bitbake'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'vim-airline/vim-airline' "{{{
 NeoBundle 'vim-airline/vim-airline-themes'
