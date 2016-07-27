@@ -18,6 +18,10 @@ call neobundle#begin(expand('~/.config/nvim/bundle/'))
 " }}}
 NeoBundleFetch 'Shougo/neobundle.vim'
 let g:neobundle#install_process_timeout = 1500
+NeoBundle 'bchretien/vim-profiler'
+NeoBundle 'embear/vim-localvimrc'
+let g:localvimrc_ask = 0
+let g:localvimrc_sandbox = 0
 " ReleaseNotes {{{
 if !empty(glob("~/.zprofile.frq"))
    NeoBundleLazy 'ReleaseNotes', {
@@ -56,7 +60,7 @@ NeoBundle 'junegunn/fzf', { 'build': './install --all' } "{{{
 NeoBundle 'junegunn/fzf.vim'
 nnoremap <c-p> :FZF<CR>
 "}}}
-source ~/.config/nvim/unit.vim
+source $HOME/.config/nvim/unit.vim
 NeoBundle 'majutsushi/tagbar'                      " Vim plugin that displays tags in a window, ordered by scope {{{
 nnoremap <F6> :TagbarToggle<CR>
 "}}}
@@ -70,7 +74,6 @@ NeoBundle 'tmux-plugins/vim-tmux'                  " vim plugin for tmux.conf
 NeoBundle 'tmux-plugins/vim-tmux-focus-events'
 NeoBundle 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_no_mappings = 1
-
 nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
@@ -87,8 +90,9 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 "}}}
 NeoBundle 'chrisbra/vim-diff-enhanced'
-NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive'} " a Git wrapper so awesome, it should be illegal
-NeoBundle 'idanarye/vim-merginal', { 'augroup' : 'fugitive'} " Fugitive extension to manage and merge Git branches
+" NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive'} " a Git wrapper so awesome, it should be illegal
+" NeoBundle 'idanarye/vim-merginal', { 'augroup' : 'fugitive'} " Fugitive extension to manage and merge Git branches
+NeoBundle 'lambdalisue/vim-gita'
 NeoBundle 'lambdalisue/vim-gista'
 " git config github.user {username}
 NeoBundle 'lambdalisue/vim-gista-unite', {
@@ -177,7 +181,8 @@ let g:vimfiler_ignore_pattern =
 " map gk <Plug>(expand_region_expand)
 " map gj <Plug>(expand_region_shrink)
 "}}}
-NeoBundle 'terryma/vim-multiple-cursors'
+" NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'vim-scripts/accelerated-jk'
 
 " CODING Plugins
 " Pandoc | Markdown {{{
@@ -309,7 +314,7 @@ NeoBundle 'carlitux/deoplete-ternjs', {
 " NeoBundle 'fatih/vim-go'
 " NeoBundle 'garyburd/go-explorer'
 NeoBundle 'vim-scripts/gtk-vim-syntax'
-
+NeoBundle 'vivien/vim-linux-coding-style'
 NeoBundle 'Shougo/context_filetype.vim'
 NeoBundle 'Shougo/deoplete.nvim', {
    \ 'depends': 'context_filetype.vim',
@@ -321,15 +326,15 @@ NeoBundle 'Shougo/deoplete.nvim', {
 source $HOME/.config/nvim/deoplete.vim
 " :UpdateRemotePlugins
 
-NeoBundle 'Rip-Rip/clang_complete', { 'build': 'make install' } " {{{
-let g:clang_complete_auto = 1
-let g:clang_auto_select = 1
-let g:clang_default_keymappings = 0
-let g:clang_jumpto_declaration_key = "<c-[>"
-let g:clang_use_library = 1
-" let g:clang_auto_user_options = ".clang_complete"
-let g:clang_library_path = "/home_vie/slendl/.linuxbrew/lib"
-" ln libclang.so.1 libclang.so
+" NeoBundle 'Rip-Rip/clang_complete', { 'build': 'make install' } " {{{
+" let g:clang_complete_auto = 1
+" let g:clang_auto_select = 1
+" let g:clang_default_keymappings = 0
+" let g:clang_jumpto_declaration_key = "<c-[>"
+" let g:clang_use_library = 1
+" " " let g:clang_auto_user_options = ".clang_complete"
+" " let g:clang_library_path = "/home_vie/slendl/.linuxbrew/lib"
+" " ln libclang.so.1 libclang.so
 " check out clang completion database.. cmake can produce such a database
 " }}}
 " " YCM {{{
@@ -366,17 +371,20 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'Shougo/neosnippet-snippets'
 "}}}
-NeoBundle 'xolox/vim-easytags', { 'depends' : 'xolox/vim-misc' } "{{{
-set tags=./tags,./TAGS,tags;TAGS;   " make vim look for tags file reverse-recursivly ;)
-let g:easytags_dynamic_files = 1    " make easytags use this file instead of global
-let g:easytags_async = 1            " make easytag update async
-let g:easytags_opts = ['--c-kinds=+defgpstuxm --fields=+iaS --extra=+q']
-nmap <F8> :UpdateTags<CR>
+" NeoBundle 'xolox/vim-easytags', { 'depends' : 'xolox/vim-misc' } "{{{
+" set tags=./tags,./TAGS,tags;TAGS;   " make vim look for tags file reverse-recursivly ;)
+" let g:easytags_dynamic_files = 1    " make easytags use this file instead of global
+" let g:easytags_async = 1            " make easytag update async
+" let g:easytags_opts = ['--c-kinds=+defgpstuxm --fields=+iaS --extra=+q']
+" let g:easytags_auto_update = 0      " that kills the io in the kernel
+" nmap <F8> :UpdateTags<CR>
 "}}}
 NeoBundle 'Raimondi/delimitMate', {
          \ 'on_i': 1,
-         \ 'hook_source': 'let g:delimitMate_expand_cr = 1',
          \ }
+         " \ 'hook_source': 'let g:delimitMate_expand_cr = 1',
+let g:delimitMate_expand_cr = 1
+
 " LucHermitte/lh-brackets {{{
 " NeoBundle 'LucHermitte/lh-vim-lib'
 " NeoBundle 'LucHermitte/lh-tags'
@@ -409,7 +417,7 @@ set scrolloff=5    " scroll offset at begining and end of line
 set textwidth=100  " line break after 100 char
 
 if has('patch-7.3.541')
-	set formatoptions+=j       " Remove comment leader when joining lines
+   set formatoptions+=j       " Remove comment leader when joining lines
 endif
 
 " }}}
@@ -442,8 +450,8 @@ set fileformats=unix,dos,mac " Use Unix as the standard file type
 set magic                    " For regular expressions turn magic on
 
 if has('vim_starting')
-	set encoding=utf-8
-	scriptencoding utf-8
+   set encoding=utf-8
+   scriptencoding utf-8
 endif
 
 " }}}
@@ -520,14 +528,14 @@ endif
 
 set pastetoggle=<F2>      " better copy & pase behabour
 if ( ! has('nvim') && has('clipboard'))
-	if has('unnamedplus') || executable('pbcopy') || executable('xclip') || executable('xsel')
-		set clipboard& clipboard+=unnamedplus
-	else
-		set clipboard& clipboard+=unnamed
-	endif
+   if has('unnamedplus') || executable('pbcopy') || executable('xclip') || executable('xsel')
+      set clipboard& clipboard+=unnamedplus
+   else
+      set clipboard& clipboard+=unnamed
+   endif
 elseif (executable('pbcopy') || executable('xclip') || executable('xsel'))
-  " nvim
-  set clipboard& clipboard+=unnamedplus
+   " nvim
+   set clipboard& clipboard+=unnamedplus
 endif
 
 " }}}
@@ -551,11 +559,11 @@ set whichwrap+=h,l,<,>,[,],~     " Move to following line on certain keys
 set completeopt=menuone          " Show menu even for one item
 set completeopt+=noselect        " Do not select a match in the menu
 if has('patch-7.4.775')
-	set completeopt+=noinsert     " do not insert the selected
+   set completeopt+=noinsert     " do not insert the selected
 endif
 if has('cscope')
-  set cscopetag                  " use cscope db when C-]
-  set cscopeverbose
+   set cscopetag                  " use cscope db when C-]
+   set cscopeverbose
 endif
 
 " }}}
@@ -583,16 +591,16 @@ set fillchars="vert:|,diff: ,fold: "     " make folds prettier"
 " Do not display completion messages
 " Patch: https://groups.google.com/forum/#!topic/vim_dev/WeBBjkXE8H8
 " if has('patch-7.4.314')
-	" set shortmess+=c
+   " set shortmess+=c
 " endif
 
 " Do not display message when editing files
 if has('patch-7.4.1570')
-	set shortmess+=F
+   set shortmess+=F
 endif
 
 if has('conceal') && v:version >= 703
-	set conceallevel=2 concealcursor=nv
+   set conceallevel=2 concealcursor=nv
 endif
 
 " }}}
@@ -604,8 +612,8 @@ set ttimeoutlen=250  " Time out on key codes
 set updatetime=1500  " Idle time to write swap and trigger CursorHold
 
 if has('nvim')
-	" https://github.com/neovim/neovim/issues/2017
-	set ttimeoutlen=-1
+   " https://github.com/neovim/neovim/issues/2017
+   set ttimeoutlen=-1
 endif
 
 " }}}
@@ -680,8 +688,10 @@ inoremap jk <Esc>
 inoremap <Esc> <nop>
 nnoremap Q <nop>
 
-noremap <silent> j gj
-noremap <silent> k gk
+nmap j <Plug>(accelerated_jk_gj_position)
+nmap k <Plug>(accelerated_jk_gk_position)
+" noremap <silent> j gj
+" noremap <silent> k gk
 
 nnoremap <F7> :call TogleVisibility()<CR>
 nnoremap <leader><F7> :set list!<CR>
@@ -719,15 +729,14 @@ vnoremap > >gv
 nmap <expr> du  &diff ? ':diffupdate<CR>' : 'du'
 nnoremap <expr> do  &diff ? 'do]czz' : 'do'
 nnoremap <expr> dp  &diff ? 'dp]czz' : 'dp'
-nnoremap <expr> 2do  &diff ? ':diffget //2<CR>]czz' : '2do'
-nnoremap <expr> 3do  &diff ? ':diffget //3<CR>]czz' : '3do'
+" nnoremap <expr> 2do  &diff ? ':diffget //2<CR>]czz' : '2do'
+" nnoremap <expr> 3do  &diff ? ':diffget //3<CR>]czz' : '3do'
 
 " find {} even if not in the first column
 " map [[ ?{<CR>w99[{:nohl<cr>
 " map ][ /}<CR>b99]}:nohl<cr>
 " map ]] j0[[%/{<CR>:nohl<cr>
 " map [] k$][%?}<CR>:nohl<cr>
-
 
 " map Ctrl-M to remove highlight from last search
 nnoremap <C-M> :nohl<CR>
@@ -750,6 +759,8 @@ if has('nvim')
    tnoremap <C-l> <C-\><C-n><C-w>l
    tnoremap <C-w><C-w> <C-\><C-n><C-w><c-w>
 endif
+
+nnoremap <Space>cc <Plug>(gita-commit-open)
 
 " usefull keys from US-Keyboard - maped to German"{{{
 nmap ö [
