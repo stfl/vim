@@ -9,3 +9,8 @@ NeoBundle 'Shougo/vimproc.vim', {
 \ }
 
 NeoBundle 'Shougo/unite.vim'
+
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/unite-outline'
+NeoBundle 'Shougo/neoyank.vim'
+" NeoBundle 'Shougo/unite-build'

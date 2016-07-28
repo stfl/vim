@@ -60,7 +60,7 @@ NeoBundle 'junegunn/fzf', { 'build': './install --all' } "{{{
 NeoBundle 'junegunn/fzf.vim'
 nnoremap <c-p> :FZF<CR>
 "}}}
-source $HOME/.config/nvim/unit.vim
+source $HOME/.config/nvim/unite.vim
 NeoBundle 'majutsushi/tagbar'                      " Vim plugin that displays tags in a window, ordered by scope {{{
 nnoremap <F6> :TagbarToggle<CR>
 "}}}
@@ -146,6 +146,7 @@ vmap <leader>q <plug>(QuickScopeToggle)
 NeoBundle 'jeffkreeftmeijer/vim-numbertoggle'
 NeoBundle 'powerman/vim-plugin-AnsiEsc'            " adds support for ansi escape characters - useful for vimpager
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'Shougo/echodoc.vim'
 " vimfiler {{{
 NeoBundle 'Shougo/neossh.vim' ", {'on_ft': 'vimfiler', 'sources': 'ssh'}
 NeoBundle 'Shougo/vimfiler.vim', {
@@ -638,6 +639,9 @@ nnoremap <space>/ :Unite grep:.<cr>
 " switching buffers
 nnoremap <space>s :Unite -quick-match buffer<cr>
 
+" MRU
+nnoremap <space>p :Unite file_mru<cr>
+
 " }}}
 " colorization and styles {{{
 let g:solarized_contrast = "high"
@@ -759,8 +763,6 @@ if has('nvim')
    tnoremap <C-l> <C-\><C-n><C-w>l
    tnoremap <C-w><C-w> <C-\><C-n><C-w><c-w>
 endif
-
-nnoremap <Space>cc <Plug>(gita-commit-open)
 
 " usefull keys from US-Keyboard - maped to German"{{{
 nmap ö [
