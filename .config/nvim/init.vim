@@ -748,7 +748,9 @@ vnoremap > >gv
 " nmap <expr> <C-K>  &diff ? '[czz' : '<C-K>'
 nmap <expr> du  &diff ? ':diffupdate<CR>' : 'du'
 nnoremap <expr> do  &diff ? 'do]czz' : 'do'
+" vnoremap <expr> do  &diff ? ":'<,'>diffget<CR>:diffupdate<CR>" : 'do'
 nnoremap <expr> dp  &diff ? 'dp]czz' : 'dp'
+vnoremap <expr> dp  &diff ? ":'<,'>diffput<CR>:diffupdate<CR>" : 'dp'
 " nnoremap <expr> 2do  &diff ? ':diffget //2<CR>]czz' : '2do'
 " nnoremap <expr> 3do  &diff ? ':diffget //3<CR>]czz' : '3do'
 
