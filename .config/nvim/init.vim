@@ -17,7 +17,7 @@ set runtimepath^=~/.config/nvim/bundle/neobundle.vim/
 call neobundle#begin(expand('~/.config/nvim/bundle/'))
 " }}}
 NeoBundleFetch 'Shougo/neobundle.vim'
-let g:neobundle#install_process_timeout = 1500
+" let g:neobundle#install_process_timeout = 1500
 NeoBundle 'bchretien/vim-profiler'
 NeoBundle 'embear/vim-localvimrc'
 let g:localvimrc_ask = 0
@@ -35,10 +35,22 @@ if !empty(glob("~/.zprofile.frq"))
             " \ 'disabled' : !executable('svn'),
 endif "}}}
 NeoBundle 'kergoth/vim-bitbake'
+NeoBundle 'Shougo/vinarise.vim'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'vim-airline/vim-airline' "{{{
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+let g:airline#extensions#tabline#show_tab_nr = 1
+let g:airline#extensions#tabline#show_tab_type = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+" fixes unneccessary redraw, when e.g. opening Gundo window
+let airline#extensions#tabline#ignore_bufadd_pat =
+            \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#show_splits = 0
 NeoBundle 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
+let g:airline_theme='solarized'
 "}}}
 NeoBundle 'mileszs/ack.vim' "{{{
 if executable('ag')
@@ -51,38 +63,50 @@ nnoremap <leader>* :Ack! <c-r><c-w><cr>
 NeoBundle 'mbbill/undotree', { 'on_cmd': 'UndotreeToggle' } " {{{
 nnoremap <F5> :UndotreeToggle<cr>
 "}}}
-" NeoBundle 'ctrlpvim/ctrlp.vim' "{{{
-" " open file in new tab with <c-t> = default
-" let g:ctrlp_extensions = ['tag']
-" nmap <leader><c-p> :CtrlPTag<cr>
-"}}}
-NeoBundle 'junegunn/fzf', { 'build': './install --all' } "{{{
-NeoBundle 'junegunn/fzf.vim'
+" FZF {{{
+NeoBundle 'junegunn/fzf', { 
+         \ 'build': './install --all',
+         \ 'install_process_timeout': '800'
+         \ }
+NeoBundleLazy 'junegunn/fzf.vim', {
+         \ 'on_cmd': 'FZF'
+         \ }
 nnoremap <c-p> :FZF<CR>
 "}}}
 source $HOME/.config/nvim/unite.vim
 NeoBundle 'majutsushi/tagbar'                      " Vim plugin that displays tags in a window, ordered by scope {{{
 nnoremap <F6> :TagbarToggle<CR>
 "}}}
-" NeoBundle 'scrooloose/nerdtree' , { 'on_cmd':  'NERDTreeToggle' } "{{{
-" nnoremap <F3> :NERDTreeToggle<CR>
-" NeoBundle 'jistr/vim-nerdtree-tabs'
-" let g:nerdtree_tabs_open_on_gui_startup = 0
-" let NERDTreeHijackNetrw=1"}}}
-" NeoBundle 'tpope/vim-vinegar'
+" tmux {{{
 NeoBundle 'tmux-plugins/vim-tmux'                  " vim plugin for tmux.conf
 NeoBundle 'tmux-plugins/vim-tmux-focus-events'
 NeoBundle 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
-" nnoremap <silent> <A-\> :TmuxNavigatePrevious<cr>
+" create a Tmuxline with airline colors 
+" NeoBundleLazy 'edkolev/tmuxline.vim', {
+"          \ 'on_cmd' : 'Tmuxline'
+"          \ }
+" if neobundle#tap('tmuxline.vim')
+"    let g:tmuxline_preset = {
+"             \'a'       : '#S',
+"             \'b'       : '#F',
+"             \'win'     : '#I #W',
+"             \'cwin'    : ['#I', '#W'],
+"             \'x'       : ['#(tmux-mem-cpu-load --interval 2)', 'Cont: \#{continuum_status}', '%a'],
+"             \'y'       : ['%d. %h', '%H:%M'],
+"             \'z'       : '#H',
+"             \'options' : {'status-justify' : 'left'}}
+"    call neobundle#untap()
+" endif
 
+" }}}
 NeoBundle 'scrooloose/nerdcommenter'
 let NERDSpaceDelims=1
+let g:NERDDefaultAlign = 'left'
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
 " 'tyru/caw.vim'
+NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'junegunn/vim-easy-align' "{{{
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -147,35 +171,20 @@ NeoBundle 'jeffkreeftmeijer/vim-numbertoggle'
 NeoBundle 'powerman/vim-plugin-AnsiEsc'            " adds support for ansi escape characters - useful for vimpager
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'Shougo/echodoc.vim'
-" vimfiler {{{
+
+" VimFiler {{{
 NeoBundle 'Shougo/neossh.vim' ", {'on_ft': 'vimfiler', 'sources': 'ssh'}
 NeoBundle 'Shougo/vimfiler.vim', {
          \ 'depends': 'unite.vim',
          \ }
+         " \ 'hook_post_source': 'source '.$HOME.'/.config/nvim/vimfiler.vim'
          " \ 'on_map': [['n', '<Plug>']],
          " \ 'on_if': "isdirectory(bufname('%'))",
-         " \ 'hook_post_source': 'source '.$HOME.'.config/nvim/vimfiler.vim'
-
-let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_restore_alternate_file = 1
-"let g:vimfiler_preview_action = 'auto_preview'
-
-let g:vimfiler_ignore_pattern =
-         \ '^\%(\.git\|\.svn|\.idea\|\.DS_Store\|\.vagrant\|\.stversions\|\.tmp'
-         \ .'\|node_modules\|.*\.pyc\|.*\.egg-info\|__pycache__\)$'
-
-" call vimfiler#custom#profile('default', 'context', {
-         " \  'safe': 0,
-         " \  'explorer': 1,
-         " \  'winwidth': 25,
-         " \  'split': 1,
-         " \  'direction': 'topleft',
-         " \  'auto_expand': 1,
-         " \  'no_quit': 1,
-         " \  'force_hide': 1,
-         " \  'parent': 0,
-         " \  'toggle': 1,
-         " \ })
+" $HOME/.config/nvim/vimfiler.vim
+if neobundle#tap('vimfiler.vim')
+   let neobundle#hooks.on_source = $HOME.'/.config/nvim/vimfiler.vim'
+   call neobundle#untap()
+endif
 " }}}
 
 " NeoBundle 'terryma/vim-expand-region' "{{{
@@ -249,20 +258,6 @@ endif
 " let g:syntastic_python_checkers=['flake8']
 " let g:syntastic_python_flake8_args='--ignore=E501,E225'
 " }}}
-" Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box."{{{
-" NeoBundle 'klen/python-mode', { 'on_ft': 'python' }
-" " set this if compiled with both versions
-" if has('pyton3')
-   " let g:pymode_python = 'python3'
-" endif
-" let g:pymode_rope_completion = 1
-" let g:pymode_rope_complete_on_dot = 1
-" let g:pymode_lint_ignore = "E501"
-
-" augroup python_aug
-   " autocmd!
-   " autocmd FileType python setlocal textwidth=79 colorcolumn=79
-" augroup END
 
 "}}}
 NeoBundle 'davidhalter/jedi-vim', {'on_ft': 'python'} " {{{
@@ -289,11 +284,11 @@ if ! has('nvim')
    setlocal completeopt=menuone,longest
    augroup MyAutoCmd
       autocmd FileType python
-               \ if has('python') || has('python3') |
-               \   setlocal omnifunc=jedi#completions |
-               \ else |
-               \   setlocal omnifunc= |
-               \ endif
+            \ if has('python') || has('python3') |
+            \   setlocal omnifunc=jedi#completions |
+            \ else |
+            \   setlocal omnifunc= |
+            \ endif
    augroup END
 endif
 
@@ -324,8 +319,21 @@ NeoBundle 'Shougo/deoplete.nvim', {
    \ }
    " \ 'hook_source': 'let g:deoplete#enable_at_startup = 1'
    " \   .' | source '.$HOME.'/.config/nvim/deoplete.vim'
-source $HOME/.config/nvim/deoplete.vim
+" source $HOME/.config/nvim/deoplete.vim
+if neobundle#tap('deoplete.nvim')
+   let neobundle#hooks.on_source = $HOME.'/.config/nvim/deoplete.vim'
+   call neobundle#untap()
+endif
 " :UpdateRemotePlugins
+
+NeoBundleLazy 'zchee/deoplete-clang', {
+         \ 'depends': 'deoplete.nvim',
+         \ 'on_i': 1,
+         \ }
+         " \ 'on_ft': 'c,cpp',
+" sudo find /usr/ -name libclang.so                                                                                              ⏎
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-3.5/lib/libclang.so'
+let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.5/'
 
 " NeoBundle 'Rip-Rip/clang_complete', { 'build': 'make install' } " {{{
 " let g:clang_complete_auto = 1
@@ -430,10 +438,12 @@ set infercase
 set incsearch       " Incremental search
 set hlsearch        " Highlight search results
 set wrapscan        " Searches wrap around the end of the file
+
 set showmatch       " Jump to matching bracket
-set matchpairs+=<:> " Add HTML brackets to pair matching
-set matchtime=1     " Tenths of a second to show the matching paren
 set cpoptions-=m    " showmatch will wait 0.5s or until a char is typed
+set matchtime=1     " Tenths of a second to show the matching paren
+set matchpairs+=<:> " Add HTML brackets to pair matching
+au FileType c,cpp set matchpairs-=<:>
 " }}}
 " General {{{
 
@@ -688,6 +698,9 @@ endif
 " let mapleader = "\"  " rebmap the <Leader> key
 let mapleader = ","  " rebmap the <Leader> key
 
+noremap ; :
+noremap : ;
+
 inoremap jk <Esc>
 inoremap <Esc> <nop>
 nnoremap Q <nop>
@@ -701,17 +714,20 @@ nnoremap <F7> :call TogleVisibility()<CR>
 nnoremap <leader><F7> :set list!<CR>
 
 " split vertically
-nnoremap <leader>v :Vex<CR>
-" nnoremap <leader>v <C-w>v<C-w>l
-" split vertically
-nnoremap <leader>s :Sex<CR>
-" nnoremap <leader>s <C-w>s
+nnoremap <leader>v :VimFilerSplit<cr>
+nnoremap <leader>e :VimFilerExplorer<cr>
+nnoremap <leader>t :VimFilerTab<CR>
 
 " " split naviagetion
 " nnoremap <A-h> <C-w>h
 " nnoremap <A-j> <C-w>j
 " nnoremap <A-k> <C-w>k
 " nnoremap <A-l> <C-w>l
+nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
+" nnoremap <silent> <A-\> :TmuxNavigatePrevious<cr>
 
 nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
@@ -747,7 +763,7 @@ nnoremap <C-M> :nohl<CR>
 " maps <CR> to :nohl in vim - TODO
 
 " map the F9 key to run make
-:map <F9> :make<CR>
+map <F9> :make<CR>
 
 nnoremap <leader>sv :so $MYVIMRC<CR>:e<CR>
 nnoremap <leader>ov :tabe $MYVIMRC<CR>
@@ -763,6 +779,27 @@ if has('nvim')
    tnoremap <C-l> <C-\><C-n><C-w>l
    tnoremap <C-w><C-w> <C-\><C-n><C-w><c-w>
 endif
+
+nnoremap gcc :Gita status<CR>
+augroup mygita
+   autocmd!
+   autocmd FileType gita-commit nmap cc <Plug>(gita-status-open)
+   autocmd FileType gita-status nmap cc <Plug>(gita-commit-open)
+augroup END
+
+" :h g:incsearch#auto_nohlsearch
+set hlsearch
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 
 " usefull keys from US-Keyboard - maped to German"{{{
 nmap ö [
