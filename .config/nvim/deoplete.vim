@@ -1,9 +1,9 @@
 " deoplete for nvim
 " ---
 
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 
-autocmd CompleteDone * pclose!
+autocmd MyAutoCmd CompleteDone * pclose!
 
 " let g:deoplete#enable_refresh_always = 1
 let g:deoplete#enable_camel_case = 1

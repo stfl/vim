@@ -1,16 +1,16 @@
-NeoBundle 'Shougo/vimproc.vim', {
-\ 'build' : {
-\     'windows' : 'tools\\update-dll-mingw',
-\     'cygwin' : 'make -f make_cygwin.mak',
-\     'mac' : 'make',
-\     'linux' : 'make',
-\     'unix' : 'gmake',
-\    },
-\ }
+" call dein#add('Shougo/vimproc.vim', {
+" \ 'build' : {
+" \     'windows' : 'tools\\update-dll-mingw',
+" \     'cygwin' : 'make -f make_cygwin.mak',
+" \     'mac' : 'make',
+" \     'linux' : 'make',
+" \     'unix' : 'gmake',
+" \    },
+" \ })
+call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 
-NeoBundle 'Shougo/unite.vim'
+call dein#add('Shougo/unite.vim')
 
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/unite-outline'
-NeoBundle 'Shougo/neoyank.vim'
-" NeoBundle 'Shougo/unite-build'
+call dein#add('Shougo/neomru.vim')
+call dein#add('Shougo/unite-outline')
+call dein#add('Shougo/neoyank.vim')

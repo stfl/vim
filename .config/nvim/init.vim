@@ -1,8 +1,6 @@
-" Plugins {{{
-" Init {{{
 " Note: Skip initialization for vim-tiny or vim-small.
 if 0 | endif
-function! VerNewerThen(min, current) "{{{
+function! VerNewerThen(min, current)
 " return 1 with version $current is newer then version $min
    if has('nvim')
       " neovim makes sth wierd with the string in system()
@@ -10,410 +8,61 @@ function! VerNewerThen(min, current) "{{{
    else
       return system("[  \"".a:min."\" = \"`echo -e \"".a:min."\\n".a:current." | sort -V | head -n1`\" ] && echo 1 || echo 0")
    endif
-endfunction "}}}
+endfunction
+
+" Set augroup
+augroup MyAutoCmd
+	autocmd!
+augroup END
 
 set nocompatible               " Be iMproved
-set runtimepath^=~/.config/nvim/bundle/neobundle.vim/
-call neobundle#begin(expand('~/.config/nvim/bundle/'))
-" }}}
-NeoBundleFetch 'Shougo/neobundle.vim'
-" let g:neobundle#install_process_timeout = 1500
-NeoBundle 'bchretien/vim-profiler'
-NeoBundle 'embear/vim-localvimrc'
-let g:localvimrc_ask = 0
-let g:localvimrc_sandbox = 0
-" ReleaseNotes {{{
-if !empty(glob("~/.zprofile.frq"))
-   NeoBundleLazy 'ReleaseNotes', {
-            \ 'external_commands' : 'svn',
-            \ 'uri' : 'http://svn.frequentis.frq/components/systemsw/software/dev-env/vim/trunk/Plugin-ReleaseNotes',
-            \ 'name' : 'ReleaseNotes',
-            \ 'on_ft' : 'ReleaseNotes',
-            \ 'disabled' : empty(glob("~/.zprofile.frq")),
-            \ 'type' : 'svn'
-            \ }
-            " \ 'disabled' : !executable('svn'),
-endif "}}}
-NeoBundle 'kergoth/vim-bitbake'
-NeoBundle 'Shougo/vinarise.vim'
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'vim-airline/vim-airline' "{{{
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
-let g:airline#extensions#tabline#show_tab_nr = 1
-let g:airline#extensions#tabline#show_tab_type = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-" fixes unneccessary redraw, when e.g. opening Gundo window
-let airline#extensions#tabline#ignore_bufadd_pat =
-            \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#show_splits = 0
-NeoBundle 'vim-airline/vim-airline-themes'
-let g:airline_powerline_fonts = 1
-let g:airline_theme='solarized'
-"}}}
-NeoBundle 'mileszs/ack.vim' "{{{
-if executable('ag')
-   let g:ackprg = 'ag --vimgrep'
-endif
-" search for current word in project: acording to current dir!!
-nnoremap <leader>* :Ack! <c-r><c-w><cr>
-" nnoremap <leader>t :Ack! "TODO\|FIXME"<CR>
-"}}}
-NeoBundle 'mbbill/undotree', { 'on_cmd': 'UndotreeToggle' } " {{{
-nnoremap <F5> :UndotreeToggle<cr>
-"}}}
-" FZF {{{
-NeoBundle 'junegunn/fzf', { 
-         \ 'build': './install --all',
-         \ 'install_process_timeout': '800'
-         \ }
-NeoBundleLazy 'junegunn/fzf.vim', {
-         \ 'on_cmd': 'FZF'
-         \ }
-nnoremap <c-p> :FZF<CR>
-"}}}
-source $HOME/.config/nvim/unite.vim
-NeoBundle 'majutsushi/tagbar'                      " Vim plugin that displays tags in a window, ordered by scope {{{
-nnoremap <F6> :TagbarToggle<CR>
-"}}}
-" tmux {{{
-NeoBundle 'tmux-plugins/vim-tmux'                  " vim plugin for tmux.conf
-NeoBundle 'tmux-plugins/vim-tmux-focus-events'
-NeoBundle 'christoomey/vim-tmux-navigator'
-let g:tmux_navigator_no_mappings = 1
-" create a Tmuxline with airline colors 
-" NeoBundleLazy 'edkolev/tmuxline.vim', {
-"          \ 'on_cmd' : 'Tmuxline'
-"          \ }
-" if neobundle#tap('tmuxline.vim')
-"    let g:tmuxline_preset = {
-"             \'a'       : '#S',
-"             \'b'       : '#F',
-"             \'win'     : '#I #W',
-"             \'cwin'    : ['#I', '#W'],
-"             \'x'       : ['#(tmux-mem-cpu-load --interval 2)', 'Cont: \#{continuum_status}', '%a'],
-"             \'y'       : ['%d. %h', '%H:%M'],
-"             \'z'       : '#H',
-"             \'options' : {'status-justify' : 'left'}}
-"    call neobundle#untap()
-" endif
+"Setup dein
+if &runtimepath !~# '/dein.vim'
+   let s:dein_dir = expand('$HOME/.config/nvim/dein.vim').'/repos/github.com/Shougo/dein.vim'
+   if ! isdirectory(s:dein_dir)
+      echom "installing dein.vim" s:dein_dir
+      execute '!git clone https://github.com/Shougo/dein.vim' s:dein_dir
+   endif
 
-" }}}
-NeoBundle 'scrooloose/nerdcommenter'
-let NERDSpaceDelims=1
-let g:NERDDefaultAlign = 'left'
-let g:NERDCommentEmptyLines = 1
-let g:NERDTrimTrailingWhitespace = 1
-" 'tyru/caw.vim'
-NeoBundle 'haya14busa/incsearch.vim'
-NeoBundle 'junegunn/vim-easy-align' "{{{
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-"}}}
-NeoBundle 'chrisbra/vim-diff-enhanced'
-" NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive'} " a Git wrapper so awesome, it should be illegal
-" NeoBundle 'idanarye/vim-merginal', { 'augroup' : 'fugitive'} " Fugitive extension to manage and merge Git branches
-NeoBundle 'lambdalisue/vim-gita'
-NeoBundle 'lambdalisue/vim-gista'
-" git config github.user {username}
-NeoBundle 'lambdalisue/vim-gista-unite', {
-    \ 'depends': 'vim-gista',
-    \ }
-
-NeoBundle 'mhinz/vim-signify'                      " git diff as signs {{{
-autocmd User Fugitive SignifyRefresh
-let g:signify_sign_change            = '~'
-" let g:signify_update_on_focusgained  = 1
-" ignore whitespaces in git
-if !exists('g:signify_vcs_cmds')
-   let g:signify_vcs_cmds = { 'git': 'git diff --no-color --no-ext-diff -U0 -w -- %f' }
-   " let g:signify_vcs_cmds = { 'svn': 'svn diff --diff-cmd %d -x -U0 -- %f' }
-endif "}}}
-NeoBundle 'juneedahamed/svnj.vim'                  " VIM SVN plugin ( subversion svn vim7) {{{
-let g:svnj_custom_statusbar_ops_hide = 1
-" Supported operations are listed on the status line of the svnj_window. With growing support for
-" many commands, recomend to hide it. You can still have a quick glance of supported operations by
-" pressing ? (question-mark)
-let g:svnj_browse_cache_all = 1
-" This enables caching, Listing of files will be faster, On MAC/Unix the default location is $HOME/.cache.
-" A new directory svnj will be created in the specified directory.
-"}}}
-NeoBundle 'kshenoy/vim-signature'                  " toggle, display and navigate marks {{{
-let g:SignatureMarkerTextHLDynamic=1
-let g:SignatureMarksTextHLDynamic=1
-let g:SignatureEnabledAtStartup=1
-" nnoremap mm :ToggleMarkAtLine<CR>
-let g:SignatureMap = { 'ToggleMarkAtLine'   :  "mm" }
-"}}}
-NeoBundle 'will133/vim-dirdiff'
-let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
-NeoBundle 'Lokaltog/vim-easymotion' " {{{
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-let g:EasyMotion_smartcase = 1
-nmap s <Plug>(easymotion-s2)
-map <leader>j <Plug>(easymotion-j)
-map <leader>k <Plug>(easymotion-k)
-
-NeoBundle 'unblevable/quick-scope'
-nmap <leader>q <plug>(QuickScopeToggle)
-vmap <leader>q <plug>(QuickScopeToggle)
-" let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-
-" NeoBundle 'justinmk/vim-sneak'
-" let g:sneak#use_ic_scs = 1
-" let g:sneak#streak = 1
-" }}}
-NeoBundle 'jeffkreeftmeijer/vim-numbertoggle'
-NeoBundle 'powerman/vim-plugin-AnsiEsc'            " adds support for ansi escape characters - useful for vimpager
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'Shougo/echodoc.vim'
-
-" VimFiler {{{
-NeoBundle 'Shougo/neossh.vim' ", {'on_ft': 'vimfiler', 'sources': 'ssh'}
-NeoBundle 'Shougo/vimfiler.vim', {
-         \ 'depends': 'unite.vim',
-         \ }
-         " \ 'hook_post_source': 'source '.$HOME.'/.config/nvim/vimfiler.vim'
-         " \ 'on_map': [['n', '<Plug>']],
-         " \ 'on_if': "isdirectory(bufname('%'))",
-" $HOME/.config/nvim/vimfiler.vim
-if neobundle#tap('vimfiler.vim')
-   let neobundle#hooks.on_source = $HOME.'/.config/nvim/vimfiler.vim'
-   call neobundle#untap()
-endif
-" }}}
-
-" NeoBundle 'terryma/vim-expand-region' "{{{
-" map gk <Plug>(expand_region_expand)
-" map gj <Plug>(expand_region_shrink)
-"}}}
-" NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'vim-scripts/accelerated-jk'
-
-" CODING Plugins
-" Pandoc | Markdown {{{
-NeoBundle 'vim-pandoc/vim-pandoc-syntax'
-NeoBundle 'vim-pandoc/vim-pandoc'
-let g:pandoc#command#latex_engine = 'pdflatex'
-let g:pandoc#command#autoexec_command = 'Pandoc pdf -s'
-" let g:pandoc#command#autoexec_on_writes = '1'
-augroup filetype_pandoc
-    autocmd!
-    autocmd FileType pandoc nnoremap <F9> :Pandoc pdf -s --number-sections <CR>
-    autocmd FileType pandoc,markdown nnoremap <localleader>aa :autocmd BufWritePost *.pdc :Pandoc pdf -s<CR>
-
-    " enable spelling in markdown and latex
-    autocmd FileType markdown,latex,pandoc setlocal spell textwidth=100 colorcolumn=100
-    autocmd BufRead *.md,*.tex,*.pdc setlocal spell textwidth=100 colorcolumn=100
-augroup END
-
-NeoBundle 'vim-pandoc/vim-pandoc-after'
-let g:pandoc#after#modules#enabled = ["unite", "neosnippets"]
-" }}}
-" LaTeX {{{
-NeoBundle 'lervag/vimtex'
-let g:tex_flavor = "latex"
-let g:tex_conceal = "adgm"
-let g:vimtex_fold_enabled = 1
-let g:vimtex_format_enabled = 1 " formating with gq considers comments
-let g:vimtex_view_method = 'zathura'
-" let g:vimtex_latexmk_continuous = 1
-let g:vimtex_latexmk_background = 1
-let g:vimtex_latexmk_callback = 1
-if has('nvim') && executable('nvr')
-   let g:vimtex_latexmk_progname = 'nvr'
-endif
-" }}}
-" syntastic {{{
-" if has('nvim')
-   " Plug 'benekastah/neomake'
-   " let g:neomake_logfile = resolve(expand("~/.vim/tmp/neomake.log"))
-   " let g:neomake_verbose = 2
-   " " let g:args = ['-fsyntax-only', '-Wall', '-Wextra']
-   " " call extend(g:args, split(system("pkg-config --cflags --libs gstreamer-1.0")))
-   " " let g:neomake_c_cpp_maker = {
-            " " \ 'args': g:args,
-            " " \ 'errorformat':
-            " " \ '%-G%f:%s:,' .
-            " " \ '%-G%f:%l: %#error: %#(Each undeclared identifier is reported only%.%#,' .
-            " " \ '%-G%f:%l: %#error: %#for each function it appears%.%#,' .
-            " " \ '%-GIn file included%.%#,' .
-            " " \ '%-G %#from %f:%l\,,' .
-            " " \ '%f:%l:%c: %trror: %m,' .
-            " " \ '%f:%l:%c: %tarning: %m,' .
-            " " \ '%f:%l:%c: %m,' .
-            " " \ '%f:%l: %trror: %m,' .
-            " " \ '%f:%l: %tarning: %m,'.
-            " " \ '%f:%l: %m',
-            " " \ }
-   " " let g:neomake_c_enabled_makers = ['cpp']
-" else
-   " Syntax checking hacks for vim
-   NeoBundle 'scrooloose/syntastic'
-" endif
-" let g:syntastic_python_checkers=['flake8']
-" let g:syntastic_python_flake8_args='--ignore=E501,E225'
-" }}}
-
-"}}}
-NeoBundle 'davidhalter/jedi-vim', {'on_ft': 'python'} " {{{
-NeoBundle 'zchee/deoplete-jedi', {'on_ft': 'python', 'on_i': 1}
-
-let g:jedi#force_py_version = 3
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#smart_auto_mappings = 0
-let g:jedi#use_tag_stack = 0
-let g:jedi#popup_select_first = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#show_call_signatures = 0
-let g:jedi#max_doc_height = 45
-let g:jedi#use_splits_not_buffers = 'bottom'
-let g:jedi#completions_command = ''
-let g:jedi#goto_command = '<leader>d'
-let g:jedi#goto_assignments_command = '<leader>a'
-let g:jedi#documentation_command = 'K'
-let g:jedi#rename_command = '<leader>r'
-let g:jedi#usages_command = '<leader>n'
-
-if ! has('nvim')
-   setlocal completeopt=menuone,longest
-   augroup MyAutoCmd
-      autocmd FileType python
-            \ if has('python') || has('python3') |
-            \   setlocal omnifunc=jedi#completions |
-            \ else |
-            \   setlocal omnifunc= |
-            \ endif
-   augroup END
+   execute 'set runtimepath^='.substitute( fnamemodify(s:dein_dir, ':p') , '/$', '', '')
 endif
 
-"}}}
-" Javascript {{{
-NeoBundle 'othree/yajs.vim', {'on_ft': 'javascript'}
-NeoBundle 'gavocanov/vim-js-indent', {'on_ft': 'javascript'}
-NeoBundle 'othree/javascript-libraries-syntax.vim', {'on_ft': 'javascript'}
-NeoBundle 'othree/jspc.vim', {'on_ft': 'javascript'}
-NeoBundle 'heavenshell/vim-jsdoc', {'on_ft': 'javascript'}
-NeoBundle 'moll/vim-node', {'on_ft': 'javascript'}
-NeoBundle 'carlitux/deoplete-ternjs', {
-         \ 'if': 'executable("tern")',
-         \ 'on_ft': 'javascript',
-         \ 'on_i': 1
-         \ }
+"set runtimepath^=$HOME/.config/nvim/dein.vim/repos/github.com/Shougo/dein.vim
 
-" }}}
-" NeoBundle 'fatih/vim-go'
-" NeoBundle 'garyburd/go-explorer'
-NeoBundle 'vim-scripts/gtk-vim-syntax'
-NeoBundle 'vivien/vim-linux-coding-style'
-NeoBundle 'Shougo/context_filetype.vim'
-NeoBundle 'Shougo/deoplete.nvim', {
-   \ 'depends': 'context_filetype.vim',
-   \ 'if': 'has("nvim")',
-   \ 'on_i': 1,
-   \ }
-   " \ 'hook_source': 'let g:deoplete#enable_at_startup = 1'
-   " \   .' | source '.$HOME.'/.config/nvim/deoplete.vim'
-" source $HOME/.config/nvim/deoplete.vim
-if neobundle#tap('deoplete.nvim')
-   let neobundle#hooks.on_source = $HOME.'/.config/nvim/deoplete.vim'
-   call neobundle#untap()
+let s:path = expand('$HOME/.config/nvim/dein.vim')
+"if dein#load_state(s:path)
+   call dein#begin(s:path, [$MYVIMRC, '$HOME/.config/nvim/plugins.vim'])
+   source $HOME/.config/nvim/plugins.vim
+   call dein#end()
+"   call dein#save_state()
+   if has('vim_starting') && dein#check_install()
+      if ! has('nvim')
+         set nomore
+      endif
+      call dein#install()
+   endif
+"endif
+
+
+"source '$HOME/.config/nvim/plugins_all.vim')
+
+if ! has('vim_starting')
+	call dein#call_hook('source')
+	call dein#call_hook('post_source')
 endif
-" :UpdateRemotePlugins
 
-NeoBundleLazy 'zchee/deoplete-clang', {
-         \ 'depends': 'deoplete.nvim',
-         \ 'on_i': 1,
-         \ }
-         " \ 'on_ft': 'c,cpp',
-" sudo find /usr/ -name libclang.so                                                                                              ⏎
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-3.5/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.5/'
-
-" NeoBundle 'Rip-Rip/clang_complete', { 'build': 'make install' } " {{{
-" let g:clang_complete_auto = 1
-" let g:clang_auto_select = 1
-" let g:clang_default_keymappings = 0
-" let g:clang_jumpto_declaration_key = "<c-[>"
-" let g:clang_use_library = 1
-" " " let g:clang_auto_user_options = ".clang_complete"
-" " let g:clang_library_path = "/home_vie/slendl/.linuxbrew/lib"
-" " ln libclang.so.1 libclang.so
-" check out clang completion database.. cmake can produce such a database
-" }}}
-" " YCM {{{
-" let cmake_version = split(system('cmake --version'))
-" if executable('cmake') && VerNewerThen("2.8.11", cmake_version[2])
-   " " NeoBundle 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer'}
-   " NeoBundleLazy 'Valloric/YouCompleteMe', {
-            " \ 'augroup': 'youcompletemeStart',
-            " \ 'build' : {
-            " \     'mac' : './install.sh --clang-completer',
-            " \     'unix' : './install.sh --clang-completer',
-            " \     'windows' : './install.sh --clang-completer',
-            " \     'cygwin' : './install.sh --clang-complete'
-            " \    }
-            " \ }
-   " augroup load_ycm
-      " autocmd!
-      " autocmd InsertEnter * call neobundle#source('YouCompleteMe')
-               " \| call youcompleteme#Enable() | autocmd! load_ycm
-   " augroup END
-" endif
-
-" " latex completion from vimtex
-" " let g:ycm_semantic_triggers = { 'tex': ['\v\\\a*(ref|cite)\a*([^]]*\])?\{([^}]*,)*[^}]*'] }
-
-" " }}}
-" snippets {{{
-NeoBundle 'Shougo/neoinclude.vim'
-NeoBundle 'Shougo/neosnippet'
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-NeoBundle 'honza/vim-snippets'
-NeoBundle 'Shougo/neosnippet-snippets'
-"}}}
-" NeoBundle 'xolox/vim-easytags', { 'depends' : 'xolox/vim-misc' } "{{{
-" set tags=./tags,./TAGS,tags;TAGS;   " make vim look for tags file reverse-recursivly ;)
-" let g:easytags_dynamic_files = 1    " make easytags use this file instead of global
-" let g:easytags_async = 1            " make easytag update async
-" let g:easytags_opts = ['--c-kinds=+defgpstuxm --fields=+iaS --extra=+q']
-" let g:easytags_auto_update = 0      " that kills the io in the kernel
-" nmap <F8> :UpdateTags<CR>
-"}}}
-NeoBundle 'Raimondi/delimitMate', {
-         \ 'on_i': 1,
-         \ }
-         " \ 'hook_source': 'let g:delimitMate_expand_cr = 1',
-let g:delimitMate_expand_cr = 1
-
-" LucHermitte/lh-brackets {{{
-" NeoBundle 'LucHermitte/lh-vim-lib'
-" NeoBundle 'LucHermitte/lh-tags'
-" NeoBundle 'LucHermitte/lh-dev'
-" NeoBundle 'LucHermitte/lh-brackets'
-" }}}
-call neobundle#end()
 filetype plugin indent on
-NeoBundleCheck                 " this will conveniently prompt you to install them.
+
+"
+" Settings
+" Reload vim config automatically {{{
+execute 'autocmd MyAutoCmd BufWritePost $HOME/.config/nvim/*vim nested'
+         \ .' source $MYVIMRC | redraw'
 " }}}
-" Settings {{{
-" automatic reload .vimrc
-augroup source_vimrc
-    autocmd!
-    autocmd! bufwritepost .vimrc source %
-    autocmd! bufwritepost init.vim source %
-augroup END
+
 set autoread          " Set to auto read when a file is changed from the outside
 
-" Tabs and Indents {{{
+" Tabs and Indents
 
 set smartindent
 set expandtab      " tab expansion to spaces
@@ -429,8 +78,8 @@ if has('patch-7.3.541')
    set formatoptions+=j       " Remove comment leader when joining lines
 endif
 
-" }}}
-" Searching {{{
+"
+" Searching
 " ---------
 set ignorecase      " Search ignoring case
 set smartcase       " Keep case when searching with *
@@ -443,9 +92,9 @@ set showmatch       " Jump to matching bracket
 set cpoptions-=m    " showmatch will wait 0.5s or until a char is typed
 set matchtime=1     " Tenths of a second to show the matching paren
 set matchpairs+=<:> " Add HTML brackets to pair matching
-au FileType c,cpp set matchpairs-=<:>
-" }}}
-" General {{{
+au MyAutoCmd FileType c,cpp set matchpairs-=<:>
+"
+" General
 
 set history=500              " Search and commands remembered
 set synmaxcol=1000           " Don't syntax highlight long lines
@@ -465,8 +114,8 @@ if has('vim_starting')
    scriptencoding utf-8
 endif
 
-" }}}
-" Vim Directories {{{
+"
+" Vim Directories
 " ---------------
 if has('nvim')
    set shada='30,/100,:50,<10,@10,s50,h,n~/.vim/shada
@@ -510,8 +159,8 @@ augroup viminfoskip
             \ setlocal viminfo=
 augroup END
 
-" }}}
-" Wildmenu {{{
+"
+" Wildmenu
 
 if has('wildmenu')
    set wildmenu
@@ -522,8 +171,8 @@ if has('wildmenu')
    set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store
 endif
 
-" }}}
-" Mouse {{{
+"
+" Mouse
 
 set mouse=a           " Enable mouse in all modes
 if exists('$TMUX') && !has('nvim')
@@ -534,8 +183,8 @@ if exists('$TMUX') && !has('nvim')
    endif
 endif
 
-" }}}
-" clipboard {{{
+"
+" clipboard
 
 set pastetoggle=<F2>      " better copy & pase behabour
 if ( ! has('nvim') && has('clipboard'))
@@ -549,8 +198,8 @@ elseif (executable('pbcopy') || executable('xclip') || executable('xsel'))
    set clipboard& clipboard+=unnamedplus
 endif
 
-" }}}
-" Behavior {{{
+"
+" Behavior
 
 syntax on        " Syntax highlighting
 " set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
@@ -577,8 +226,8 @@ if has('cscope')
    set cscopeverbose
 endif
 
-" }}}
-" Editor UI Appearance {{{
+"
+" Editor UI Appearance
 
 set list              " show whitespaces
 set listchars=tab:»\ ,eol:¬,trail:·,extends:>,precedes:<
@@ -614,8 +263,8 @@ if has('conceal') && v:version >= 703
    set conceallevel=2 concealcursor=nv
 endif
 
-" }}}
-" Time {{{
+"
+" Time
 " --------
 set timeout ttimeout
 set timeoutlen=1000  " Time out on mappings
@@ -627,9 +276,9 @@ if has('nvim')
    set ttimeoutlen=-1
 endif
 
-" }}}
+"
 
-" Unite config{{{
+" Unite config
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 
@@ -652,8 +301,8 @@ nnoremap <space>s :Unite -quick-match buffer<cr>
 " MRU
 nnoremap <space>p :Unite file_mru<cr>
 
-" }}}
-" colorization and styles {{{
+"
+" colorization and styles
 let g:solarized_contrast = "high"
 " let g:solarized_diffmode = "high"
 let g:solarized_visibility = "low"
@@ -692,10 +341,9 @@ if version >= 703
    set colorcolumn=100
    let g:solarized_hitrail = 1
 endif
-" }}}
-" }}}
-" key mappings {{{
-" let mapleader = "\"  " rebmap the <Leader> key
+
+
+" key mappings  {{{
 let mapleader = ","  " rebmap the <Leader> key
 
 noremap ; :
@@ -705,29 +353,27 @@ inoremap jk <Esc>
 inoremap <Esc> <nop>
 nnoremap Q <nop>
 
-nmap j <Plug>(accelerated_jk_gj_position)
-nmap k <Plug>(accelerated_jk_gk_position)
-" noremap <silent> j gj
-" noremap <silent> k gk
+" nmap j <Plug>(accelerated_jk_gj_position)
+" nmap k <Plug>(accelerated_jk_gk_position)
+noremap <silent> j gj
+noremap <silent> k gk
 
 nnoremap <F7> :call TogleVisibility()<CR>
 nnoremap <leader><F7> :set list!<CR>
 
-" split vertically
-nnoremap <leader>v :VimFilerSplit<cr>
-nnoremap <leader>e :VimFilerExplorer<cr>
-nnoremap <leader>t :VimFilerTab<CR>
-
 " " split naviagetion
-" nnoremap <A-h> <C-w>h
-" nnoremap <A-j> <C-w>j
-" nnoremap <A-k> <C-w>k
-" nnoremap <A-l> <C-w>l
-nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
-" nnoremap <silent> <A-\> :TmuxNavigatePrevious<cr>
+if dein#tap('vim-tmux-navigator')
+   nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
+   nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
+   nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
+   nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
+   " nnoremap <silent> <A-\> :TmuxNavigatePrevious<cr>
+else
+   nnoremap <A-h> <C-w>h
+   nnoremap <A-j> <C-w>j
+   nnoremap <A-k> <C-w>k
+   nnoremap <A-l> <C-w>l
+endif
 
 nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
@@ -775,35 +421,41 @@ nnoremap <leader>oz :tabe ~/.zshrc<CR>
 if has('nvim')
    nnoremap <leader><C-T> :vsp term://zsh<cr>
    tnoremap <Esc> <C-\><C-n>
-   tnoremap <C-h> <C-\><C-n><C-w>h
-   tnoremap <C-j> <C-\><C-n><C-w>j
-   tnoremap <C-k> <C-\><C-n><C-w>k
-   tnoremap <C-l> <C-\><C-n><C-w>l
+   tnoremap jk <C-\><C-n>
+   tnoremap <A-h> <C-\><C-n><C-w>h
+   tnoremap <A-j> <C-\><C-n><C-w>j
+   tnoremap <A-k> <C-\><C-n><C-w>k
+   tnoremap <A-l> <C-\><C-n><C-w>l
    tnoremap <C-w><C-w> <C-\><C-n><C-w><c-w>
 endif
 
 nnoremap gcc :Gita status<CR>
 augroup mygita
    autocmd!
-   autocmd FileType gita-commit nmap cc <Plug>(gita-status-open)
-   autocmd FileType gita-status nmap cc <Plug>(gita-commit-open)
+   autocmd FileType gita-commit nmap gcc <Plug>(gita-status-open)
+   autocmd FileType gita-status nmap gcc <Plug>(gita-commit-open)
+   autocmd FileType gita-commit,gita-status nmap rm <Plug>(gita-rm)
+   autocmd FileType gita-commit,gita-status nmap rc <Plug>(gita-rm-cached)
+   autocmd FileType gitcommit,gita-commit setlocal spell
 augroup END
 
 " :h g:incsearch#auto_nohlsearch
-set hlsearch
-let g:incsearch#auto_nohlsearch = 1
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
+if dein#tap('incsearch.vim')
+   set hlsearch
+   let g:incsearch#auto_nohlsearch = 1
+   map n  <Plug>(incsearch-nohl-n)
+   map N  <Plug>(incsearch-nohl-N)
+   map *  <Plug>(incsearch-nohl-*)
+   map #  <Plug>(incsearch-nohl-#)
+   map g* <Plug>(incsearch-nohl-g*)
+   map g# <Plug>(incsearch-nohl-g#)
 
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
+   map /  <Plug>(incsearch-forward)
+   map ?  <Plug>(incsearch-backward)
+   map g/ <Plug>(incsearch-stay)
+endif
 
-" usefull keys from US-Keyboard - maped to German"{{{
+" usefull keys from US-Keyboard - maped to German
 nmap ö [
 omap ö [
 nmap ä ]
@@ -823,10 +475,10 @@ nmap ü <C-]>
 " select from multiple found tags
 " alternativly use :tn :tp
 noremap gä g]
-" }}}
-" }}}
-" Functions {{{
-" Search for selected text, forwards or backwards. first * then n/N ->"{{{
+
+
+" Functions
+" Search for selected text, forwards or backwards. first * then n/N ->
 vnoremap <silent> * :<C-U>
   \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
   \gvy/<C-R><C-R>=substitute(
@@ -837,24 +489,24 @@ vnoremap <silent> # :<C-U>
   \gvy?<C-R><C-R>=substitute(
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
-"}}}
-" Remember cursor position between vim sessions"{{{
+
+" Remember cursor position between vim sessions
 autocmd BufReadPost *
          \ if line("'\"") > 0 && line ("'\"") <= line("$") |
          \   exe "normal! g'\"" |
          \ endif
 " center buffer around cursor when opening files
 autocmd BufRead * normal zz
-"}}}
-function! CopyMatches(reg) "{{{
+
+function! CopyMatches(reg)
   let hits = []
   %s//\=len(add(hits, submatch(0))) ? submatch(0) : ''/ge
   let reg = empty(a:reg) ? '+' : a:reg
   execute 'let @'.reg.' = join(hits, "\n") . "\n"'
 endfunction
 command! -register CopyMatches call CopyMatches(<q-reg>)
-"}}}
-function! TogleVisibility() "{{{
+
+function! TogleVisibility()
    if (&list == 0)
       set list
    else
@@ -865,8 +517,8 @@ function! TogleVisibility() "{{{
       endif
       colorscheme solarized
    endif
-endfunction "}}}
-" Font Size{{{
+endfunction
+" Font Size
 " Change font size quickly - http://vim.wikia.com/wiki/Change_font_size_quickly
 nnoremap <leader>+ :LargerFont<cr>
 nnoremap <leader>- :SmallerFont<cr>
@@ -894,8 +546,8 @@ function! SmallerFont()
   call AdjustFontSize(-1)
 endfunction
 command! SmallerFont call SmallerFont()
-"}}}
-" MyDiff{{{
+
+" MyDiff
 " This diff function uses "-w" instead of "-b", to ignore *all* whitespace
 " changes (not only non-leading whitespace)
 set diffexpr=MyDiff()
@@ -910,8 +562,8 @@ function! MyDiff()
    silent execute "!diff -a --binary " . opt . v:fname_in . " " . v:fname_new .
             \  " > " . v:fname_out
 endfunction
-"}}}
-" Highlight words to avoid in tech writing"{{{
+
+" Highlight words to avoid in tech writing
 " http://css-tricks.com/words-avoid-educational-writing/
 highlight TechWordsToAvoid ctermbg=red ctermfg=white
 function! MatchTechWordsToAvoid()
@@ -925,9 +577,9 @@ augroup tech_words
    autocmd InsertLeave *.md,*.tex call MatchTechWordsToAvoid()
    autocmd BufWinLeave *.md,*.tex call clearmatches()
 augroup END
-"}}}
 
-" Frequentis specifics {{{
+
+" Frequentis specifics
 "adds user and timestamp to end of line
 nnoremap <F4> :r! echo "(slendl on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>kJ
 autocmd BufRead MakePkg setlocal noexpandtab filetype=make
@@ -935,5 +587,5 @@ autocmd BufRead ReleaseNotes setlocal textwidth=80 colorcolumn=80 spell
 
 command! TargetOn execute 'set scrolloff=15 | %s/t on="false/t on="true/gc | set scrolloff=5'
 command! TargetOff execute 'set scrolloff=15 | %s/t on="true/t on="false/gc | set scrolloff=5'
-" }}}
-" }}}
+
+" vi: ft=vim

@@ -24,7 +24,8 @@ call vimfiler#custom#profile('default', 'context', {
          " \  'direction': 'topleft',
 
 " Open VimFilerExplorer if vim is started without arguments
-augroup MyAutoCmd
-   autocmd!
-   autocmd VimEnter * if !argc() | VimFilerExplorer | endif
-augroup END
+autocmd MyAutoCmd VimEnter * if !argc() | VimFilerExplorer | endif
+
+nnoremap <leader>v :VimFilerSplit<cr>
+nnoremap <leader>e :VimFilerExplorer<cr>
+nnoremap <leader>t :VimFilerTab<CR>
