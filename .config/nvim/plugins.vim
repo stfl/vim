@@ -30,8 +30,8 @@ call dein#add('tacroe/unite-mark', {'on_source': 'unite.vim'})
 call dein#add('tsukkee/unite-tag', {'on_source': 'unite.vim'})
 call dein#add('Shougo/neossh.vim', {'on_ft': 'vimfiler', 'sources': 'ssh'})
 call dein#add('lambdalisue/vim-gista-unite', { 'on_source': 'unite.vim', 'depends': 'vim-gista'})
-" }}}
 
+" }}}
 " ReleaseNotes {{{
 " if !empty(glob("~/.zprofile.frq"))
 "    call dein#add('ReleaseNotes', {
@@ -43,8 +43,9 @@ call dein#add('lambdalisue/vim-gista-unite', { 'on_source': 'unite.vim', 'depend
 "             \ 'type' : 'svn'
 "             \ })
 "             " \ 'disabled' : !executable('svn'),
-" endif "}}}
+" endif
 
+"}}}
 call dein#add('Shougo/vinarise.vim', {'on_cmd': 'Vinarise'})
 call dein#add('Konfekt/FastFold', {
          \ 'on_event': 'BufEnter',
@@ -86,12 +87,13 @@ let g:airline_theme='solarized'
 "             \'options' : {'status-justify' : 'left'}}
 "    call dein#untap()
 " endif
-" }}}
 
-" Filetypes
+" }}}
+" Filetypes {{{
 call dein#add('kergoth/vim-bitbake', {'on_ft': 'bitbake'})
 call dein#add('tmux-plugins/vim-tmux', {'on_ft': 'tmux'})           " vim plugin for tmux.conf
 
+" }}}
 call dein#add('mileszs/ack.vim', {
          \ 'on_cmd': 'Ack',
          \})
@@ -108,7 +110,6 @@ nnoremap <leader>* :Ack! <c-r><c-w><cr>
 call dein#add('mbbill/undotree', { 'on_cmd': 'UndotreeToggle' }) " {{{
 nnoremap <F5> :UndotreeToggle<cr>
 "}}}
-
 " FZF {{{
 call dein#add('junegunn/fzf', {
          \ 'build': './install --all',
@@ -121,9 +122,6 @@ nnoremap <c-p> :FZF<CR>
 call dein#add('majutsushi/tagbar', {'on_cmd': 'TagbarToggle'})                      " Vim plugin that displays tags in a window, ordered by scope {{{
 nnoremap <F6> :TagbarToggle<CR>
 "}}}
-" tmux {{{
-
-" }}}
 call dein#add('scrooloose/nerdcommenter') ", {'on_map': {'n': '<Plug>NERDCommenter'}})
 let NERDSpaceDelims=1
 let g:NERDDefaultAlign = 'left'
@@ -154,9 +152,7 @@ if !exists('g:signify_vcs_cmds')
    let g:signify_vcs_cmds = { 'git': 'git diff --no-color --no-ext-diff -U0 -w -- %f' }
    " let g:signify_vcs_cmds = { 'svn': 'svn diff --diff-cmd %d -x -U0 -- %f' }
 endif "}}}
-
 call dein#add('rhysd/committia.vim', {'on_path': 'COMMIT_EDITMSG'})
-
 call dein#add('juneedahamed/svnj.vim')                  " VIM SVN plugin ( subversion svn vim7) {{{
 let g:svnj_custom_statusbar_ops_hide = 1
 " Supported operations are listed on the status line of the svnj_window. With growing support for
@@ -166,7 +162,6 @@ let g:svnj_browse_cache_all = 1
 " This enables caching, Listing of files will be faster, On MAC/Unix the default location is $HOME/.cache.
 " A new directory svnj will be created in the specified directory.
 "}}}
-"
 call dein#add('kshenoy/vim-signature', {'on_path': '.*'}) " toggle, display and navigate marks {{{
 let g:SignatureMarkerTextHLDynamic=1
 let g:SignatureMarksTextHLDynamic=1
@@ -174,7 +169,6 @@ let g:SignatureEnabledAtStartup=1
 " nnoremap mm :ToggleMarkAtLine<CR>
 let g:SignatureMap = { 'ToggleMarkAtLine'   :  "mm" }
 "}}}
-
 call dein#add('will133/vim-dirdiff', {'on_cmd': 'DirDiff'})
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*~,.svn,.git,*.o"
 
