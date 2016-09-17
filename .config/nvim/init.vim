@@ -7,23 +7,20 @@ if &compatible
    set nocompatible               " Be iMproved
 endif
 
-" lazy load filetype {{{
-function! s:lazy_load_filetype() abort
-   if &l:filetype ==# '' && bufname('%') ==# ''
+function! s:my_on_filetype() abort "{{{
+   if &l:filetype == '' && bufname('%') == ''
       return
    endif
-
    redir => filetype_out
    silent! filetype
    redir END
    if filetype_out =~# 'OFF'
+      " Lazy loading
       silent! filetype plugin indent on
       syntax enable
       filetype detect
    endif
-endfunction
-
-"}}}
+endfunction "}}}
 
 augroup MyAutoCmd
    autocmd!
@@ -40,23 +37,24 @@ endif
 " }}}
 " Initialize dein.vim (package manager) {{{
 let s:path = expand('$HOME/.config/nvim/dein.vim')
-if dein#load_state(s:path)
+"if dein#load_state(s:path)
    call dein#begin(s:path, [$MYVIMRC, '$HOME/.config/nvim/plugins.vim'])
    source $HOME/.config/nvim/plugins.vim
    call dein#end()
-   call dein#save_state()
+   "call dein#save_state()
    if dein#check_install()
       if ! has('nvim')
          set nomore
       endif
       call dein#install()
    endif
-endif
+"endif
 
 " plugin specific settings
 "source $HOME/.config/nvim/plugins_all.vim
 
-if ! has('vim_starting')
+if !has('vim_starting')
+   echomsg string("!vim_starting call hooks")
 	call dein#call_hook('source')
 	call dein#call_hook('post_source')
 
@@ -66,9 +64,10 @@ endif
 
 " }}}
 " Loading configuration modules {{{
+
 source $HOME/.config/nvim/general.vim
+call s:my_on_filetype()
 source $HOME/.config/nvim/utils.vim
-call s:lazy_load_filetype()
 source $HOME/.config/nvim/theme.vim
 " source $HOME/.config/nvim/bindings.vim
 
@@ -76,9 +75,11 @@ source $HOME/.config/nvim/theme.vim
 " Reload vim config automatically {{{
 execute 'autocmd MyAutoCmd BufWritePost $HOME/.config/nvim/*vim nested source $MYVIMRC | redraw'
 
+execute 'autocmd MyAutoCmd FileType,Syntax,BufNewFile,BufNew,BufReadPost * call s:my_on_filetype()'
+
 " }}}
 
-set secure
+" set secure
 
 " key mappings  {{{
 let mapleader = ","  " rebmap the <Leader> key
@@ -92,6 +93,8 @@ nnoremap Q <nop>
 
 " nmap j <Plug>(accelerated_jk_gj_position)
 " nmap k <Plug>(accelerated_jk_gk_position)
+nmap j <Plug>(accelerated_jk_gj)
+nmap k <Plug>(accelerated_jk_gk)
 noremap <silent> j gj
 noremap <silent> k gk
 
@@ -237,4 +240,3 @@ autocmd BufRead ReleaseNotes setlocal textwidth=80 colorcolumn=80 spell
 command! TargetOn execute 'set scrolloff=15 | %s/t on="false/t on="true/gc | set scrolloff=5'
 command! TargetOff execute 'set scrolloff=15 | %s/t on="true/t on="false/gc | set scrolloff=5'
 
-" vi: ft=vim

@@ -208,7 +208,6 @@ call dein#add('Shougo/vimfiler.vim', {
 "    call dein#untap()
 " endif
 " }}}
-
 " call dein#add('terryma/vim-expand-region') "{{{
 " map gk <Plug>(expand_region_expand)
 " map gj <Plug>(expand_region_shrink)
