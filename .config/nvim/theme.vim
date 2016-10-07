@@ -1,4 +1,5 @@
-" colorization and styles
+
+" Solarized {{{
 let g:solarized_contrast = "high"
 " let g:solarized_diffmode = "high"
 let g:solarized_visibility = "low"
@@ -38,10 +39,8 @@ if version >= 703
    let g:solarized_hitrail = 1
 endif
 
-set fillchars="vert:|,diff: ,fold: "     " make folds prettier"
-
+" Toggle solarized visibility {{{
 nnoremap <F7> :call TogleVisibility()<CR>
-
 function! TogleVisibility()
    if (&list == 0)
       set list
@@ -55,31 +54,55 @@ function! TogleVisibility()
    endif
 endfunction
 
-" Font Size
+" }}}
+
+" }}}
+" Folds {{{
+" Nicer fold text
+" See: http://dhruvasagar.com/2013/03/28/vim-better-foldtext
+function! FoldText() "{{{
+	let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+	let lines_count = v:foldend - v:foldstart + 1
+	let lines_count_text = '| ' . printf('%10s', lines_count . ' lines') . ' |'
+	let foldchar = matchstr(&fillchars, 'fold:\zs.')
+	let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+	let foldtextend = lines_count_text . repeat(foldchar, 8)
+	let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+	return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
+endfunction "}}}
+set foldtext=FoldText()
+
+set fillchars=vert:│,fold:-
+set listchars=tab:\┆\ ,eol:¬,extends:⟫,precedes:⟪,nbsp:.,trail:·
+
+" }}}
+" Font Size in GUI {{{
 " Change font size quickly - http://vim.wikia.com/wiki/Change_font_size_quickly
-nnoremap <leader>+ :LargerFont<cr>
-nnoremap <leader>- :SmallerFont<cr>
-let s:pattern = '^\(.* \)\([1-9][0-9]*\)$'
-let s:minfontsize = 6
-let s:maxfontsize = 16
-function! AdjustFontSize(amount)
-  if has("gui_running")
-    let fontname = substitute(&guifont, s:pattern, '\1', '')
-    let cursize = substitute(&guifont, s:pattern, '\2', '')
-    let newsize = cursize + a:amount
-    if (newsize >= s:minfontsize) && (newsize <= s:maxfontsize)
-      let newfont = fontname . newsize
-      let &guifont = newfont
-    endif
-  endif
-endfunction
+if has("gui_running")
+   nnoremap <leader>+ :LargerFont<cr>
+   nnoremap <leader>- :SmallerFont<cr>
+   let s:pattern = '^\(.* \)\([1-9][0-9]*\)$'
+   let s:minfontsize = 6
+   let s:maxfontsize = 16
+   function! AdjustFontSize(amount)
+      let fontname = substitute(&guifont, s:pattern, '\1', '')
+      let cursize = substitute(&guifont, s:pattern, '\2', '')
+      let newsize = cursize + a:amount
+      if (newsize >= s:minfontsize) && (newsize <= s:maxfontsize)
+         let newfont = fontname . newsize
+         let &guifont = newfont
+      endif
+   endfunction
 
-function! LargerFont()
-  call AdjustFontSize(1)
-endfunction
-command! LargerFont call LargerFont()
+   function! LargerFont()
+      call AdjustFontSize(1)
+   endfunction
+   command! LargerFont call LargerFont()
 
-function! SmallerFont()
-  call AdjustFontSize(-1)
-endfunction
-command! SmallerFont call SmallerFont()
+   function! SmallerFont()
+      call AdjustFontSize(-1)
+   endfunction
+   command! SmallerFont call SmallerFont()
+endif
+
+" }}}

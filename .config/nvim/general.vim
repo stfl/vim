@@ -1,6 +1,6 @@
 set autoread          " Set to auto read when a file is changed from the outside
 
-" Tabs and Indents
+" Tabs and Indents {{{
 set smartindent
 set expandtab      " tab expansion to spaces
 set smarttab
@@ -15,9 +15,8 @@ if has('patch-7.3.541')
    set formatoptions+=j       " Remove comment leader when joining lines
 endif
 
-"
-" Searching
-" ---------
+" }}}
+" Searching {{{
 set ignorecase      " Search ignoring case
 set smartcase       " Keep case when searching with *
 set infercase
@@ -30,8 +29,9 @@ set cpoptions-=m    " showmatch will wait 0.5s or until a char is typed
 set matchtime=1     " Tenths of a second to show the matching paren
 set matchpairs+=<:> " Add HTML brackets to pair matching
 au MyAutoCmd FileType c,cpp set matchpairs-=<:>
-"
-" General
+
+" }}}
+" General {{{
 
 set history=500              " Search and commands remembered
 set synmaxcol=1000           " Don't syntax highlight long lines
@@ -51,9 +51,8 @@ if has('vim_starting')
    scriptencoding utf-8
 endif
 
-"
-" Vim Directories
-" ---------------
+" }}}
+" Vim Directories {{{
 if has('nvim')
    set shada='30,/100,:50,<10,@10,s50,h,n~/.vim/shada
 else
@@ -96,8 +95,8 @@ augroup viminfoskip
             \ setlocal viminfo=
 augroup END
 
-"
-" Wildmenu
+" }}}
+" Wildmenu {{{
 
 if has('wildmenu')
    set wildmenu
@@ -108,8 +107,8 @@ if has('wildmenu')
    set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store
 endif
 
-"
-" Mouse
+" }}}
+" Mouse {{{
 
 set mouse=a           " Enable mouse in all modes
 if exists('$TMUX') && !has('nvim')
@@ -120,8 +119,8 @@ if exists('$TMUX') && !has('nvim')
    endif
 endif
 
-"
-" clipboard
+" }}}
+" clipboard {{{
 
 set pastetoggle=<F2>      " better copy & pase behabour
 if ( ! has('nvim') && has('clipboard'))
@@ -135,8 +134,8 @@ elseif (executable('pbcopy') || executable('xclip') || executable('xsel'))
    set clipboard& clipboard+=unnamedplus
 endif
 
-"
-" Behavior
+" }}}
+" Behavior {{{
 
 syntax on        " Syntax highlighting
 " set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
@@ -163,11 +162,10 @@ if has('cscope')
    set cscopeverbose
 endif
 
-"
-" Editor UI Appearance
+" }}}
+" Editor UI Appearance {{{
 
 set list              " show whitespaces
-set listchars=tab:»\ ,eol:¬,trail:·,extends:>,precedes:<
 set cursorline          " Highlight current line
 set number              " Show line numbers
 set showcmd             " Show the (partial) command as it's being typed
@@ -185,9 +183,9 @@ set helpheight=12       " Minimum help window height
 
 " Do not display completion messages
 " Patch: https://groups.google.com/forum/#!topic/vim_dev/WeBBjkXE8H8
-" if has('patch-7.4.314')
-   " set shortmess+=c
-" endif
+if has('patch-7.4.314')
+   set shortmess+=c
+endif
 
 " Do not display message when editing files
 if has('patch-7.4.1570')
@@ -198,8 +196,8 @@ if has('conceal') && v:version >= 703
    set conceallevel=2 concealcursor=nv
 endif
 
-"
-" Time
+" }}}
+" Time {{{
 " --------
 set timeout ttimeout
 set timeoutlen=1000  " Time out on mappings
@@ -211,6 +209,7 @@ if has('nvim')
    set ttimeoutlen=-1
 endif
 
+" }}}
 " Make directory automatically. {{{
 " --------------------------------------
 " http://vim-users.jp/2011/02/hack202/
@@ -250,5 +249,21 @@ autocmd MyAutoCmd BufReadPost *
          \ endif
 " center buffer around cursor when opening files
 autocmd MyAutoCmd BufRead * normal zz
+
+" }}}
+" Highlight words to avoid in tech writing {{{
+" http://css-tricks.com/words-avoid-educational-writing/
+highlight TechWordsToAvoid ctermbg=red ctermfg=white
+function! MatchTechWordsToAvoid()
+   match TechWordsToAvoid /\c\<\(obviously\|basically\|simply\|of\scourse\|clearly\|just\|everyone\sknows\|however\|so,\|easy\)\>/
+endfunction
+augroup tech_words
+   autocmd!
+   autocmd FileType markdown,latex call MatchTechWordsToAvoid()
+   autocmd BufWinEnter *.md,*.tex call MatchTechWordsToAvoid()
+   autocmd InsertEnter *.md,*.tex call MatchTechWordsToAvoid()
+   autocmd InsertLeave *.md,*.tex call MatchTechWordsToAvoid()
+   autocmd BufWinLeave *.md,*.tex call clearmatches()
+augroup END
 
 " }}}

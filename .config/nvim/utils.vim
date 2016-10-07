@@ -7,14 +7,45 @@ endfunction
 command! -register CopyMatches call CopyMatches(<q-reg>)
 
 " }}}
-" Search for selected text, forwards or backwards. first * then n/N ->
-vnoremap <silent> * :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy/<C-R><C-R>=substitute(
-  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
-vnoremap <silent> # :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy?<C-R><C-R>=substitute(
-  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
+" Highlight words to avoid in tech writing {{{
+" http://css-tricks.com/words-avoid-educational-writing/
+highlight TechWordsToAvoid ctermbg=red ctermfg=white
+function! MatchTechWordsToAvoid()
+   match TechWordsToAvoid /\c\<\(obviously\|basically\|simply\|of\scourse\|clearly\|just\|everyone\sknows\|however\|so,\|easy\)\>/
+endfunction
+augroup tech_words
+   autocmd!
+   autocmd FileType markdown,latex call MatchTechWordsToAvoid()
+   autocmd BufWinEnter *.md,*.tex call MatchTechWordsToAvoid()
+   autocmd InsertEnter *.md,*.tex call MatchTechWordsToAvoid()
+   autocmd InsertLeave *.md,*.tex call MatchTechWordsToAvoid()
+   autocmd BufWinLeave *.md,*.tex call clearmatches()
+augroup END
+
+" }}}
+"
+" Makes * and # work on visual mode too.
+" See: http://github.com/nelstrom/vim-visual-star-search
+function! VSetSearch(cmdtype) "{{{
+	let temp = @s
+	normal! gv"sy
+	let @/ = substitute(escape(@s, '\'.a:cmdtype), '\n', '\\n', 'g')
+	let @s = temp
+endfunction "}}}
+
+" Zoom / Restore window {{{
+command! ZoomToggle call s:ZoomToggle()
+function! s:ZoomToggle() "{{{
+	if exists('t:zoomed') && t:zoomed > -1
+		execute t:zoom_winrestcmd
+		let t:zoomed = -1
+	else
+		let t:zoom_winrestcmd = winrestcmd()
+		resize
+		vertical resize
+		let t:zoomed = bufnr('%')
+	endif
+endfunction
+
+" }}}
+
