@@ -1,3 +1,7 @@
+" -----------
+"  General
+" -----------
+
 set autoread          " Set to auto read when a file is changed from the outside
 
 " Tabs and Indents {{{
@@ -242,28 +246,12 @@ function! MyDiff()
 endfunction
 
 " }}}
-" Remember cursor position between vim sessions {{{
-autocmd MyAutoCmd BufReadPost *
-         \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-         \   exe "normal! g'\"" |
-         \ endif
-" center buffer around cursor when opening files
-autocmd MyAutoCmd BufRead * normal zz
-
-" }}}
 " Highlight words to avoid in tech writing {{{
 " http://css-tricks.com/words-avoid-educational-writing/
 highlight TechWordsToAvoid ctermbg=red ctermfg=white
 function! MatchTechWordsToAvoid()
    match TechWordsToAvoid /\c\<\(obviously\|basically\|simply\|of\scourse\|clearly\|just\|everyone\sknows\|however\|so,\|easy\)\>/
 endfunction
-augroup tech_words
-   autocmd!
-   autocmd FileType markdown,latex call MatchTechWordsToAvoid()
-   autocmd BufWinEnter *.md,*.tex call MatchTechWordsToAvoid()
-   autocmd InsertEnter *.md,*.tex call MatchTechWordsToAvoid()
-   autocmd InsertLeave *.md,*.tex call MatchTechWordsToAvoid()
-   autocmd BufWinLeave *.md,*.tex call clearmatches()
-augroup END
 
 " }}}
+

@@ -1,9 +1,7 @@
-
+" =============
 " Vim Initialization
+" =============
 
-" Global Mappings "{{{
-
-" }}}
 " Install dein if necessary {{{
 if &runtimepath !~# '/dein.vim'
    let s:dein_dir = expand('$HOME/.config/nvim/dein.vim').'/repos/github.com/Shougo/dein.vim'
@@ -20,18 +18,6 @@ endif
 if len($SSH_CLIENT)
 	let $VIM_MINIMAL = 1
 endif
-
-" }}}
-" Function to Check if Version is is newer {{{
-function! VerNewerThen(min, current)
-" return 1 with version $current is newer then version $min
-   if has('nvim')
-      " neovim makes sth wierd with the string in system()
-      return 1
-   else
-      return system("[  \"".a:min."\" = \"`echo -e \"".a:min."\\n".a:current." | sort -V | head -n1`\" ] && echo 1 || echo 0")
-   endif
-endfunction
 
 " }}}
 " Disable default plugins "{{{

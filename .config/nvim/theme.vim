@@ -1,3 +1,6 @@
+" ------------
+"  Theme
+" ------------
 
 " Solarized {{{
 let g:solarized_contrast = "high"
@@ -57,8 +60,7 @@ endfunction
 " }}}
 
 " }}}
-" Folds {{{
-" Nicer fold text
+" Nicer fold text {{{
 " See: http://dhruvasagar.com/2013/03/28/vim-better-foldtext
 function! FoldText() "{{{
 	let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
@@ -104,5 +106,8 @@ if has("gui_running")
    endfunction
    command! SmallerFont call SmallerFont()
 endif
+
+" }}}
+
 
 " }}}

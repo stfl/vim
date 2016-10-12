@@ -1,4 +1,7 @@
+" -----------
 " Unite config
+" -----------
+
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 
@@ -10,13 +13,11 @@ endif
 
 " yank history
 let g:unite_source_history_yank_enable = 1
-nnoremap <space>y :Unite history/yank<cr>
+nnoremap <leader>y :Unite history/yank<cr>
 
 " like ack / ag
-nnoremap <space>/ :Unite grep:.<cr>
-
-" switching buffers
-nnoremap <space>s :Unite -quick-match buffer<cr>
-
-" MRU
-nnoremap <space>p :Unite file_mru<cr>
+nnoremap <leader>/ :Unite grep:.<cr>
+nnoremap <leader>s :Unite -quick-match tab<cr>
+nnoremap <leader>S :Unite -quick-match buffer<cr>
+nnoremap <leader>p :Unite file_mru<cr>
+nnoremap <leader>um :Unite mapping<cr>

@@ -1,4 +1,6 @@
+" =============
 " Neovim specific settings on start
+" =============
 
 " Write history on idle
 augroup MyAutoCmd

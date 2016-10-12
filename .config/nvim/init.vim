@@ -8,9 +8,9 @@ if &compatible
 endif
 
 function! s:my_on_filetype() abort "{{{
-   if &l:filetype == '' && bufname('%') == ''
-      return
-   endif
+   " if &l:filetype == '' && bufname('%') == ''
+     " return
+   " endif
    redir => filetype_out
    silent! filetype
    redir END
@@ -37,32 +37,31 @@ endif
 " }}}
 " Initialize dein.vim (package manager) {{{
 let s:path = expand('$HOME/.config/nvim/dein.vim')
-if dein#load_state(s:path)
+" if dein#load_state(s:path)
    call dein#begin(s:path, [$MYVIMRC, '$HOME/.config/nvim/plugins.vim'])
    source $HOME/.config/nvim/plugins.vim
    call dein#end()
-   call dein#save_state()
+   " call dein#save_state()
    if dein#check_install()
       if ! has('nvim')
          set nomore
       endif
       call dein#install()
    endif
-endif
+" endif
 
 source $HOME/.config/nvim/mappings.vim
 
 " plugin specific settings
 source $HOME/.config/nvim/plugins_all.vim
 
-if !has('vim_starting')
-   echomsg string("!vim_starting call hooks")
+" if !has('vim_starting')
 	call dein#call_hook('source')
 	call dein#call_hook('post_source')
 
    filetype plugin indent on
    syntax enable
-endif
+" endif
 
 " }}}
 " Loading configuration modules {{{
@@ -70,6 +69,7 @@ endif
 source $HOME/.config/nvim/general.vim
 call s:my_on_filetype()
 source $HOME/.config/nvim/utils.vim
+source $HOME/.config/nvim/filetypes.vim
 source $HOME/.config/nvim/theme.vim
 
 " }}}

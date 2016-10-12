@@ -1,3 +1,7 @@
+" ----------
+" **Plugin settings for vimfiler**
+" ----------
+
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_restore_alternate_file = 1
 "let g:vimfiler_preview_action = 'auto_preview'

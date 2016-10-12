@@ -137,7 +137,7 @@ call dein#add('Shougo/vimfiler.vim', {
          \ })
 
 " ------------------------------------
-" CODING Plugins 
+" CODING Plugins
 " -----------------------------------
 call dein#add('scrooloose/syntastic')
 
@@ -157,6 +157,8 @@ call dein#add('lervag/vimtex', {'on_ft': 'tex,latex,bib'})
 " Python {{{
 call dein#add('davidhalter/jedi-vim', {'on_ft': 'python'})
 call dein#add('zchee/deoplete-jedi', {'on_ft': 'python', 'on_i': 1})
+call dein#add('hynek/vim-python-pep8-indent', {'on_ft': 'python', 'on_i': 1})
+call dein#add('bfredl/nvim-ipy', {'on_ft': 'python', 'on_i': 1})
 
 " }}}
 " Javascript {{{
