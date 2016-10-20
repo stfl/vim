@@ -165,35 +165,41 @@ if dein#tap('incsearch.vim')
    set hlsearch
    let g:incsearch#auto_nohlsearch = 1
 
-   map /  <Plug>(incsearch-forward)
-   map ?  <Plug>(incsearch-backward)
-   map g/ <Plug>(incsearch-stay)
+   map /   <Plug>(incsearch-forward)
+   map ?   <Plug>(incsearch-backward)
+   map g/  <Plug>(incsearch-stay)
 
-   map n <Plug>(incsearch-nohl)<Plug>(anzu-n)
-   map N <Plug>(incsearch-nohl)<Plug>(anzu-N)
+   map n   <Plug>(incsearch-nohl-n)
+   map N   <Plug>(incsearch-nohl-N)
 
-   map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)<Plug>(anzu-update-search-status)
-   map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)<Plug>(anzu-update-search-status)
-   map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)<Plug>(anzu-update-search-status)
-   map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)<Plug>(anzu-update-search-status)
+   map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)
+   map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
+   map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
+   map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
 
-   map z*  <Plug>(incsearch-nohl0)<Plug>(asterisk-z*)<Plug>(anzu-update-search-status)
-   map gz* <Plug>(incsearch-nohl0)<Plug>(asterisk-gz*)<Plug>(anzu-update-search-status)
-   map z#  <Plug>(incsearch-nohl0)<Plug>(asterisk-z#)<Plug>(anzu-update-search-status)
-   map gz# <Plug>(incsearch-nohl0)<Plug>(asterisk-gz#)<Plug>(anzu-update-search-status)
+   map z*  <Plug>(asterisk-z*)
+   map gz* <Plug>(asterisk-gz*)
+   map z#  <Plug>(asterisk-z#)
+   map gz# <Plug>(asterisk-gz#)
+endif
+
+if dein#tap('vim-asterisk')
+   " let g:asterisk#keeppos = 1
 endif
 
 if dein#tap('vim-pandoc')
-   let g:pandoc#command#latex_engine = 'pdflatex'
    let g:pandoc#command#autoexec_command = 'Pandoc pdf -s'
-   " let g:pandoc#command#autoexec_on_writes = '1'
-   augroup filetype_pandoc
-      autocmd FileType pandoc nnoremap <F9> :Pandoc pdf -s --number-sections <CR>
-      autocmd FileType pandoc,markdown nnoremap <localleader>aa :autocmd BufWritePost *.pdc :Pandoc pdf -s<CR>
+   let g:pandoc#formatting#textwidth = 100
+   let g:pandoc#command#use_message_buffers = '0'
+   " let g:pandoc#completion#bib#mode = 'citeproc'
 
-   augroup END
+   " toggle autoexec
+   autocmd MyAutoCmd FileType pandoc,markdown nnoremap <localleader>aa
+      \ :let g:pandoc#command#autoexec_on_writes = g:pandoc#command#autoexec_on_writes == 1 ? 0 : 1<CR>
+      \ :echomsg "Pandoc autoexec " . string(g:pandoc#command#autoexec_on_writes == 0 ? "deactivated" : "activated")<CR>
+endif
 
-   " is this from vim-pandoc-after ??? TODO
+if dein#tap('vim-pandoc-after')
    let g:pandoc#after#modules#enabled = ["unite", "neosnippets"]
 endif
 
@@ -210,7 +216,6 @@ if dein#tap('vimtex')
       let g:vimtex_latexmk_progname = 'nvr'
    endif
 endif
-
 
 if dein#tap('jedi-vim')
    let g:jedi#force_py_version = 3
@@ -243,7 +248,8 @@ if dein#tap('jedi-vim')
    " TODO breakpoints
 endif
 
-if dein#tap('deoplete-jedi')
+if dein#tap('deoplete-jedi') && has('nvim')
+   autocmd MyAutoCmd FileType python setlocal omnifunc=
    let deoplete#sources#jedi#show_docstring = 1
 endif
 
@@ -262,10 +268,29 @@ if dein#tap('deoplete-clang')
    let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.5/'
 endif
 
-if dein#tap('neosnippet')
-   imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-   smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-   xmap <C-k>     <Plug>(neosnippet_expand_target)
+if dein#tap('neosnippet.vim')
+   let g:neosnippet#enable_snipmate_compatibility = 1
+   let g:neosnippet#enable_preview = 1
+   let g:neosnippet#enable_completed_snippet = 1
+   let g:neosnippet#enable_complete_done = 1
+   let g:neosnippet#expand_word_boundary = 1
+   " let g:neosnippet#disable_runtime_snippets = { '_': 1 }
+   let g:neosnippet#data_directory  = '$HOME/.config/nvim/snippets'
+   let g:neosnippet#snippets_directory =
+            \'$HOME/.config/nvim/snippets'
+   " \.dein#get('vim-snippets').path.'/snippets,'
+   " \.dein#get('neosnippet-snippets').path.'/neosnippets'
+   " \ dein#get('vim-go').path.'/gosnippets/snippets'
+   " \ dein#get('mpvim').path.'/snippets',
+   " \ dein#get('ansible-vim').path.'/UltiSnips',
+
+   " imap <expr><C-o> neosnippet#expandable_or_jumpable()
+   "    \ ? "\<Plug>(neosnippet_expand_or_jump)" : "\<ESC>o"
+   " xmap <silent><C-s>      <Plug>(neosnippet_register_oneshot_snippet)
+   imap <silent><C-Space>  <Plug>(neosnippet_start_unite_snippet)
+   imap <silent><C-k>      <Plug>(neosnippet_expand_or_jump)
+   smap <silent><C-k>      <Plug>(neosnippet_expand_or_jump)
+   xmap <silent><C-k>      <Plug>(neosnippet_expand_target)
 endif
 
 " if dein#tap('vim-easytags')
@@ -277,7 +302,7 @@ endif
 " nmap <F8> :UpdateTags<CR>
 " endif
 
-if dein#tap('Gita')
+if dein#tap('vim-gita')
    nnoremap gcc :Gita status<CR>
    augroup mygita
       autocmd!

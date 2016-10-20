@@ -2,12 +2,16 @@
 "  Key mappings
 " -------------
 
-
 " Release keymappings for plug-in.
 nnoremap <Space>  <Nop>
 xnoremap <Space>  <Nop>
 nnoremap , <Nop>
 xnoremap , <Nop>
+
+" Fix keybind name for Ctrl+Spacebar
+map <Nul> <C-Space>
+map! <Nul> <C-Space>
+
 let g:mapleader="\<Space>"
 " let mapleader = ","  " rebmap the <Leader> key
 let g:maplocalleader=','
@@ -116,11 +120,11 @@ xnoremap <C-r> :<C-u>call VSetSearch('/')<CR>:%s/\V<C-R>=@/<CR>//gc<Left><Left><
 
 " Improve scroll, credits: https://github.com/Shougo
 nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?
-	\ 'zt' : (winline() == 1) ? 'zb' : 'zz'
+         \ 'zt' : (winline() == 1) ? 'zb' : 'zz'
 noremap <expr> <C-f> max([winheight(0) - 2, 1])
-	\ ."\<C-d>".(line('w$') >= line('$') ? "L" : "M")
+         \ ."\<C-d>".(line('w$') >= line('$') ? "L" : "M")
 noremap <expr> <C-b> max([winheight(0) - 2, 1])
-	\ ."\<C-u>".(line('w0') <= 1 ? "H" : "M")
+         \ ."\<C-u>".(line('w0') <= 1 ? "H" : "M")
 noremap <expr> <C-e> (line("w$") >= line('$') ? "j" : "3\<C-e>")
 noremap <expr> <C-y> (line("w0") <= 1         ? "k" : "3\<C-y>")
 

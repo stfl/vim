@@ -7,7 +7,7 @@ call dein#add('bchretien/vim-profiler', {'rtp': ''})
 call dein#add('embear/vim-localvimrc')
 
 call dein#add('tmux-plugins/vim-tmux-focus-events', {'if': "$TMUX != ''"})
-call dein#add('christoomey/vim-tmux-navigator', {'if': "$TMUX != ''"})
+call dein#add('christoomey/vim-tmux-navigator') ", {'if': '$TMUX != \'\''})
 
 " Unite {{{
 call dein#add('Shougo/unite.vim', {
@@ -78,6 +78,7 @@ call dein#add('scrooloose/nerdcommenter') ", {'on_map': {'n': '<Plug>NERDComment
 " 'tyru/caw.vim'
 
 call dein#add('haya14busa/incsearch.vim', {'on_map': {'n': '<Plug>'}})
+call dein#add('haya14busa/vim-asterisk', {'on_map': {'vn': '<Plug>'}})
 
 call dein#add('junegunn/vim-easy-align', {'xn': '<Plug>LiveEasyAlign'})
 
@@ -144,14 +145,15 @@ call dein#add('scrooloose/syntastic')
 " Filetypes {{{
 call dein#add('kergoth/vim-bitbake', {'on_ft': 'bitbake'})
 call dein#add('tmux-plugins/vim-tmux', {'on_ft': 'tmux'})
+
 " Pandoc | Markdown | Latex {{{
 call dein#add('vim-pandoc/vim-pandoc-syntax', {'on_ft': 'pandoc'})
-call dein#add('vim-pandoc/vim-pandoc', {'on_ft': 'pandoc,markdown'})
+call dein#add('vim-pandoc/vim-pandoc', {'on_ft': ['pandoc', 'markdown'] })
 call dein#add('vim-pandoc/vim-pandoc-after', {
-         \ 'on_ft': 'pandoc',
+         \ 'on_ft': ['pandoc', 'markdown'],
          \ 'depends': 'vim-pandoc',
          \})
-call dein#add('lervag/vimtex', {'on_ft': 'tex,latex,bib'})
+call dein#add('lervag/vimtex', {'on_ft': ['tex','latex','bib']})
 
 " }}}
 " Python {{{
@@ -184,10 +186,10 @@ call dein#add('garyburd/go-explorer', {'on_ft': 'go'})
 call dein#add('zchee/deoplete-clang', {
          \ 'depends': 'deoplete.nvim',
          \ 'on_i': 1,
-         \ 'on_ft': 'c,cpp,objc,objcpp'
+         \ 'on_ft': ['c','cpp','objc','objcpp']
          \ })
 
-call dein#add('vim-scripts/gtk-vim-syntax', {'on_ft': 'c,gtk'})
+call dein#add('vim-scripts/gtk-vim-syntax', {'on_ft': ['c','gtk']})
 
 call dein#add('vivien/vim-linux-coding-style')
 
@@ -207,14 +209,13 @@ call dein#add('Shougo/neoinclude.vim', {'on_if': 1})
 
 " }}}
 " snippets {{{
-call dein#add('Shougo/neosnippet', {
+call dein#add('Shougo/neosnippet.vim', {
          \ 'depends': ['neosnippet-snippets', 'context_filetype.vim'],
          \ 'on_event': 'InsertCharPre',
          \ 'on_ft': 'snippet'
          \ })
 
-call dein#add('Shougo/neosnippet-snippets')
-
-call dein#add('honza/vim-snippets', {'rtp': ''})
+call dein#add('Shougo/neosnippet-snippets') ", {'rtp': ''})
+call dein#add('honza/vim-snippets') " {'rtp': ''})
 
 " }}}

@@ -12,8 +12,7 @@ else
 endif
 
 " yank history
-let g:unite_source_history_yank_enable = 1
-nnoremap <leader>y :Unite history/yank<cr>
+nnoremap <leader>y :Unite history/yank -default-action=append<cr>
 
 " like ack / ag
 nnoremap <leader>/ :Unite grep:.<cr>

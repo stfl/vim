@@ -14,6 +14,10 @@ let g:deoplete#tag#cache_limit_size = 5000000
 let g:deoplete#keyword_patterns = {}
 let g:deoplete#keyword_patterns._ = '[a-zA-Z_]\k*\(?'
 
+" Pandoc
+let g:deoplete#omni_patterns = {}
+let g:deoplete#omni_patterns.pandoc= '@'
+
 " Go
 let g:deoplete#sources#go = 'vim-go'
 

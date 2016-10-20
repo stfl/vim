@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# https://github.com/retorquere/zotero-better-bibtex/wiki/Cite-as-you-Write
+
+# use format=cite for latex \cite{}
+
+params=format=pandoc #?brackets=1
+if [[ "x$1" != "x" ]]; then
+   params=$1
+fi
+
+CAYW_URL=http://localhost:23119/better-bibtex/cayw?${params}
+BBT_status=$(/usr/bin/curl 'http://localhost:23119/better-bibtex/cayw?probe=probe' 2>/dev/null)
+
+if [ "$BBT_status" == "ready" ] 2>/dev/null; then
+   /usr/bin/curl $CAYW_URL 2>/dev/null
+   exit 0;
+fi
+
+

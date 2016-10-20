@@ -50,13 +50,14 @@ let s:path = expand('$HOME/.config/nvim/dein.vim')
    endif
 " endif
 
+" mappings can later be overwritten in plugin_all.vim
 source $HOME/.config/nvim/mappings.vim
 
 " plugin specific settings
 source $HOME/.config/nvim/plugins_all.vim
 
 " if !has('vim_starting')
-	call dein#call_hook('source')
+   call dein#call_hook('source')
 	call dein#call_hook('post_source')
 
    filetype plugin indent on
@@ -75,7 +76,7 @@ source $HOME/.config/nvim/theme.vim
 " }}}
 " Reload vim config automatically {{{
 execute 'autocmd MyAutoCmd BufWritePost $HOME/.config/nvim/*vim nested source $MYVIMRC | redraw'
-execute 'autocmd MyAutoCmd FileType,Syntax,BufNewFile,BufNew,BufRead,VimEnter * call s:my_on_filetype()'
+" execute 'autocmd MyAutoCmd FileType,Syntax,BufNewFile,BufNew,BufRead,VimEnter * call s:my_on_filetype()'
 
 " }}}
 
@@ -85,8 +86,8 @@ set secure
 " Frequentis specifics
 "adds user and timestamp to end of line
 nnoremap <F4> :r! echo "(slendl on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>kJ
-autocmd BufRead MakePkg setlocal noexpandtab filetype=make
-autocmd BufRead ReleaseNotes setlocal textwidth=80 colorcolumn=80 spell
+autocmd MyAutoCmd BufRead MakePkg setlocal noexpandtab filetype=make
+autocmd MyAutoCmd BufRead ReleaseNotes setlocal textwidth=80 colorcolumn=80 spell
 
 command! TargetOn execute 'set scrolloff=15 | %s/t on="false/t on="true/gc | set scrolloff=5'
 command! TargetOff execute 'set scrolloff=15 | %s/t on="true/t on="false/gc | set scrolloff=5'

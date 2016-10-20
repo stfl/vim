@@ -2,12 +2,13 @@
 "  Plugin independet **filetype** settings
 " -----------
 
-augroup filetype_pandoc " {{{
-   autocmd!
+augroup MyAutoCmd " {{{
 
    " enable spelling in markdown and latex
-   autocmd FileType markdown,latex,pandoc setlocal spell textwidth=100 colorcolumn=100
-   autocmd BufRead *.md,*.tex,*.pdc setlocal spell textwidth=100 colorcolumn=100
+   autocmd FileType latex setlocal spell textwidth=100 colorcolumn=100
+   autocmd BufRead *.tex setlocal spell textwidth=100 colorcolumn=100
+
+   autocmd BufRead *.pdc setlocal filetype=pandoc
 
    autocmd FileType markdown,latex call MatchTechWordsToAvoid()
    autocmd BufWinEnter *.md,*.tex call MatchTechWordsToAvoid()
