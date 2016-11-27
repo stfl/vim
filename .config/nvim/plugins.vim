@@ -2,14 +2,14 @@
 call dein#add('Shougo/dein.vim')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 
-call dein#add('bchretien/vim-profiler', {'rtp': ''})
-
-call dein#add('embear/vim-localvimrc')
-
-call dein#add('tmux-plugins/vim-tmux-focus-events', {'if': "$TMUX != ''"})
-call dein#add('christoomey/vim-tmux-navigator') ", {'if': '$TMUX != \'\''})
 
 " Unite {{{
+" call dein#add('Shougo/denite.nvim', {
+"          \ 'lazy': 1,
+"          \ 'depends': 'neomru.vim',
+"          \ 'hook_post_source': 'source $HOME/.config/nvim/unite.vim'
+"          \ })
+
 call dein#add('Shougo/unite.vim', {
          \ 'lazy': 1,
          \ 'depends': 'neomru.vim',
@@ -43,10 +43,10 @@ call dein#add('lambdalisue/vim-gista-unite', { 'on_source': 'unite.vim', 'depend
 " endif
 
 "}}}
-call dein#add('Shougo/vinarise.vim', {'on_cmd': 'Vinarise'})
-
 " Theme | GUI {{{
 call dein#add('jeffkreeftmeijer/vim-numbertoggle', {'on_i': 1})
+
+call dein#add('kshenoy/vim-signature', {'on_path': '.*'})
 
 call dein#add('altercation/vim-colors-solarized')
 
@@ -58,8 +58,26 @@ call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
 " call dein#add('edkolev/tmuxline.vim')
 
-" call dein#add('powerman/vim-plugin-AnsiEsc')    " adds support for ansi escape characters - useful for vimpager
+call dein#add('junegunn/limelight.vim', {'lazy': 1})
+call dein#add('junegunn/goyo.vim', {
+         \ 'depends': 'limelight.vim',
+         \ 'on_cmd': 'Goyo',
+         \ 'hook_add': 'source $HOME/.config/nvim/goyo.vim'
+         \ })
+
+call dein#add('tmux-plugins/vim-tmux-focus-events')
+call dein#add('christoomey/vim-tmux-navigator')
+
+call dein#add('Konfekt/FastFold', {
+         \ 'on_event': 'BufEnter',
+         \ 'hook_post_source': 'FastFoldUpdate'
+         \ })
+
+call dein#add('powerman/vim-plugin-AnsiEsc')    " adds support for ansi escape characters - useful for vimpager
+" 'on_cmd': 'AnsiEsc',
 " }}}
+" Utils {{{
+
 call dein#add('mileszs/ack.vim', { 'on_cmd': 'Ack'})
 
 call dein#add('mbbill/undotree', { 'on_cmd': 'UndotreeToggle' })
@@ -70,6 +88,7 @@ call dein#add('junegunn/fzf', {
          \ 'on_if': 0,
          \ })
 call dein#add('junegunn/fzf.vim', {'on_cmd': 'FZF'})
+
 
 call dein#add('majutsushi/tagbar', {'on_cmd': 'TagbarToggle'})
 " call dein#add('xolox/vim-easytags', { 'depends' : 'xolox/vim-misc' })
@@ -82,18 +101,33 @@ call dein#add('haya14busa/vim-asterisk', {'on_map': {'vn': '<Plug>'}})
 
 call dein#add('junegunn/vim-easy-align', {'xn': '<Plug>LiveEasyAlign'})
 
+call dein#add('dhruvasagar/vim-table-mode', {
+         \ 'on_ft': ['pandoc', 'markdown'],
+         \ 'on_cmd': ['TableModeToggle', 'TableModeEnable', 'Tableize'] }
+         \ )
+
 call dein#add('Raimondi/delimitMate', {
          \ 'on_i': 1,
          \ 'hook_source': 'let g:delimitMate_expand_cr = 1',
          \ })
 
-call dein#add('Konfekt/FastFold', {
-         \ 'on_event': 'BufEnter',
-         \ 'hook_post_source': 'FastFoldUpdate'
+call dein#add('Shougo/echodoc.vim')
+
+call dein#add('Shougo/vimfiler.vim', {
+         \ 'depends': 'unite.vim',
+         \ 'hook_post_source': 'source $HOME/.config/nvim/vimfiler.vim'
          \ })
 
-" Version Control stuff {{{
+call dein#add('Shougo/vinarise.vim', {'on_cmd': 'Vinarise'})
+
+call dein#add('bchretien/vim-profiler', {'rtp': ''})
+
+call dein#add('embear/vim-localvimrc')
+
+" }}}
+" Version Control {{{
 " Git {{{
+
 call dein#add('lambdalisue/vim-gita', {'on_cmd': 'Gita'})
 call dein#add('lambdalisue/vim-gista', {'on_cmd': 'Gista'})          " git config github.user {username}
 call dein#add('chrisbra/vim-diff-enhanced', {'on_cmd': 'EnhancedDiff'})
@@ -107,8 +141,8 @@ call dein#add('will133/vim-dirdiff', {'on_cmd': 'DirDiff'})
 call dein#add('mhinz/vim-signify', {'on_path': '.*'})
 
 "}}}
-
 " Motions {{{
+
 call dein#add('Lokaltog/vim-easymotion')
 " call dein#add('justinmk/vim-sneak')
 " let g:sneak#use_ic_scs = 1
@@ -120,8 +154,6 @@ call dein#add('bkad/CamelCaseMotion', {'on_map': {'nx': '<Plug>CamelCaseMotion'}
 "
 call dein#add('tpope/vim-surround')
 
-call dein#add('kshenoy/vim-signature', {'on_path': '.*'})
-
 " call dein#add('terryma/vim-expand-region') "{{{
 " map gk <Plug>(expand_region_expand)
 " map gj <Plug>(expand_region_shrink)
@@ -130,21 +162,14 @@ call dein#add('kshenoy/vim-signature', {'on_path': '.*'})
 call dein#add('vim-scripts/accelerated-jk')
 " }}}
 
-call dein#add('Shougo/echodoc.vim')
-
-call dein#add('Shougo/vimfiler.vim', {
-         \ 'depends': 'unite.vim',
-         \ 'hook_post_source': 'source $HOME/.config/nvim/vimfiler.vim'
-         \ })
-
 " ------------------------------------
 " CODING Plugins
 " -----------------------------------
-call dein#add('scrooloose/syntastic')
-
-" Filetypes {{{
-call dein#add('kergoth/vim-bitbake', {'on_ft': 'bitbake'})
-call dein#add('tmux-plugins/vim-tmux', {'on_ft': 'tmux'})
+" call dein#add('scrooloose/syntastic')
+call dein#add('neomake/neomake', {
+         \ 'if': "has('nvim') && empty($VIM_MINIMAL)",
+         \ 'on_cmd': 'Neomake'
+         \ })
 
 " Pandoc | Markdown | Latex {{{
 call dein#add('vim-pandoc/vim-pandoc-syntax', {'on_ft': 'pandoc'})
@@ -154,6 +179,13 @@ call dein#add('vim-pandoc/vim-pandoc-after', {
          \ 'depends': 'vim-pandoc',
          \})
 call dein#add('lervag/vimtex', {'on_ft': ['tex','latex','bib']})
+
+call dein#add('ujihisa/neco-look', {
+         \ 'if': 'executable("look")',
+         \ })
+" TODO
+         " \ 'if': '&spell',
+         " \ 'on_i': 1,
 
 " }}}
 " Python {{{
@@ -191,10 +223,15 @@ call dein#add('zchee/deoplete-clang', {
 
 call dein#add('vim-scripts/gtk-vim-syntax', {'on_ft': ['c','gtk']})
 
-call dein#add('vivien/vim-linux-coding-style')
+" call dein#add('vivien/vim-linux-coding-style')
 
 " }}}
+" Others {{{
+call dein#add('kergoth/vim-bitbake', {'on_ft': 'bitbake'})
+call dein#add('tmux-plugins/vim-tmux', {'on_ft': 'tmux'})
+
 " }}}
+
 " Deoplete {{{
 call dein#add('Shougo/context_filetype.vim')
 call dein#add('Shougo/deoplete.nvim', {

@@ -79,6 +79,13 @@ vnoremap <S-Tab> <gv
 nnoremap > >>_
 nnoremap < <<_
 
+" formating the paragraph
+nnoremap gqp gqap
+
+" past last yanked, not including stuff from d/D/x/X/...
+nnoremap gp "0p
+nnoremap gP "0P
+
 " Drag current line/s vertically and auto-indent
 noremap  <Leader>mk :m-2<CR>==
 noremap  <Leader>mj :m+<CR>==
@@ -86,7 +93,7 @@ vnoremap <Leader>mk :m-2<CR>gv=gv
 vnoremap <Leader>mj :m'>+<CR>gv=gv
 
 " Select last paste
-nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
+" nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
 " Use backspace key for matchit.vim
 nmap <BS> %

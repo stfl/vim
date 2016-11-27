@@ -143,7 +143,7 @@ endif
 
 syntax on        " Syntax highlighting
 " set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
-set complete=.,kspell
+set complete=.
 set foldmethod=marker            " allow folding at markers
 " set foldcolumn=3
 set foldnestmax=3

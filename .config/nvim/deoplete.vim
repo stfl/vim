@@ -6,17 +6,19 @@
 
 autocmd MyAutoCmd CompleteDone * pclose!
 
+let g:deoplete#keyword_patterns = {}
+let g:deoplete#omni_patterns = {}
 " let g:deoplete#enable_refresh_always = 1
 let g:deoplete#enable_camel_case = 1
 let g:deoplete#auto_complete_start_length = 3
 let g:deoplete#tag#cache_limit_size = 5000000
 
-let g:deoplete#keyword_patterns = {}
 let g:deoplete#keyword_patterns._ = '[a-zA-Z_]\k*\(?'
 
+
 " Pandoc
-let g:deoplete#omni_patterns = {}
-let g:deoplete#omni_patterns.pandoc= '@'
+let g:deoplete#omni_patterns.pandoc= '@\w*'
+
 
 " Go
 let g:deoplete#sources#go = 'vim-go'
@@ -32,6 +34,7 @@ autocmd FileType python setlocal omnifunc=
 
 let g:deoplete#omni#input_patterns = get(g:, 'deoplete#omni#input_patterns', {})
 let g:deoplete#omni#input_patterns.python = ''
+
 
 " Javascript
 let g:deoplete#omni#input_patterns.javascript = '[^. \t]\.\%\(\h\w*\)\?'

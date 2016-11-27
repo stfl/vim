@@ -88,6 +88,16 @@ if dein#tap('vim-easy-align')
    nmap ga <Plug>(LiveEasyAlign)
 endif
 
+if dein#tap('vim-table-mode')
+   " let g:table_mode_corner_corner="+"
+   " let g:table_mode_header_fillchar="="
+
+   let g:table_mode_corner="|"
+
+   let g:table_mode_align_char=":"
+endif
+
+
 if dein#tap('vim-signify')
    autocmd MyAutoCmd User Fugitive SignifyRefresh
    let g:signify_sign_change            = '~'
@@ -193,10 +203,12 @@ if dein#tap('vim-pandoc')
    let g:pandoc#command#use_message_buffers = '0'
    " let g:pandoc#completion#bib#mode = 'citeproc'
 
+   autocmd MyAutoCmd FileType pandoc nnoremap <localleader>zc :r !zotcite<CR>
+
    " toggle autoexec
    autocmd MyAutoCmd FileType pandoc,markdown nnoremap <localleader>aa
-      \ :let g:pandoc#command#autoexec_on_writes = g:pandoc#command#autoexec_on_writes == 1 ? 0 : 1<CR>
-      \ :echomsg "Pandoc autoexec " . string(g:pandoc#command#autoexec_on_writes == 0 ? "deactivated" : "activated")<CR>
+            \ :let g:pandoc#command#autoexec_on_writes = g:pandoc#command#autoexec_on_writes == 1 ? 0 : 1<CR>
+            \ :echomsg "Pandoc autoexec " . string(g:pandoc#command#autoexec_on_writes == 0 ? "deactivated" : "activated")<CR>
 endif
 
 if dein#tap('vim-pandoc-after')
@@ -275,9 +287,8 @@ if dein#tap('neosnippet.vim')
    let g:neosnippet#enable_complete_done = 1
    let g:neosnippet#expand_word_boundary = 1
    " let g:neosnippet#disable_runtime_snippets = { '_': 1 }
-   let g:neosnippet#data_directory  = '$HOME/.config/nvim/snippets'
-   let g:neosnippet#snippets_directory =
-            \'$HOME/.config/nvim/snippets'
+   let g:neosnippet#data_directory  = expand('$HOME/.config/nvim/snippets')
+   let g:neosnippet#snippets_directory = expand('$HOME/.config/nvim/snippets')
    " \.dein#get('vim-snippets').path.'/snippets,'
    " \.dein#get('neosnippet-snippets').path.'/neosnippets'
    " \ dein#get('vim-go').path.'/gosnippets/snippets'
@@ -293,6 +304,27 @@ if dein#tap('neosnippet.vim')
    xmap <silent><C-k>      <Plug>(neosnippet_expand_target)
 endif
 
+if dein#tap('neomake')
+   autocmd MyAutoCmd BufWritePost * Neomake
+   " autocmd MyAutoCmd BufWritePost * call <SID>neomake_custom()
+   " function! s:neomake_custom()
+   "    let filetypes = [
+   "             \   'ansible', 'python', 'php', 'ruby', 'vim', 'go', 'sh',
+   "             \   'javascript', 'javascript.jsx', 'json', 'css', 'yaml',
+   "             \   'markdown', 'html'
+   "             \ ]
+   "
+   "    if empty(&buftype) && index(filetypes, &filetype) > -1
+   "       Neomake
+   "    endif
+   " endfunction
+
+   let g:neomake_verbose = 0
+   let g:neomake_serialize = 1
+   let g:neomake_serialize_abort_on_error = 1
+   " let g:neomake_logfile = '/tmp/neomake.log'
+endif
+
 " if dein#tap('vim-easytags')
 " set tags=./tags,./TAGS,tags;TAGS;   " make vim look for tags file reverse-recursivly ;)
 " let g:easytags_dynamic_files = 1    " make easytags use this file instead of global
@@ -303,7 +335,7 @@ endif
 " endif
 
 if dein#tap('vim-gita')
-   nnoremap gcc :Gita status<CR>
+   nnoremap gcc  :Gita status<CR>
    augroup mygita
       autocmd!
       autocmd FileType gita-commit nmap gcc <Plug>(gita-status-open)
