@@ -89,7 +89,6 @@ call dein#add('junegunn/fzf', {
          \ })
 call dein#add('junegunn/fzf.vim', {'on_cmd': 'FZF'})
 
-
 call dein#add('majutsushi/tagbar', {'on_cmd': 'TagbarToggle'})
 " call dein#add('xolox/vim-easytags', { 'depends' : 'xolox/vim-misc' })
 
@@ -124,6 +123,8 @@ call dein#add('bchretien/vim-profiler', {'rtp': ''})
 
 call dein#add('embear/vim-localvimrc')
 
+call dein#add('airblade/vim-rooter')
+
 " }}}
 " Version Control {{{
 " Git {{{
@@ -132,6 +133,7 @@ call dein#add('lambdalisue/vim-gita', {'on_cmd': 'Gita'})
 call dein#add('lambdalisue/vim-gista', {'on_cmd': 'Gista'})          " git config github.user {username}
 call dein#add('chrisbra/vim-diff-enhanced', {'on_cmd': 'EnhancedDiff'})
 call dein#add('rhysd/committia.vim', {'on_path': 'COMMIT_EDITMSG'})
+call dein#add('cohama/agit.vim', {'on_cmd': 'Agit'})
 
 " }}}
 call dein#add('juneedahamed/svnj.vim')
@@ -149,7 +151,7 @@ call dein#add('Lokaltog/vim-easymotion')
 " let g:sneak#streak = 1
 call dein#add('unblevable/quick-scope', {'on_path': '.*'})
 
-call dein#add('bkad/CamelCaseMotion', {'on_map': {'nx': '<Plug>CamelCaseMotion'}})
+" call dein#add('bkad/CamelCaseMotion', {'on_map': {'nx': '<Plug>CamelCaseMotion'}})
 
 "
 call dein#add('tpope/vim-surround')

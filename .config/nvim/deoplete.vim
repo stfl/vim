@@ -8,6 +8,7 @@ autocmd MyAutoCmd CompleteDone * pclose!
 
 let g:deoplete#keyword_patterns = {}
 let g:deoplete#omni_patterns = {}
+let g:deoplete#omni#input_patterns = get(g:, 'deoplete#omni#input_patterns', {})
 " let g:deoplete#enable_refresh_always = 1
 let g:deoplete#enable_camel_case = 1
 let g:deoplete#auto_complete_start_length = 3
@@ -19,6 +20,17 @@ let g:deoplete#keyword_patterns._ = '[a-zA-Z_]\k*\(?'
 " Pandoc
 let g:deoplete#omni_patterns.pandoc= '@\w*'
 
+" Latex
+let g:deoplete#omni#input_patterns.tex = '\\(?:'
+         \ . '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
+         \ . '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
+         \ . '|hyperref\s*\[[^]]*'
+         \ . '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+         \ . '|(?:include(?:only)?|input)\s*\{[^}]*'
+         \ . '|\w*(gls|Gls|GLS)(pl)?\w*(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+         \ . '|includepdf(\s*\[[^]]*\])?\s*\{[^}]*'
+         \ . '|includestandalone(\s*\[[^]]*\])?\s*\{[^}]*'
+         \ .')'
 
 " Go
 let g:deoplete#sources#go = 'vim-go'
@@ -32,7 +44,6 @@ let g:deoplete#sources#jedi#short_types = 1
 
 autocmd FileType python setlocal omnifunc=
 
-let g:deoplete#omni#input_patterns = get(g:, 'deoplete#omni#input_patterns', {})
 let g:deoplete#omni#input_patterns.python = ''
 
 

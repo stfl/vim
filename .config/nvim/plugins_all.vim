@@ -7,6 +7,12 @@ if dein#tap('vim-localvimrc')
    let g:localvimrc_sandbox = 0
 endif
 
+if dein#tap('vim-rooter')
+   let g:rooter_silent_chdir = 1
+   let g:rooter_manual_only = 1
+   let g:rooter_patterns = ['.git/']
+endif
+
 if dein#tap('vim-tmux-navigator')
    let g:tmux_navigator_no_mappings = 1
    "unmap <A-h>
@@ -201,7 +207,9 @@ if dein#tap('vim-pandoc')
    let g:pandoc#command#autoexec_command = 'Pandoc pdf -s'
    let g:pandoc#formatting#textwidth = 100
    let g:pandoc#command#use_message_buffers = '0'
-   " let g:pandoc#completion#bib#mode = 'citeproc'
+   " let g:pandoc#biblio#use_bibtool = 1
+
+   let g:pandoc#modules#disabled = ['chdir']
 
    autocmd MyAutoCmd FileType pandoc nnoremap <localleader>zc :r !zotcite<CR>
 
@@ -227,6 +235,11 @@ if dein#tap('vimtex')
    if has('nvim') && executable('nvr')
       let g:vimtex_latexmk_progname = 'nvr'
    endif
+endif
+
+if dein#tap('FastFold')
+   let g:tex_fold_enabled=1
+   let g:fastfold_savehook = 1 " don't update on save
 endif
 
 if dein#tap('jedi-vim')
@@ -345,6 +358,11 @@ if dein#tap('vim-gita')
       autocmd FileType gitcommit,gita-commit setlocal spell
    augroup END
 endif
+
+if dein#tap('agit.vim')
+   let g:agit_enable_auto_refresh = 1
+endif
+
 
 if dein#tap('indentLine')
    let g:indentLine_char = "┆"

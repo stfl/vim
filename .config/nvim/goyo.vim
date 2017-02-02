@@ -2,7 +2,7 @@
 " Goyo
 " -------
 
-let g:goyo_width = 103
+let g:goyo_width = 105
 
 " s:goyo_enter() "{{{
 " Disable visual candy in Goyo mode
@@ -23,6 +23,13 @@ function! s:goyo_enter()
    SignifyDisable
    SignatureToggleSigns
    QuickScopeToggle 
+
+   let g:neomake_place_signs = 0
+
+   " save fold color &highlight['f:Folded']
+   " hi Folded
+   hi Folded ctermfg=Gray
+
 
    " Activate Limelight
    Limelight
@@ -51,10 +58,13 @@ function! s:goyo_leave()
    SignatureToggleSigns
    QuickScopeToggle 
 
+   let g:neomake_place_signs = 1
+   " hi Folded
+
    " De-activate Limelight
    Limelight!
 
-   " source $HOME/.config/nvim/theme.vim
+   source $HOME/.config/nvim/theme.vim
 endfunction
 " }}}
 

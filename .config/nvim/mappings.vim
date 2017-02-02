@@ -41,12 +41,13 @@ noremap <silent> j gj
 noremap <silent> k gk
 
 " Toggle editor visuals
-nnoremap <leader><F7> :set list!<CR>
-nmap <Leader>ts :setlocal spell!<cr>
-nmap <Leader>tn :setlocal nonumber! norelativenumber!<CR>
-nmap <Leader>tl :setlocal nolist!<CR>
-nmap <Leader>th :nohlsearch<CR>
-nmap <Leader>tw :setlocal wrap! breakindent!<CR>
+nnoremap <leader><F7> :setlocal list!<CR>
+nnoremap <Leader>ts :setlocal spell!<cr>
+nnoremap <Leader>tn :setlocal nonumber! norelativenumber!<CR>
+nnoremap <Leader>tl :setlocal nolist!<CR>
+nnoremap <Leader>th :nohlsearch<CR>
+nnoremap <Leader>tw :setlocal wrap! breakindent!<CR>
+nnoremap <expr> <Leader>tc &conceallevel == 0 ? ':setlocal conceallevel=2<CR>' : ':setlocal conceallevel=0<CR>'
 
 " split naviagetion
 nnoremap <A-h> <C-w>h
@@ -78,9 +79,6 @@ vnoremap <Tab> >gv|
 vnoremap <S-Tab> <gv
 nnoremap > >>_
 nnoremap < <<_
-
-" formating the paragraph
-nnoremap gqp gqap
 
 " past last yanked, not including stuff from d/D/x/X/...
 nnoremap gp "0p
@@ -163,6 +161,13 @@ vnoremap <expr> dp  &diff ? ":'<,'>diffput<CR>:diffupdate<CR>" : 'dp'
 
 " map the F9 key to run make
 map <F9> :make<CR>
+
+" Evaluate an expression contained in a visual selection and place the answer in a new line below the current line:
+" if the $x= is overwritten at the end with the actal formula, it also works to set $a= variables
+vnoremap <Leader>ma yo<Esc>p^y$V:!perl -e '$x = <C-R>"; print $x'<CR>-y0j0P
+
+" Evaluate an expression contained in a visual selection and replace the visual selection with the answer: - only single line
+vnoremap <Leader>mr "aygvrXgv"by:r !perl -e '$x = <C-R>a; print $x'<CR>0"cyWddk:s/<C-R>b/<C-R>c/<CR>
 
 nnoremap <leader>sv :so $MYVIMRC<CR>:e<CR>
 nnoremap <leader>ov :tabe $MYVIMRC<CR>
