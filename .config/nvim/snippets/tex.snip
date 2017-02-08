@@ -1,0 +1,49 @@
+snippet \acro
+alias   acro
+	\acro{${1:ACRO}} [$1] {${2:Acronyme}}
+
+snippet     \ac
+alias       ac
+    \ac{${1:TARGET}}${0}
+    
+
+snippet \textbf
+alias   textbf \textbf{ bf
+	\textbf{${1:TARGET}}${0}
+
+snippet \textit
+alias   textit \textit{ it
+	\textit{${1:TARGET}}${0}
+
+
+snippet cite
+alias   \cite
+	\cite{${1}}${0}
+
+snippet eqref
+alias   \eqref eqr
+    \eqref{eq:${1}}${0}
+
+snippet \section
+alias   section \section{ sec
+	\section{${1:Name}}\label{sec:${2:name}}
+    ${0:TARGET}
+
+# \section{${1}}\label{${2:`substitude("\$1","\w*","_","g")`}}
+
+
+snippet \subsection
+alias   subsection \subsection{
+    \subsection{${1}}\label{sec:${2:name}}
+    ${0:TARGET}
+
+snippet \subsubsection
+alias   subsubsection \subsubsection{
+    \subsubsection{${1}}\label{sec:${2:name}}
+    ${0:TARGET}
+
+snippet equation
+alias   \begin{equation} \equation
+    \begin{equation}\label{eq:${1:name}}
+        ${2:TARGET}
+    \end{equation}
