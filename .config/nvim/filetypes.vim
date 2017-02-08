@@ -2,7 +2,7 @@
 "  Plugin independant **filetype** settings
 " -----------
 
-augroup MyAutoCmd " {{{
+augroup MyAutoCmd " Pandoc Markdown setup {{{
    " enable spelling in markdown and latex
    autocmd FileType latex setlocal spell textwidth=100 colorcolumn=100 formatoptions+=tlv
    autocmd BufRead *.tex setlocal spell textwidth=100 colorcolumn=100 formatoptions+=tlv
@@ -29,4 +29,5 @@ endfunction
 
 au MyAutoCmd FileType python nnoremap <F9> :exec '!python3' shellescape(@%, 1)<cr>
 
+au MyAutoCmd FileType c,cpp,objc,objcpp set foldmethod=syntax
 

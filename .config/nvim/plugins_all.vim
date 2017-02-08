@@ -85,6 +85,7 @@ if dein#tap('nerdcommenter')
    let g:NERDDefaultAlign = 'left'
    let g:NERDCommentEmptyLines = 1
    let g:NERDTrimTrailingWhitespace = 1
+   let g:NERDCompactSexyComs = 1
 endif
 
 if dein#tap('vim-easy-align')
@@ -289,8 +290,13 @@ endif
 
 if dein#tap('deoplete-clang')
    " sudo find /usr/ -name libclang.so
-   let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-3.5/lib/libclang.so'
-   let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.5/'
+   if !empty(glob("/usr/lib/libclang.so"))                                " on Arch
+      let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
+      let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/'
+   elseif !empty(glob("/usr/lib/llvm-3.5/lib/libclang.so"))               " on Debian
+      let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-3.5/lib/libclang.so'
+      let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.5/'
+   endif
 endif
 
 if dein#tap('neosnippet.vim')

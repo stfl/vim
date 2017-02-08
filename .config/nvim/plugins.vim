@@ -50,9 +50,9 @@ call dein#add('kshenoy/vim-signature', {'on_path': '.*'})
 
 call dein#add('altercation/vim-colors-solarized')
 
-call dein#add('Yggdroot/indentLine',{
-         \ 'hook_post_source': 'let g:indentLine_char = "┆"'
-         \})
+" call dein#add('Yggdroot/indentLine',{
+"          \ 'hook_post_source': 'let g:indentLine_char = "┆"'
+"          \})
 
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
@@ -100,10 +100,10 @@ call dein#add('haya14busa/vim-asterisk', {'on_map': {'vn': '<Plug>'}})
 
 call dein#add('junegunn/vim-easy-align', {'xn': '<Plug>LiveEasyAlign'})
 
-call dein#add('dhruvasagar/vim-table-mode', {
-         \ 'on_ft': ['pandoc', 'markdown'],
-         \ 'on_cmd': ['TableModeToggle', 'TableModeEnable', 'Tableize'] }
-         \ )
+" call dein#add('dhruvasagar/vim-table-mode', {
+"          \ 'on_ft': ['pandoc', 'markdown'],
+"          \ 'on_cmd': ['TableModeToggle', 'TableModeEnable', 'Tableize'] }
+"          \ )
 
 call dein#add('Raimondi/delimitMate', {
          \ 'on_i': 1,
@@ -161,7 +161,7 @@ call dein#add('tpope/vim-surround')
 " map gj <Plug>(expand_region_shrink)
 "}}}
 " call dein#add('terryma/vim-multiple-cursors')
-call dein#add('vim-scripts/accelerated-jk')
+" call dein#add('vim-scripts/accelerated-jk')
 " }}}
 
 " ------------------------------------
