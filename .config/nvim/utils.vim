@@ -72,8 +72,8 @@ endfunction
 command! -register CopyMatches call CopyMatches(<q-reg>)
 
 " }}}
-" Makes * and # work on visual mode too.  "{{{
-" See: http://github.com/nelstrom/vim-visual-star-search
+" " Makes * and # work on visual mode too. used for <C-R> replacements ;)  "{{{
+" " See: http://github.com/nelstrom/vim-visual-star-search
 function! VSetSearch(cmdtype)
    let temp = @s
    normal! gv"sy

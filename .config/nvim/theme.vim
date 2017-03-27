@@ -28,7 +28,7 @@ colorscheme solarized
 " make search in Gray and white.
 hi Search term=reverse cterm=reverse ctermfg=10 ctermbg=15 guibg=DarkGrey
 " hi Search term=bold cterm=bold ctermfg=15 ctermbg=10 guibg=DarkGrey
-hi Folded term=bold cterm=bold
+hi Folded term=none cterm=none ctermfg=DarkGrey guifg=DarkGrey ctermbg=none guibg=none 
 
 " fix wierd display of Sign Column Color
 if has('gui_running')

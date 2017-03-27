@@ -18,5 +18,7 @@ nnoremap <leader>y :Unite history/yank -default-action=append<cr>
 nnoremap <leader>/ :Unite grep:.<cr>
 nnoremap <leader>s :Unite -quick-match tab<cr>
 nnoremap <leader>S :Unite -quick-match buffer<cr>
-nnoremap <leader>p :Unite file_mru<cr>
+" nnoremap <leader>p :Unite file_mru<cr>
 nnoremap <leader>um :Unite mapping<cr>
+
+cnoreabbrev U Unite

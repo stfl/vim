@@ -30,10 +30,10 @@ nnoremap gQ <Nop>
 nnoremap <CR> za
 
 " Disable arrow movement, resize splits instead.
-nnoremap <Up>    :resize +2<CR>
-nnoremap <Down>  :resize -2<CR>
-nnoremap <Left>  :vertical resize +2<CR>
-nnoremap <Right> :vertical resize -2<CR>
+nnoremap <Up>    :resize -2<CR>
+nnoremap <Down>  :resize +2<CR>
+nnoremap <Left>  :vertical resize -2<CR>
+nnoremap <Right> :vertical resize +2<CR>
 
 nnoremap <C-w>z :ZoomToggle<CR>
 
@@ -54,6 +54,8 @@ nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
+
+nnoremap <C-l> :redraw<cr>:nohl<cr>
 
 nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
@@ -79,6 +81,9 @@ vnoremap <Tab> >gv|
 vnoremap <S-Tab> <gv
 nnoremap > >>_
 nnoremap < <<_
+
+nnoremap <leader>l gt
+nnoremap <leader>h gT
 
 " past last yanked, not including stuff from d/D/x/X/...
 nnoremap gp "0p
@@ -113,6 +118,8 @@ cnoreabbrev Bd bd
 cnoreabbrev bD bd
 cnoreabbrev t tabe
 cnoreabbrev T tabe
+
+cnoreabbrev ln lnext
 
 " Start new line from any cursor position
 inoremap <S-Return> <C-o>o

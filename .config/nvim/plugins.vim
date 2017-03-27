@@ -19,7 +19,7 @@ call dein#add('Shougo/unite.vim', {
 " Unit sources
 call dein#add('Shougo/neomru.vim', {'on_if': 1})
 call dein#add('Shougo/neoyank.vim', {'on_if': 1, 'on_source': 'unite.vim'})
-call dein#add('Shougo/unite-build', {'on_source': 'unite.vim'})
+" call dein#add('Shougo/unite-build', {'on_source': 'unite.vim'})
 call dein#add('Shougo/unite-outline', {'on_source': 'unite.vim'})
 call dein#add('osyo-manga/unite-quickfix', {'on_source': 'unite.vim'})
 call dein#add('osyo-manga/unite-filetype', {'on_source': 'unite.vim'})
@@ -87,7 +87,7 @@ call dein#add('junegunn/fzf', {
          \ 'install_process_timeout': '800',
          \ 'on_if': 0,
          \ })
-call dein#add('junegunn/fzf.vim', {'on_cmd': 'FZF'})
+call dein#add('junegunn/fzf.vim') ", {'on_cmd': 'FZF'})
 
 call dein#add('majutsushi/tagbar', {'on_cmd': 'TagbarToggle'})
 " call dein#add('xolox/vim-easytags', { 'depends' : 'xolox/vim-misc' })
@@ -123,7 +123,7 @@ call dein#add('bchretien/vim-profiler', {'rtp': ''})
 
 call dein#add('embear/vim-localvimrc')
 
-call dein#add('airblade/vim-rooter')
+call dein#add('airblade/vim-rooter', {'on_cmd' : 'Rooter'})
 
 " }}}
 " Version Control {{{
@@ -186,15 +186,16 @@ call dein#add('ujihisa/neco-look', {
          \ 'if': 'executable("look")',
          \ })
 " TODO
-         " \ 'if': '&spell',
-         " \ 'on_i': 1,
+" \ 'if': '&spell',
+" \ 'on_i': 1,
 
 " }}}
 " Python {{{
 call dein#add('davidhalter/jedi-vim', {'on_ft': 'python'})
-call dein#add('zchee/deoplete-jedi', {'on_ft': 'python', 'on_i': 1})
-call dein#add('hynek/vim-python-pep8-indent', {'on_ft': 'python', 'on_i': 1})
-call dein#add('bfredl/nvim-ipy', {'on_ft': 'python', 'on_i': 1})
+call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'}) ", 'on_i': 1})
+call dein#add('hynek/vim-python-pep8-indent', {'on_ft': 'python'}) ", 'on_i': 1})
+call dein#add('bfredl/nvim-ipy', {'on_ft': 'python'}) ", 'on_i': 1})
+" install: pip install --user jupyter_client
 
 " }}}
 " Javascript {{{
@@ -225,12 +226,20 @@ call dein#add('zchee/deoplete-clang', {
 
 call dein#add('vim-scripts/gtk-vim-syntax', {'on_ft': ['c','gtk']})
 
+call dein#add('lyuts/vim-rtags', {
+         \ 'if': "executable('rc')",
+         \ 'on_ft': ['c', 'cpp']
+         \ })
+" install https://github.com/Andersbakken/rtags
+
 " call dein#add('vivien/vim-linux-coding-style')
 
 " }}}
 " Others {{{
 call dein#add('kergoth/vim-bitbake', {'on_ft': 'bitbake'})
 call dein#add('tmux-plugins/vim-tmux', {'on_ft': 'tmux'})
+call dein#add('stfl/meson.vim', {'on_ft': 'meson'})
+call dein#add('chiel92/vim-autoformat')
 
 " }}}
 

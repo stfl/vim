@@ -34,7 +34,7 @@ if dein#tap('vim-airline') "{{{
    let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
    " fixes unneccessary redraw, when e.g. opening Gundo window
    let airline#extensions#tabline#ignore_bufadd_pat =
-            \ '\c\vgundo|undotree|diffpanel|vimfiler|tagbar|nerd_tree|[unite]|vimfiler'
+            \ '\c\vgundo|undotree|diffpanel|vimfiler|tagbar|nerd_tree|[unite]'
    " let g:airline#extensions#tabline#fnamemod = ':t'
    let g:airline#extensions#tabline#show_splits = 0
 endif
@@ -60,7 +60,9 @@ endif
 " }}}
 "
 if dein#tap('ack.vim')
-   if executable('ag')
+   if executable('rg')
+      let g:ackprg = 'rg --vimgrep'
+   elseif executable('ag')
       let g:ackprg = 'ag --vimgrep'
    endif
    " search for current word in project: acording to current dir!!
@@ -74,9 +76,32 @@ endif
 
 if dein#tap('fzf.vim')
    nnoremap <c-p> :FZF<CR>
+
+   " Mapping selecting mappings
+   nmap <leader><tab> <plug>(fzf-maps-n)
+   xmap <leader><tab> <plug>(fzf-maps-x)
+   omap <leader><tab> <plug>(fzf-maps-o)
+
+   " Insert mode completion
+   " imap <c-x><c-k> <plug>(fzf-complete-word)
+   imap <c-x><c-f> <plug>(fzf-complete-path)
+   imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+   imap <c-x><c-l> <plug>(fzf-complete-line)
+
+   nnoremap <leader>p :History<cr>
+
+   if executable('rg')
+      command! -bang -nargs=* Rg
+               \ call fzf#vim#grep(
+               \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+               \   <bang>0 ? fzf#vim#with_preview('up:60%')
+               \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+               \   <bang>0)
+   endif
 endif
 
 if dein#tap('tagbar')
+   nnoremap <Leader>gu  :TagbarToggle<CR>
    nnoremap <F6> :TagbarToggle<CR>
 endif
 
@@ -107,9 +132,10 @@ endif
 
 if dein#tap('vim-signify')
    autocmd MyAutoCmd User Fugitive SignifyRefresh
-   let g:signify_sign_change            = '~'
+   let g:signify_sign_change = '~'
    " let g:signify_update_on_focusgained  = 1
-   " ignore whitespaces in git
+
+   " ignore whitespaces
    if !exists('g:signify_vcs_cmds')
       let g:signify_vcs_cmds = { 'git': 'git diff --no-color --no-ext-diff -U0 -w -- %f' }
       " let g:signify_vcs_cmds = { 'svn': 'svn diff --diff-cmd %d -x -U0 -- %f' }
@@ -194,13 +220,13 @@ if dein#tap('incsearch.vim')
    map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
    map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
 
+endif
+
+if dein#tap('vim-asterisk')
    map z*  <Plug>(asterisk-z*)
    map gz* <Plug>(asterisk-gz*)
    map z#  <Plug>(asterisk-z#)
    map gz# <Plug>(asterisk-gz#)
-endif
-
-if dein#tap('vim-asterisk')
    " let g:asterisk#keeppos = 1
 endif
 
@@ -342,6 +368,9 @@ if dein#tap('neomake')
    let g:neomake_serialize = 1
    let g:neomake_serialize_abort_on_error = 1
    " let g:neomake_logfile = '/tmp/neomake.log'
+
+   cnoreabbrev N! Neomake!
+   cnoreabbrev N Neomake
 endif
 
 " if dein#tap('vim-easytags')
@@ -354,7 +383,7 @@ endif
 " endif
 
 if dein#tap('vim-gita')
-   nnoremap gcc  :Gita status<CR>
+   nnoremap gcc :Gita status<CR>
    augroup mygita
       autocmd!
       autocmd FileType gita-commit nmap gcc <Plug>(gita-status-open)

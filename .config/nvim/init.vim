@@ -56,6 +56,8 @@ source $HOME/.config/nvim/mappings.vim
 " plugin specific settings
 source $HOME/.config/nvim/plugins_all.vim
 
+call dein#remote_plugins()
+
 " if !has('vim_starting')
    call dein#call_hook('source')
 	call dein#call_hook('post_source')
