@@ -108,7 +108,7 @@ endif
 if dein#tap('nerdcommenter')
    let NERDSpaceDelims=1
    let g:NERDDefaultAlign = 'left'
-   let g:NERDCommentEmptyLines = 1
+   " let g:NERDCommentEmptyLines = 1
    let g:NERDTrimTrailingWhitespace = 1
    let g:NERDCompactSexyComs = 1
 endif
@@ -365,12 +365,17 @@ if dein#tap('neomake')
    " endfunction
 
    let g:neomake_verbose = 0
-   let g:neomake_serialize = 1
-   let g:neomake_serialize_abort_on_error = 1
-   " let g:neomake_logfile = '/tmp/neomake.log'
+   " let g:neomake_serialize = 1
+   " let g:neomake_serialize_abort_on_error = 1
+   let g:neomake_logfile = '/tmp/neomake.log'
 
    cnoreabbrev N! Neomake!
    cnoreabbrev N Neomake
+endif
+
+if dein#tap('OMNeTpp4.x-NED-Syntax-file')
+   autocmd MyAutoCmd BufNewFile,BufRead *.ned set filetype=ned
+   autocmd MyAutoCmd BufNewFile,BufRead *.ned set commentstring="//%s"
 endif
 
 " if dein#tap('vim-easytags')
@@ -397,7 +402,6 @@ endif
 if dein#tap('agit.vim')
    let g:agit_enable_auto_refresh = 1
 endif
-
 
 if dein#tap('indentLine')
    let g:indentLine_char = "┆"

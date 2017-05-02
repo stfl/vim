@@ -123,7 +123,9 @@ call dein#add('bchretien/vim-profiler', {'rtp': ''})
 
 call dein#add('embear/vim-localvimrc')
 
-call dein#add('airblade/vim-rooter', {'on_cmd' : 'Rooter'})
+" call dein#add('airblade/vim-rooter', {'on_cmd' : 'Rooter'})
+
+call dein#add('chiel92/vim-autoformat')
 
 " }}}
 " Version Control {{{
@@ -199,12 +201,12 @@ call dein#add('bfredl/nvim-ipy', {'on_ft': 'python'}) ", 'on_i': 1})
 
 " }}}
 " Javascript {{{
-call dein#add('othree/yajs.vim', {'on_ft': 'javascript'})
-call dein#add('gavocanov/vim-js-indent', {'on_ft': 'javascript'})
-call dein#add('othree/javascript-libraries-syntax.vim', {'on_ft': 'javascript'})
-call dein#add('othree/jspc.vim', {'on_ft': 'javascript'})
-call dein#add('heavenshell/vim-jsdoc', {'on_ft': 'javascript'})
-call dein#add('moll/vim-node', {'on_ft': 'javascript'})
+" call dein#add('othree/yajs.vim', {'on_ft': 'javascript'})
+" call dein#add('gavocanov/vim-js-indent', {'on_ft': 'javascript'})
+" call dein#add('othree/javascript-libraries-syntax.vim', {'on_ft': 'javascript'})
+" call dein#add('othree/jspc.vim', {'on_ft': 'javascript'})
+" call dein#add('heavenshell/vim-jsdoc', {'on_ft': 'javascript'})
+" call dein#add('moll/vim-node', {'on_ft': 'javascript'})
 call dein#add('carlitux/deoplete-ternjs', {
          \ 'if': 'executable("tern")',
          \ 'on_ft': 'javascript',
@@ -213,8 +215,8 @@ call dein#add('carlitux/deoplete-ternjs', {
 
 " }}}
 " Go {{{
-call dein#add('fatih/vim-go', {'on_ft': 'go'})
-call dein#add('garyburd/go-explorer', {'on_ft': 'go'})
+" call dein#add('fatih/vim-go', {'on_ft': 'go'})
+" call dein#add('garyburd/go-explorer', {'on_ft': 'go'})
 
 " }}}
 " C {{{
@@ -239,7 +241,7 @@ call dein#add('lyuts/vim-rtags', {
 call dein#add('kergoth/vim-bitbake', {'on_ft': 'bitbake'})
 call dein#add('tmux-plugins/vim-tmux', {'on_ft': 'tmux'})
 call dein#add('stfl/meson.vim', {'on_ft': 'meson'})
-call dein#add('chiel92/vim-autoformat')
+call dein#add('vim-scripts/OMNeTpp4.x-NED-Syntax-file', {'on_ft': 'ned'})
 
 " }}}
 
