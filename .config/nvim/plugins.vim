@@ -25,22 +25,18 @@ call dein#add('osyo-manga/unite-quickfix', {'on_source': 'unite.vim'})
 call dein#add('osyo-manga/unite-filetype', {'on_source': 'unite.vim'})
 call dein#add('tacroe/unite-mark', {'on_source': 'unite.vim'})
 call dein#add('tsukkee/unite-tag', {'on_source': 'unite.vim'})
-call dein#add('Shougo/neossh.vim', {'on_ft': 'vimfiler', 'sources': 'ssh'})
+call dein#add('Shougo/neossh.vim', {'on_source': 'unite.vim'}) ", {'on_ft': 'vimfiler', 'sources': 'ssh'})
 call dein#add('lambdalisue/vim-gista-unite', { 'on_source': 'unite.vim', 'depends': 'vim-gista'})
 
 " }}}
 " ReleaseNotes {{{
-" if !empty(glob("~/.zprofile.frq"))
-"    call dein#add('ReleaseNotes', {
-"             \ 'external_commands' : 'svn',
-"             \ 'uri' : 'http://svn.frequentis.frq/components/systemsw/software/dev-env/vim/trunk/Plugin-ReleaseNotes',
-"             \ 'name' : 'ReleaseNotes',
-"             \ 'on_ft' : 'ReleaseNotes',
-"             \ 'disabled' : empty(glob("~/.zprofile.frq")),
-"             \ 'type' : 'svn'
-"             \ })
-"             " \ 'disabled' : !executable('svn'),
-" endif
+if !empty(glob("~/.zprofile.frq"))
+   call dein#add('$HOME/.local/repos/Plugin-ReleaseNotes/', {
+            \ 'name' : 'ReleaseNotes',
+            \ 'on_ft' : 'ReleaseNotes',
+            \ 'disabled' : empty(glob("~/.zprofile.frq")),
+            \ })
+endif
 
 "}}}
 " Theme | GUI {{{
@@ -219,11 +215,15 @@ call dein#add('carlitux/deoplete-ternjs', {
 " call dein#add('garyburd/go-explorer', {'on_ft': 'go'})
 
 " }}}
-" C {{{
+" C / C++ {{{
 call dein#add('zchee/deoplete-clang', {
          \ 'depends': 'deoplete.nvim',
          \ 'on_i': 1,
          \ 'on_ft': ['c','cpp','objc','objcpp']
+         \ })
+
+call dein#add('vim-scripts/a.vim', {
+         \ 'on_ft': ['c', 'cpp']
          \ })
 
 call dein#add('vim-scripts/gtk-vim-syntax', {'on_ft': ['c','gtk']})

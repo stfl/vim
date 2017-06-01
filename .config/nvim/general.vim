@@ -146,7 +146,7 @@ syntax on        " Syntax highlighting
 set complete=.
 set foldmethod=marker            " allow folding at markers
 " set foldcolumn=3
-set foldnestmax=3
+set foldnestmax=2
 set diffopt=filler,vertical,iwhite  " ignore whitespace
 set splitbelow splitright        " Splits open bottom right
 set switchbuf=usetab,split       " Switch buffer behavior
@@ -157,11 +157,11 @@ set breakat=\ \	;:,!?            " Long lines break chars
 set nostartofline                " Cursor in same column for few commands
 set whichwrap+=h,l,<,>,[,],~     " Move to following line on certain keys
 set completeopt=menuone          " Show menu even for one item
-set completeopt+=noselect        " Do not select a match in the menu
+" set completeopt+=noselect        " Do not select a match in the menu
 if has('patch-7.4.775')
-   set completeopt+=noinsert     " do not insert the selected
+   " set completeopt+=noinsert     " do not insert the selected
 endif
-if has('cscope')
+if has('cscope') " && executable('cscope')
    set cscopetag                  " use cscope db when C-]
    set cscopeverbose
 endif
