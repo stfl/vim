@@ -239,7 +239,8 @@ call dein#add('lyuts/vim-rtags', {
 " }}}
 " Others {{{
 call dein#add('kergoth/vim-bitbake', {'on_ft': 'bitbake'})
-call dein#add('tmux-plugins/vim-tmux', {'on_ft': 'tmux'})
+" call dein#add('tmux-plugins/vim-tmux', {'on_ft': 'tmux'})
+call dein#add('ericpruitt/tmux.vim', { 'rtp': 'vim/',  'on_ft': 'tmux'})
 call dein#add('stfl/meson.vim', {'on_ft': 'meson'})
 call dein#add('vim-scripts/OMNeTpp4.x-NED-Syntax-file', {'on_ft': 'ned'})
 

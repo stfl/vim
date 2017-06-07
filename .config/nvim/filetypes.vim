@@ -32,3 +32,4 @@ au MyAutoCmd FileType python nnoremap <F9> :exec '!python3' shellescape(@%, 1)<c
 au MyAutoCmd FileType c,cpp,objc,objcpp set foldmethod=syntax
 
 au MyAutoCmd BufRead /home/slendl/.ssh/config.d/* set ft=sshconfig
+au MyAutoCmd BufRead /home/slendl/.config/mr/* set ft=sh
