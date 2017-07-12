@@ -322,7 +322,88 @@ if dein#tap('deoplete-clang')
    elseif !empty(glob("/usr/lib/llvm-3.5/lib/libclang.so"))               " on Debian
       let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-3.5/lib/libclang.so'
       let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.5/'
+   else 
+      echomsg string('deoplete-clang: libclang not found!!!')
    endif
+
+   let g:deoplete#sources#clang#sort_algo = 'priority'
+endif
+
+if dein#tap('tweekmonster/deoplete-clang2')
+   " fill in the g:neomake_<filetype>_clang_maker variable with the clang executable path and flags.
+   " You will still need to enable it with g:neomake_<filetype>_enabled_makers = ["clang"]
+   let g:deoplete#sources#clang#autofill_neomake = 1
+
+   " maximum number of lines to search for a #ifdef or #endif
+   let g:deoplete#sources#clang#preproc_max_lines = 300 
+  
+   " :!which -a clang
+   if !empty(glob("/usr/bin/clang"))
+      let g:deoplete#sources#clang#executable = "/usr/bin/clang"
+   else
+      echomsg string('deoplete-clang2: clang not found!!!')
+   endif
+endif
+
+
+" if dein#tap('Valloric/YouCompleteMe')
+" ignore alot to allow ycm to kick in
+" let g:deoplete#ignore_sources.c =
+"       \ ['dictionary', 'member', 'omni', 'tag', 'syntax', 'file/include', 'neosnippet', 'around']
+" let g:deoplete#ignore_sources.cpp    = g:deoplete#ignore_sources.c
+" let g:deoplete#ignore_sources.objc = g:deoplete#ignore_sources.c
+" 
+" function! YCMConfig()
+"   let g:ycm_auto_trigger = 1
+"   let g:ycm_min_num_of_chars_for_completion = 1
+"   let g:ycm_filetype_blacklist = {
+"         \ 'tagbar' : 1,
+"         \ 'pandoc' : 1,
+"         \ 'quickrun' : 1,
+"         \ 'markdown' : 1,
+"         \}
+"   let g:ycm_always_populate_location_list = 1
+"   let g:ycm_autoclose_preview_window_after_completion = 1
+"   let g:ycm_autoclose_preview_window_after_insertion = 1
+"   let g:ycm_collect_identifiers_from_comments_and_strings = 1
+"   let g:ycm_collect_identifiers_from_tags_files = 1
+"   let g:ycm_complete_in_comments = 1
+"   let g:ycm_confirm_extra_conf = 0
+"   let g:ycm_extra_conf_globlist = ['./*','../*']
+"   let g:ycm_filepath_completion_use_working_dir = 1
+"   let g:ycm_global_ycm_extra_conf = $XDG_CONFIG_HOME.'/nvim/.ycm_extra_conf.py'
+"   let g:ycm_goto_buffer_command = 'same-buffer'  " ['same-buffer', 'horizontal-split', 'vertical-split', 'new-tab', 'new-or-existing-tab']
+"   let g:ycm_key_list_select_completion = ['<Down>']
+"   let g:ycm_server_python_interpreter = g:python3_host_prog
+"   let g:ycm_seed_identifiers_with_syntax = 1
+
+"   autocmd! FileType rust nmap <buffer><C-]>  <C-u>YcmCompleter GoTo<CR>
+" endfunction
+" endif
+
+if dein#tap('lyuts/vim-rtags')
+   let g:rtagsJumpStackMaxSize = 1000
+   let g:rtagsMaxSearchResultWindowHeight = 15
+   let g:rtagsMinCharsForCommandCompletion = 100
+   let g:rtagsUseLocationList = 1
+
+
+   " <space>rf :Unite rtags/references
+
+   " let g:rtagsUseDefaultMappings = 0
+   " au MyAutoCmd c,cpp,objc,objcpp nnoremap <silent><buffer><C-]>            :<C-u>call rtags#JumpTo(g:SAME_WINDOW)<CR>
+   " au MyAutoCmd c,cpp,objc,objcpp nnoremap <silent><buffer><LocalLeader>cb  :<C-u>call rtags#JumpBack()<CR>
+   " au MyAutoCmd c,cpp,objc,objcpp nnoremap <silent><buffer><LocalLeader>cc  :<C-u>call rtags#FindRefs()<CR>
+   " au MyAutoCmd c,cpp,objc,objcpp nnoremap <silent><buffer><LocalLeader>cC  :<C-u>call rtags#FindSuperClasses()<CR>
+   " au MyAutoCmd c,cpp,objc,objcpp nnoremap <silent><buffer><LocalLeader>cf  :<C-u>call rtags#FindSubClasses()<CR>
+   " au MyAutoCmd c,cpp,objc,objcpp nnoremap <silent><buffer><LocalLeader>cn  :<C-u>call rtags#FindRefsByName(input("Pattern? ", "", "customlist,rtags#CompleteSymbols"))<CR>
+   " au MyAutoCmd c,cpp,objc,objcpp nnoremap <silent><buffer><LocalLeader>cp  :<C-u>call rtags#JumpToParent()<CR>
+   " au MyAutoCmd c,cpp,objc,objcpp nnoremap <silent><buffer><LocalLeader>cs  :<C-u>call rtags#FindSymbols(input("Pattern? ", "", "customlist,rtags#CompleteSymbols"))<CR>
+   " au MyAutoCmd c,cpp,objc,objcpp nnoremap <silent><buffer><Leader>u        :<C-u>call rtags#SymbolInfo()<CR>
+   " au MyAutoCmd c,cpp,objc,objcpp nnoremap <silent><buffer><LocalLeader>cu  :<C-u>call rtags#SymbolInfo()<CR>
+   " au MyAutoCmd c,cpp,objc,objcpp nnoremap <silent><buffer><LocalLeader>cv  :<C-u>call rtags#FindVirtuals()<CR>
+   " au MyAutoCmd c,cpp,objc,objcpp nnoremap <silent><buffer><Space>]         :<C-u>YcmCompleter GoTo<CR>
+   " au MyAutoCmd c,cpp,objc,objcpp nnoremap <silent><buffer><LocalLeader>] :<C-u>tag <C-r>=expand("<cword>")<CR><CR>
 endif
 
 if dein#tap('neosnippet.vim')

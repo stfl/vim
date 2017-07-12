@@ -1,6 +1,7 @@
 
 call dein#add('Shougo/dein.vim')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+call dein#add('haya14busa/dein-command.vim', {'on_cmd': 'Dein'})
 
 
 " Unite {{{
@@ -69,7 +70,7 @@ call dein#add('Konfekt/FastFold', {
          \ 'hook_post_source': 'FastFoldUpdate'
          \ })
 
-call dein#add('powerman/vim-plugin-AnsiEsc')    " adds support for ansi escape characters - useful for vimpager
+" call dein#add('powerman/vim-plugin-AnsiEsc')    " adds support for ansi escape characters - useful for vimpager
 " 'on_cmd': 'AnsiEsc',
 " }}}
 " Utils {{{
@@ -121,7 +122,8 @@ call dein#add('embear/vim-localvimrc')
 
 " call dein#add('airblade/vim-rooter', {'on_cmd' : 'Rooter'})
 
-call dein#add('chiel92/vim-autoformat')
+" call dein#add('chiel92/vim-autoformat')
+call dein#add('sbdchd/neoformat', {'on_cmd': 'Neoformat'})
 
 " }}}
 " Version Control {{{
@@ -192,7 +194,7 @@ call dein#add('ujihisa/neco-look', {
 call dein#add('davidhalter/jedi-vim', {'on_ft': 'python'})
 call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'}) ", 'on_i': 1})
 call dein#add('hynek/vim-python-pep8-indent', {'on_ft': 'python'}) ", 'on_i': 1})
-call dein#add('bfredl/nvim-ipy', {'on_ft': 'python'}) ", 'on_i': 1})
+" call dein#add('bfredl/nvim-ipy', {'on_ft': 'python'}) ", 'on_i': 1})
 " install: pip install --user jupyter_client
 
 " }}}
@@ -203,11 +205,11 @@ call dein#add('bfredl/nvim-ipy', {'on_ft': 'python'}) ", 'on_i': 1})
 " call dein#add('othree/jspc.vim', {'on_ft': 'javascript'})
 " call dein#add('heavenshell/vim-jsdoc', {'on_ft': 'javascript'})
 " call dein#add('moll/vim-node', {'on_ft': 'javascript'})
-call dein#add('carlitux/deoplete-ternjs', {
-         \ 'if': 'executable("tern")',
-         \ 'on_ft': 'javascript',
-         \ 'on_i': 1
-         \ })
+" call dein#add('carlitux/deoplete-ternjs', {
+"          \ 'if': 'executable("tern")',
+"          \ 'on_ft': 'javascript',
+"          \ 'on_i': 1
+"          \ })
 
 " }}}
 " Go {{{
@@ -222,6 +224,34 @@ call dein#add('zchee/deoplete-clang', {
          \ 'on_ft': ['c','cpp','objc','objcpp']
          \ })
 
+" call dein#add('tweekmonster/deoplete-clang2', {
+"          \ 'depends': 'deoplete.nvim',
+"          \ 'on_i': 1,
+"          \ 'on_ft': ['c','cpp','objc','objcpp']
+"          \ })
+
+" call dein#add('Valloric/YouCompleteMe', {
+"          \ 'on_i': 1,
+"          \ 'on_ft': ['c','cpp','objc','objcpp'],
+"          \ 'hook_source': 'source $HOME/.config/nvim/ycm.vim',
+"          \ })
+         " \ 'on_ft': ['c', 'cpp', 'objc', 'objcpp', 'typescript'],
+         " \ 'on_i': 1,
+         " \ 'build': './install.sh --clang-completer --system-libclang',
+         " \ 'lazy': 1,
+         " \ 'merged': 0,
+         " \ 'frozen': 1,
+
+call dein#add('vim-scripts/Conque-GDB',
+          \ {'on_cmd': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermVSplit', 'ConqueTermTab', 
+          \             'ConqueGdb', 'ConqueGdbSplit', 'ConqueGdbVSplit', 'ConqueGdbTab', 
+          \             'ConqueGdbExe', 'ConqueGdbBDelete', 'ConqueGdbCommand']
+          \ })
+
+call dein#add("mphe/grayout.vim", {
+         \ 'on_ft': ['c','cpp','objc','objcpp']
+         \ })
+
 call dein#add('vim-scripts/a.vim', {
          \ 'on_ft': ['c', 'cpp']
          \ })
@@ -230,7 +260,7 @@ call dein#add('vim-scripts/gtk-vim-syntax', {'on_ft': ['c','gtk']})
 
 call dein#add('lyuts/vim-rtags', {
          \ 'if': "executable('rc')",
-         \ 'on_ft': ['c', 'cpp']
+         \ 'on_ft': ['c', 'cpp', 'objc']
          \ })
 " install https://github.com/Andersbakken/rtags
 

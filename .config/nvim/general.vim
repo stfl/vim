@@ -113,6 +113,7 @@ endif
 
 " }}}
 " Mouse {{{
+"
 
 set mouse=a           " Enable mouse in all modes
 if exists('$TMUX') && !has('nvim')
@@ -147,6 +148,7 @@ set complete=.
 set foldmethod=marker            " allow folding at markers
 " set foldcolumn=3
 set foldnestmax=2
+set foldminlines=4
 set diffopt=filler,vertical,iwhite  " ignore whitespace
 set splitbelow splitright        " Splits open bottom right
 set switchbuf=usetab,split       " Switch buffer behavior

@@ -6,18 +6,45 @@
 
 autocmd MyAutoCmd CompleteDone * pclose!
 
-let g:deoplete#keyword_patterns = {}
-let g:deoplete#omni_patterns = {}
-let g:deoplete#omni#input_patterns = get(g:, 'deoplete#omni#input_patterns', {})
-" let g:deoplete#enable_refresh_always = 1
-let g:deoplete#enable_camel_case = 1
-let g:deoplete#auto_complete_start_length = 3
+let g:deoplete#auto_complete_delay = 0
+let g:deoplete#auto_complete_start_length = 1
+let g:deoplete#enable_camel_case = 0
+let g:deoplete#enable_ignore_case = 0
+let g:deoplete#enable_refresh_always = 0
+let g:deoplete#auto_refresh_delay = 100
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#file#enable_buffer_path = 1
+let g:deoplete#max_list = 10000
 let g:deoplete#tag#cache_limit_size = 5000000
 
+if !exists('g:deoplete#sources')
+    let g:deoplete#sources = {}
+endif
+if !exists('g:deoplete#omni_patterns')
+   let g:deoplete#omni_patterns = {}
+endif
+
+let g:deoplete#omni#input_patterns = get(g:, 'deoplete#omni#input_patterns', {})
+
+if !exists('g:deoplete#keyword_patterns')
+   let g:deoplete#keyword_patterns = {}
+endif
 let g:deoplete#keyword_patterns._ = '[a-zA-Z_]\k*\(?'
 
+if !exists('g:deoplete#ignore_sources')
+   let g:deoplete#ignore_sources = {} " Initialize
+endif
+" let g:deoplete#ignore_sources._ = ['around']
+
+" C/C++
+" ignore alot to allow ycm to kick in
+" let g:deoplete#ignore_sources.c =
+"       \ ['dictionary', 'member', 'omni', 'tag', 'syntax', 'file/include', 'neosnippet', 'around']
+" let g:deoplete#ignore_sources.cpp    = g:deoplete#ignore_sources.c
+" let g:deoplete#ignore_sources.objc = g:deoplete#ignore_sources.c
 
 " Pandoc
+" add support for references
 let g:deoplete#omni_patterns.pandoc= '@\w*'
 
 " Latex
@@ -46,6 +73,8 @@ autocmd FileType python setlocal omnifunc=
 
 let g:deoplete#omni#input_patterns.python = ''
 
+" let g:deoplete#ignore_sources.python =
+"       \ ['buffer', 'dictionary', 'member', 'omni', 'tag', 'syntax', 'around'] " file/include conflicting deoplete-jedi
 
 " Javascript
 let g:deoplete#omni#input_patterns.javascript = '[^. \t]\.\%\(\h\w*\)\?'
@@ -53,13 +82,23 @@ let g:deoplete#omni#input_patterns.php = '\w+|[^. \t]->\w*|\w+::\w*'
 let g:deoplete#member#prefix_patterns = get(g:, 'deoplete#member#prefix_patterns', {})
 let g:deoplete#member#prefix_patterns.javascript = ['\.']
 
-call deoplete#custom#set('_', 'converters', [
-         \ 'converter_remove_paren',
-         \ 'converter_remove_overlap',
-         \ 'converter_truncate_abbr',
-         \ 'converter_truncate_menu',
-         \ 'converter_auto_delimiter',
-         \ ])
+" call deoplete#custom#set('_', 'converters', [
+"          \ 'converter_remove_paren',
+"          \ 'converter_remove_overlap',
+"          \ 'converter_truncate_abbr',
+"          \ 'converter_truncate_menu',
+"          \ 'converter_auto_delimiter',
+"          \ ])
+
+function! SetupDeopleteForCppWithRtags()
+   " Enable heavy omni completion.
+   setlocal omnifunc=RtagsCompleteFunc
+   let g:deoplete#omni#functions.c = RtagsCompleteFunc
+   let g:deoplete#omni#functions.cpp = RtagsCompleteFunc
+
+   let g:deoplete#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+   let g:deoplete#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+endfunction
 
 " Mappings
 " inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#manual_complete()
