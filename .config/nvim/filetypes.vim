@@ -4,11 +4,12 @@
 
 augroup MyAutoCmd " Pandoc Markdown setup {{{
    " enable spelling in markdown and latex
-   autocmd FileType latex setlocal spell textwidth=100 colorcolumn=100 formatoptions+=tlv
-   autocmd BufRead *.tex setlocal spell textwidth=100 colorcolumn=100 formatoptions+=tlv
+   autocmd FileType tex setlocal spell spelllang=en_us textwidth=100 colorcolumn=100 formatoptions+=tlv
+   " autocmd BufRead *.tex setlocal spell spelllang=en_us textwidth=100 colorcolumn=100 formatoptions+=tlv
+   " setlocal dictionary+=/usr/share/dict/words
 
    autocmd BufRead *.pdc setlocal filetype=pandoc
-   autocmd FileType pandoc setlocal spell textwidth=100 colorcolumn=100 formatoptions+=tlv
+   autocmd FileType pandoc setlocal spell spelllang=en_us textwidth=100 colorcolumn=100 formatoptions+=tlv
 
    autocmd FileType markdown,latex,pandoc call MatchTechWordsToAvoid()
    autocmd BufWinEnter *.md,*.tex call MatchTechWordsToAvoid()
@@ -27,6 +28,10 @@ endfunction
 
 " }}}
 
+" snippets don't work when intended with spaces
+au MyAutoCmd BufRead *.snip set noexpandtab
+
+" TODO set makeprog ? neomake?
 au MyAutoCmd FileType python nnoremap <F9> :exec '!python3' shellescape(@%, 1)<cr>
 
 au MyAutoCmd FileType c,cpp,objc,objcpp set foldmethod=syntax

@@ -88,7 +88,7 @@ set secure
 "adds user and timestamp to end of line
 nnoremap <F4> :r! echo "(slendl on `date +"\%a \%b \%d \%T \%Z \%Y"`):"<CR>kJ
 autocmd MyAutoCmd BufRead MakePkg setlocal noexpandtab filetype=make
-autocmd MyAutoCmd BufRead ReleaseNotes setlocal textwidth=80 colorcolumn=80 spell
+autocmd MyAutoCmd BufRead ReleaseNotes setlocal textwidth=80 colorcolumn=80 spell spelllang=en_us
 
 command! TargetOn execute 'set scrolloff=15 | %s/t on="false/t on="true/gc | set scrolloff=5'
 command! TargetOff execute 'set scrolloff=15 | %s/t on="true/t on="false/gc | set scrolloff=5'

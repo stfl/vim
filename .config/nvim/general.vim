@@ -160,6 +160,9 @@ set nostartofline                " Cursor in same column for few commands
 set whichwrap+=h,l,<,>,[,],~     " Move to following line on certain keys
 set completeopt=menuone          " Show menu even for one item
 " set completeopt+=noselect        " Do not select a match in the menu
+" if glob('/usr/share/dict/usa')
+   " setlocal dictionary+=/usr/share/dict/usa
+" endif
 if has('patch-7.4.775')
    " set completeopt+=noinsert     " do not insert the selected
 endif

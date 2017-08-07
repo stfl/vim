@@ -1,0 +1,22 @@
+# vim: ft=neosnippet, noexpandtab
+
+
+# GStreamer GObject
+snippet     g_object_set
+alias       objset set
+	g_object_set(G_OBJECT(${1:object}), "${2:property}", ${3:value}, NULL);${0}
+
+snippet     g_object_get
+alias       objget get
+	g_object_get (G_OBJECT(${1:object}), "${2:property}", &${3:variable(needs unref!)}, NULL);${0}
+	g_object_unref($3);
+
+snippet     g_print
+alias       gpr
+	g_print("%${1:s}\n", ${2});${0}
+
+# usrsctp
+
+# alias       SCTPDBG
+snippet     sctpdbg
+	SCTPDBG(SCTP_DEBUG_${1:TIMER2}, "${2}\n"${3:, });${0}

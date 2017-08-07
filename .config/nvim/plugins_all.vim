@@ -2,6 +2,35 @@
 " Plugin specific config
 " -----------
 
+
+if dein#tap('denite.nvim')
+   cnoreabbrev D Denite
+
+   nnoremap <C-p> :<C-u>Denite file_rec<CR>
+
+   nnoremap <leader>s :<C-u>Denite buffer -mode=normal<CR>
+   nnoremap <leader>dm :Unite mapping<cr>
+
+" nnoremap <leader><Space>s :<C-u>DeniteBufferDir buffer<CR>
+" nnoremap <leader>8 :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
+" nnoremap <leader>/ :<C-u>Denite grep:. -mode=normal<CR>
+" nnoremap <leader><Space>/ :<C-u>DeniteBufferDir grep:. -mode=normal<CR>
+" nnoremap <leader>d :<C-u>DeniteBufferDir file_rec<CR>
+
+" endif
+
+" if dein#tap('denite-exta')
+   nnoremap <leader>o :<C-u>Denite location_list -mode=normal -no-empty<CR>
+   nnoremap <leader>q :Denite quickfix -mode=normal<CR>
+   nnoremap <leader>ds :<C-u>Denite history:search -mode=normal<CR>
+   nnoremap <leader>dc :<C-u>Denite history:cmd -mode=normal<CR>
+endif
+
+if dein#tap('neoyank.vim')
+   nnoremap <leader>y :Denite neoyank -default-action=append<cr>
+   " -mode=normal
+endif
+
 if dein#tap('vim-localvimrc')
    let g:localvimrc_ask = 0
    let g:localvimrc_sandbox = 0
@@ -255,12 +284,24 @@ if dein#tap('vimtex')
    let g:tex_conceal = "adgm"
    let g:vimtex_fold_enabled = 1
    let g:vimtex_format_enabled = 1 " formating with gq considers comments
-   let g:vimtex_view_method = 'zathura'
-   " let g:vimtex_latexmk_continuous = 1
-   let g:vimtex_latexmk_background = 1
-   let g:vimtex_latexmk_callback = 1
+
+
+   " let g:vimtex_complete_close_braces = 1
+   " TODO disable deliminate on latex files
+
+   let g:vimtex_compiler_enabled = 1
+
+   let g:vimtex_compiler_method = 'latexmk'
+   let g:vimtex_compiler_latexmk_continuous = 1
+   let g:vimtex_compiler_latexmk_background = 1
+   let g:vimtex_compiler_latexmk_callback = 1
+
    if has('nvim') && executable('nvr')
-      let g:vimtex_latexmk_progname = 'nvr'
+      let g:vimtex_compiler_progname = 'nvr'
+   endif
+   " let g:vimtex_view_method = 'zathura'
+   if executable('zathura')
+      let g:vimtex_view_general_viewer = 'zathura'
    endif
 endif
 
@@ -322,7 +363,7 @@ if dein#tap('deoplete-clang')
    elseif !empty(glob("/usr/lib/llvm-3.5/lib/libclang.so"))               " on Debian
       let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-3.5/lib/libclang.so'
       let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.5/'
-   else 
+   else
       echomsg string('deoplete-clang: libclang not found!!!')
    endif
 
@@ -335,8 +376,8 @@ if dein#tap('tweekmonster/deoplete-clang2')
    let g:deoplete#sources#clang#autofill_neomake = 1
 
    " maximum number of lines to search for a #ifdef or #endif
-   let g:deoplete#sources#clang#preproc_max_lines = 300 
-  
+   let g:deoplete#sources#clang#preproc_max_lines = 300
+
    " :!which -a clang
    if !empty(glob("/usr/bin/clang"))
       let g:deoplete#sources#clang#executable = "/usr/bin/clang"
@@ -352,7 +393,7 @@ endif
 "       \ ['dictionary', 'member', 'omni', 'tag', 'syntax', 'file/include', 'neosnippet', 'around']
 " let g:deoplete#ignore_sources.cpp    = g:deoplete#ignore_sources.c
 " let g:deoplete#ignore_sources.objc = g:deoplete#ignore_sources.c
-" 
+"
 " function! YCMConfig()
 "   let g:ycm_auto_trigger = 1
 "   let g:ycm_min_num_of_chars_for_completion = 1

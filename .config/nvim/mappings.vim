@@ -27,7 +27,9 @@ nnoremap  Q <Nop>
 nnoremap gQ <Nop>
 
 " Toggle fold
-nnoremap <CR> za
+" nnoremap <CR> za
+nnoremap <expr> <CR> foldlevel('.') ? 'za' : '<CR>'
+" cnoremap <cr> <cr>zv
 
 " Disable arrow movement, resize splits instead.
 nnoremap <Up>    :resize -2<CR>
@@ -59,6 +61,15 @@ nnoremap <C-l> :redraw<cr>:nohl<cr>
 
 nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
+" nnoremap ZT  :tabclose!<CR>
+" nnoremap ZTZ :windo w!<CR>:tabclose<CR>
+
+" select tab to the left if closing, but not if closing the first
+nnoremap <expr> ZW tabpagenr('$') > 1 ? ':windo w!<CR>:tabclose<CR>gT' : ':wqa<CR>'
+nnoremap <expr> ZT tabpagenr('$') > 1 ? ':tabclose!<CR>gT'             : ':qa!<CR>'
+nmap     <expr> ZZ winnr('$') == 1 && tabpagenr() != 1 && tabpagenr('$') != tabpagenr() 
+         \ ? 'ZZgT' : 'ZZ'
+
 
 " Fast saving
 nnoremap <Leader>w :w<CR>

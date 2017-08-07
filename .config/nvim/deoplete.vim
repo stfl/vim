@@ -7,7 +7,7 @@
 autocmd MyAutoCmd CompleteDone * pclose!
 
 let g:deoplete#auto_complete_delay = 0
-let g:deoplete#auto_complete_start_length = 1
+let g:deoplete#auto_complete_start_length = 2
 let g:deoplete#enable_camel_case = 0
 let g:deoplete#enable_ignore_case = 0
 let g:deoplete#enable_refresh_always = 0
@@ -17,23 +17,17 @@ let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#max_list = 10000
 let g:deoplete#tag#cache_limit_size = 5000000
 
-if !exists('g:deoplete#sources')
-    let g:deoplete#sources = {}
-endif
-if !exists('g:deoplete#omni_patterns')
-   let g:deoplete#omni_patterns = {}
-endif
+call deoplete#custom#set('_', 'min_pattern_length', 2)
 
+let g:deoplete#sources = get(g:, 'deoplete#sources', {})
+let g:deoplete#omni_patterns = get(g:, 'deoplete#omni_patterns', {})
 let g:deoplete#omni#input_patterns = get(g:, 'deoplete#omni#input_patterns', {})
+let g:deoplete#omni#functions = get(g:, 'deoplete#omni#functions', {})
 
-if !exists('g:deoplete#keyword_patterns')
-   let g:deoplete#keyword_patterns = {}
-endif
-let g:deoplete#keyword_patterns._ = '[a-zA-Z_]\k*\(?'
-
-if !exists('g:deoplete#ignore_sources')
-   let g:deoplete#ignore_sources = {} " Initialize
-endif
+let g:deoplete#keyword_patterns = get(g:, 'deoplete#keyword_patterns', {})
+" let g:deoplete#keyword_patterns._ = '[a-zA-Z_]\k*\(?'
+"
+let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
 " let g:deoplete#ignore_sources._ = ['around']
 
 " C/C++
@@ -60,7 +54,7 @@ let g:deoplete#omni#input_patterns.tex = '\\(?:'
          \ .')'
 
 " Go
-let g:deoplete#sources#go = 'vim-go'
+let g:deoplete#sources.go = 'vim-go'
 
 
 " Python

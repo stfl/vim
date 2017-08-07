@@ -4,30 +4,36 @@ call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('haya14busa/dein-command.vim', {'on_cmd': 'Dein'})
 
 
-" Unite {{{
+" Denite {{{
 " call dein#add('Shougo/denite.nvim', {
 "          \ 'lazy': 1,
 "          \ 'depends': 'neomru.vim',
 "          \ 'hook_post_source': 'source $HOME/.config/nvim/unite.vim'
 "          \ })
 
-call dein#add('Shougo/unite.vim', {
-         \ 'lazy': 1,
-         \ 'depends': 'neomru.vim',
-         \ 'hook_post_source': 'source $HOME/.config/nvim/unite.vim'
+call dein#add('Shougo/denite.nvim', {
+         \ 'on_cmd': 'Denite',
+         \ 'hook_source': 'source $HOME/.config/nvim/denite.vim',
          \ })
+         " \ 'depends': 'neomru.vim',
+" from rafi:
+         " \ 'hook_post_source': 'source $HOME/.config/nvim/menus.vim'
 
 " Unit sources
+call dein#add('chemzqm/denite-extra', {'on_if': 1, 'on_source': 'denite.vim'})
 call dein#add('Shougo/neomru.vim', {'on_if': 1})
-call dein#add('Shougo/neoyank.vim', {'on_if': 1, 'on_source': 'unite.vim'})
-" call dein#add('Shougo/unite-build', {'on_source': 'unite.vim'})
-call dein#add('Shougo/unite-outline', {'on_source': 'unite.vim'})
-call dein#add('osyo-manga/unite-quickfix', {'on_source': 'unite.vim'})
-call dein#add('osyo-manga/unite-filetype', {'on_source': 'unite.vim'})
-call dein#add('tacroe/unite-mark', {'on_source': 'unite.vim'})
-call dein#add('tsukkee/unite-tag', {'on_source': 'unite.vim'})
-call dein#add('Shougo/neossh.vim', {'on_source': 'unite.vim'}) ", {'on_ft': 'vimfiler', 'sources': 'ssh'})
-call dein#add('lambdalisue/vim-gista-unite', { 'on_source': 'unite.vim', 'depends': 'vim-gista'})
+call dein#add('Shougo/neoyank.vim', {'on_if': 1, 'on_source': 'denite.vim'})
+call dein#add('Shougo/unite-outline', {'on_source': 'denite.vim'})
+" call dein#add('osyo-manga/unite-quickfix', {'on_source': 'denite.vim'})
+" call dein#add('osyo-manga/unite-filetype', {'on_source': 'denite.vim'})
+call dein#add('tacroe/unite-mark', {'on_source': 'denite.vim'})
+" call dein#add('tsukkee/unite-tag', {'on_source': 'denite.vim'})
+" call dein#add('Shougo/neossh.vim', {'on_source': 'denite.vim'}) ", {'on_ft': 'vimfiler', 'sources': 'ssh'})
+" call dein#add('lambdalisue/vim-gista-unite', { 'on_source': 'denite.vim', 'depends': 'vim-gista'})
+
+" call dein#add('chemzqm/unite-location', {'on_source': 'denite.nvim' })
+call dein#add('chemzqm/denite-git', {'on_source': 'denite.nvim' })
+" call dein#add('rafi/vim-denite-session', {'on_source': 'denite.nvim' })
 
 " }}}
 " ReleaseNotes {{{
@@ -47,9 +53,9 @@ call dein#add('kshenoy/vim-signature', {'on_path': '.*'})
 
 call dein#add('altercation/vim-colors-solarized')
 
-" call dein#add('Yggdroot/indentLine',{
-"          \ 'hook_post_source': 'let g:indentLine_char = "┆"'
-"          \})
+" TODO maybe replace some of solarized stuff with: 
+" call dein#add('https://github.com/ntpeters/vim-better-whitespace')
+
 
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
@@ -79,12 +85,12 @@ call dein#add('mileszs/ack.vim', { 'on_cmd': 'Ack'})
 
 call dein#add('mbbill/undotree', { 'on_cmd': 'UndotreeToggle' })
 
-call dein#add('junegunn/fzf', {
-         \ 'build': './install --all',
-         \ 'install_process_timeout': '800',
-         \ 'on_if': 0,
-         \ })
-call dein#add('junegunn/fzf.vim') ", {'on_cmd': 'FZF'})
+" call dein#add('junegunn/fzf', {
+"          \ 'build': './install --all',
+"          \ 'install_process_timeout': '800',
+"          \ 'on_if': 0,
+"          \ })
+" call dein#add('junegunn/fzf.vim') ", {'on_cmd': 'FZF'})
 
 call dein#add('majutsushi/tagbar', {'on_cmd': 'TagbarToggle'})
 " call dein#add('xolox/vim-easytags', { 'depends' : 'xolox/vim-misc' })
@@ -120,6 +126,8 @@ call dein#add('bchretien/vim-profiler', {'rtp': ''})
 
 call dein#add('embear/vim-localvimrc')
 
+call dein#add('tpope/vim-repeat')
+
 " call dein#add('airblade/vim-rooter', {'on_cmd' : 'Rooter'})
 
 " call dein#add('chiel92/vim-autoformat')
@@ -130,7 +138,7 @@ call dein#add('sbdchd/neoformat', {'on_cmd': 'Neoformat'})
 " Git {{{
 
 call dein#add('lambdalisue/vim-gita', {'on_cmd': 'Gita'})
-call dein#add('lambdalisue/vim-gista', {'on_cmd': 'Gista'})          " git config github.user {username}
+" call dein#add('lambdalisue/vim-gista', {'on_cmd': 'Gista'})          " git config github.user {username}
 call dein#add('chrisbra/vim-diff-enhanced', {'on_cmd': 'EnhancedDiff'})
 call dein#add('rhysd/committia.vim', {'on_path': 'COMMIT_EDITMSG'})
 call dein#add('cohama/agit.vim', {'on_cmd': 'Agit'})
@@ -184,9 +192,11 @@ call dein#add('lervag/vimtex', {'on_ft': ['tex','latex','bib']})
 
 call dein#add('ujihisa/neco-look', {
          \ 'if': 'executable("look")',
+         \ 'on_if': '&spell',
          \ })
+" run :UpdateRemotePlugins
+
 " TODO
-" \ 'if': '&spell',
 " \ 'on_i': 1,
 
 " }}}
@@ -252,9 +262,9 @@ call dein#add("mphe/grayout.vim", {
          \ 'on_ft': ['c','cpp','objc','objcpp']
          \ })
 
-call dein#add('vim-scripts/a.vim', {
-         \ 'on_ft': ['c', 'cpp']
-         \ })
+call dein#add('jpmv27/a.vim') ", {
+         " \ 'on_ft': ['c', 'cpp']
+         " \ })
 
 call dein#add('vim-scripts/gtk-vim-syntax', {'on_ft': ['c','gtk']})
 
