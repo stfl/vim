@@ -38,3 +38,5 @@ au MyAutoCmd FileType c,cpp,objc,objcpp set foldmethod=syntax
 
 au MyAutoCmd BufRead /home/slendl/.ssh/config.d/* set ft=sshconfig
 au MyAutoCmd BufRead /home/slendl/.config/mr/* set ft=sh
+
+au MyAutoCmd FileType qf setlocal scrolloff=0

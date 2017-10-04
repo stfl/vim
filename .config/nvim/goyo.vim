@@ -13,23 +13,23 @@ function! s:goyo_enter()
    elseif exists('$TMUX')
       " Hide tmux status
       silent !tmux set status off
-      " TODO tmux - zoom
       silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
    endif
 
    set noshowcmd
    set scrolloff=999
+   set nolist
+   set nonumber norelativenumber
 
    SignifyDisable
    SignatureToggleSigns
-   QuickScopeToggle 
+   QuickScopeToggle
 
-   let g:neomake_place_signs = 0
+   " let g:neomake_place_signs = 0
 
    " save fold color &highlight['f:Folded']
    " hi Folded
-   hi Folded ctermfg=Gray
-
+   hi Folded ctermfg=DarkGray
 
    " Activate Limelight
    Limelight
@@ -47,24 +47,30 @@ function! s:goyo_leave()
    elseif exists('$TMUX')
       " Show tmux status
       silent !tmux set status on
-      " TODO tmux unzoom
       silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
    endif
 
    set showcmd
    set scrolloff=5
+   set list
+   set number relativenumber
 
    SignifyEnable
    SignatureToggleSigns
-   QuickScopeToggle 
+   QuickScopeToggle
 
-   let g:neomake_place_signs = 1
+   " let g:neomake_place_signs = 1
    " hi Folded
 
    " De-activate Limelight
    Limelight!
 
    source $HOME/.config/nvim/theme.vim
+
+   if (&filetype == "tex")
+      " get the proper Fold Line and stuff
+      VimtexReload
+   endif
 endfunction
 " }}}
 

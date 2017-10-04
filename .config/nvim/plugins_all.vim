@@ -6,10 +6,16 @@
 if dein#tap('denite.nvim')
    cnoreabbrev D Denite
 
-   nnoremap <C-p> :<C-u>Denite file_rec<CR>
+   nnoremap <silent> <C-p> :<C-u>Denite file_rec<CR>
 
-   nnoremap <leader>s :<C-u>Denite buffer -mode=normal<CR>
-   nnoremap <leader>dm :Unite mapping<cr>
+   nnoremap <silent> <leader>s :<C-u>Denite buffer -mode=normal<CR>
+   " nnoremap <silent> <leader>dm :Unite mapping<cr>
+
+   nnoremap <silent> <space>p  :<C-u>Denite file_mru<CR>
+   nnoremap <silent> <space>dr  :<C-u>Denite -resume<CR>
+
+   nnoremap <silent> <leader>dg :<C-u>Denite grep<CR>
+   nnoremap <silent> <leader>dG :<C-u>DeniteCursorWord grep<CR>
 
 " nnoremap <leader><Space>s :<C-u>DeniteBufferDir buffer<CR>
 " nnoremap <leader>8 :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
@@ -17,13 +23,20 @@ if dein#tap('denite.nvim')
 " nnoremap <leader><Space>/ :<C-u>DeniteBufferDir grep:. -mode=normal<CR>
 " nnoremap <leader>d :<C-u>DeniteBufferDir file_rec<CR>
 
-" endif
+endif
 
-" if dein#tap('denite-exta')
-   nnoremap <leader>o :<C-u>Denite location_list -mode=normal -no-empty<CR>
-   nnoremap <leader>q :Denite quickfix -mode=normal<CR>
-   nnoremap <leader>ds :<C-u>Denite history:search -mode=normal<CR>
-   nnoremap <leader>dc :<C-u>Denite history:cmd -mode=normal<CR>
+if dein#tap('denite-exta')
+   nnoremap <silent> <leader>o  :<C-u>Denite location_list -mode=normal -no-empty<CR>
+   nnoremap <silent> <leader>q  :<C-u>Denite quickfix -mode=normal -no-empty<CR>
+   nnoremap <silent> <leader>ds :<C-u>Denite history:search -mode=normal<CR>
+   nnoremap <silent> <leader>dc :<C-u>Denite history:cmd -mode=normal<CR>
+endif
+
+if dein#tap('unite-location')
+   " nnoremap <silent> <space>j  :call execute('Denite -resume -select=+'.v:count1.' -immediately')<CR>
+   " nnoremap <silent> <space>k  :call execute('Denite -resume -select=-'.v:count1.' -immediately')<CR>
+   nnoremap <silent> <space>q  :<C-u>Denite -mode=normal -auto-resize quickfix<CR>
+   nnoremap <silent> <space>o  :<C-u>Denite -mode=normal -auto-resize location_list<CR>
 endif
 
 if dein#tap('neoyank.vim')
@@ -137,7 +150,7 @@ endif
 if dein#tap('nerdcommenter')
    let NERDSpaceDelims=1
    let g:NERDDefaultAlign = 'left'
-   " let g:NERDCommentEmptyLines = 1
+   let g:NERDCommentEmptyLines = 1
    let g:NERDTrimTrailingWhitespace = 1
    let g:NERDCompactSexyComs = 1
 endif
@@ -156,6 +169,37 @@ if dein#tap('vim-table-mode')
    let g:table_mode_corner="|"
 
    let g:table_mode_align_char=":"
+endif
+
+if dein#tap('neoformat')
+   let g:neoformat_c_glibgnuindent = {
+            \ 'exe': 'indent',
+            \ 'args': ['--braces-on-if-line',
+                     \ '--case-brace-indentation 0',
+                     \ '--case-indentation 2',
+                     \ '--braces-after-struct-decl-line',
+                     \ '--line-length 80',
+                     \ '--no-tabs',
+                     \ '--cuddle-else',
+                     \ '--dont-line-up-parentheses',
+                     \ '--continuation-indentation 4',
+                     \ '--honour-newlines',
+                     \ '--tab-size 8',
+                     \ '--indent-level 2',
+                     \ '--leave-preprocessor-space'],
+            \ 'stdin': 1,
+            \ }
+            " \ 'replace': 1
+
+   " let g:neoformat_only_msg_on_error = 1
+   " Enable alignment
+   let g:neoformat_basic_format_align = 1
+
+   " Enable tab to spaces conversion
+   let g:neoformat_basic_format_retab = 1
+
+   " Enable trimmming of trailing whitespace
+   let g:neoformat_basic_format_trim = 1
 endif
 
 
@@ -203,9 +247,11 @@ if dein#tap('vim-easymotion')
 endif
 
 if dein#tap('quick-scope')
-   nmap <leader>q <Plug>(QuickScopeToggle)
-   vmap <leader>q <Plug>(QuickScopeToggle)
+   nmap <leader>tq <Plug>(QuickScopeToggle)
+   vmap <leader>tq <Plug>(QuickScopeToggle)
    " let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+   au MyAutoCmd filetype qf let b:qs_local_disable=1
 endif
 
 if dein#tap('accelerated-jk')
@@ -281,20 +327,25 @@ endif
 
 if dein#tap('vimtex')
    let g:tex_flavor = "latex"
-   let g:tex_conceal = "adgm"
-   let g:vimtex_fold_enabled = 1
-   let g:vimtex_format_enabled = 1 " formating with gq considers comments
-
+   " let g:tex_conceal = "adgm"
+   let g:tex_conceal = "adgms"
+   let g:vimtex_format_enabled = 1         " formating with gq considers comments
 
    " let g:vimtex_complete_close_braces = 1
    " TODO disable deliminate on latex files
 
    let g:vimtex_compiler_enabled = 1
+   let g:vimtex_quickfix_mode = 0          " do not open automatically
 
    let g:vimtex_compiler_method = 'latexmk'
    let g:vimtex_compiler_latexmk_continuous = 1
    let g:vimtex_compiler_latexmk_background = 1
    let g:vimtex_compiler_latexmk_callback = 1
+
+   " reload formating and folds
+   nmap <silent> zuz <plug>(vimtex-reload)
+   nmap <silent> <localleader>lL <plug>(vimtex-compile-ss)
+   " nmap <silent> <localleader>lo <plug>(vimtex-compile-ss)
 
    if has('nvim') && executable('nvr')
       let g:vimtex_compiler_progname = 'nvr'
@@ -303,6 +354,33 @@ if dein#tap('vimtex')
    if executable('zathura')
       let g:vimtex_view_general_viewer = 'zathura'
    endif
+
+   let g:vimtex_fold_enabled = 1
+   " faster folding > alternative usw FastFold
+   " let g:vimtex_fold_manual = 1
+
+    let g:vimtex_fold_types = {
+          \ 'comments' : {'enabled' : 1},
+          \ 'sections' : {
+          \   'sections' : [
+          \     'part',
+          \     'chapter',
+          \     'section',
+          \     'subsection',
+          \     'subsubsection',
+          \     'paragraph',
+          \     'subparagraph',
+          \   ],
+          \ },
+          \}
+
+   let g:vimtex_fold_types_sections = [
+            \ "part",
+            \ "chapter",
+            \ "section",
+            \ "subsection",
+            \ "subsubsection",
+            \ ]
 endif
 
 if dein#tap('FastFold')
@@ -493,6 +571,10 @@ if dein#tap('neomake')
 
    cnoreabbrev N! Neomake!
    cnoreabbrev N Neomake
+
+
+   let g:neomake_python_pycodestyle_args = ['--max-line-length=9999']
+
 endif
 
 if dein#tap('OMNeTpp4.x-NED-Syntax-file')
@@ -529,6 +611,10 @@ if dein#tap('indentLine')
    let g:indentLine_char = "┆"
    " let g:indentLine_color_term = 239
    " let g:indentLine_setColors = 0
+endif
+
+if dein#tap('goyo.vim')
+   nnoremap <leader>tg :Goyo<CR>
 endif
 
 if dein#tap('limelight.vim')

@@ -50,6 +50,7 @@ nnoremap <Leader>tl :setlocal nolist!<CR>
 nnoremap <Leader>th :nohlsearch<CR>
 nnoremap <Leader>tw :setlocal wrap! breakindent!<CR>
 nnoremap <expr> <Leader>tc &conceallevel == 0 ? ':setlocal conceallevel=2<CR>' : ':setlocal conceallevel=0<CR>'
+" <leader>tq >> toggle quick-scope
 
 " split naviagetion
 nnoremap <A-h> <C-w>h
@@ -59,6 +60,13 @@ nnoremap <A-l> <C-w>l
 
 nnoremap <C-l> :redraw<cr>:nohl<cr>
 
+nnoremap <leader>f gww
+vnoremap <leader>f gw
+nnoremap <leader>F gwap
+
+" Capitalize first letter in words of selection
+vnoremap gU :<C-U>%s/\%V\v<(.)(\w*)/\u\1\L\2/g<CR>:nohl<CR>
+
 nnoremap ZAQ :qa!<CR>
 nnoremap ZAZ :wqa<CR>
 " nnoremap ZT  :tabclose!<CR>
@@ -66,14 +74,15 @@ nnoremap ZAZ :wqa<CR>
 
 " select tab to the left if closing, but not if closing the first
 nnoremap <expr> ZW tabpagenr('$') > 1 ? ':windo w!<CR>:tabclose<CR>gT' : ':wqa<CR>'
-nnoremap <expr> ZT tabpagenr('$') > 1 ? ':tabclose!<CR>gT'             : ':qa!<CR>'
-nmap     <expr> ZZ winnr('$') == 1 && tabpagenr() != 1 && tabpagenr('$') != tabpagenr() 
+nnoremap <expr> ZT tabpagenr('$') > 1
+         \ ? ':tabclose!<CR>' : ':qa!<CR>'
+nmap     <expr> ZZ winnr('$') == 1 && tabpagenr() != 1 && tabpagenr('$') != tabpagenr()
          \ ? 'ZZgT' : 'ZZ'
 
 
 " Fast saving
 nnoremap <Leader>w :w<CR>
-vnoremap <Leader>w <Esc>:w<CR>
+vnoremap <Leader>w :<c-u>w<CR>
 nnoremap <C-s> :<C-u>w<CR>
 vnoremap <C-s> :<C-u>w<CR>
 cnoremap <C-s> <C-u>w<CR>
@@ -101,10 +110,10 @@ nnoremap gp "0p
 nnoremap gP "0P
 
 " Drag current line/s vertically and auto-indent
-noremap  <Leader>mk :m-2<CR>==
-noremap  <Leader>mj :m+<CR>==
-vnoremap <Leader>mk :m-2<CR>gv=gv
-vnoremap <Leader>mj :m'>+<CR>gv=gv
+noremap  <Leader>k :m-2<CR>==
+vnoremap <Leader>k :m-2<CR>gv=gv
+vnoremap <Leader>j :m'>+<CR>gv=gv
+noremap  <Leader>j :m+<CR>==
 
 " Select last paste
 " nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
@@ -188,8 +197,8 @@ vnoremap <Leader>ma yo<Esc>p^y$V:!perl -e '$x = <C-R>"; print $x'<CR>-y0j0P
 vnoremap <Leader>mr "aygvrXgv"by:r !perl -e '$x = <C-R>a; print $x'<CR>0"cyWddk:s/<C-R>b/<C-R>c/<CR>
 
 nnoremap <leader>sv :so $MYVIMRC<CR>:e<CR>
-nnoremap <leader>ov :tabe $MYVIMRC<CR>
-nnoremap <leader>oz :tabe ~/.zshrc<CR>
+" nnoremap <leader>ov :tabe $MYVIMRC<CR>
+" nnoremap <leader>oz :tabe ~/.zshrc<CR>
 
 " Terminal mappings
 if has('nvim')

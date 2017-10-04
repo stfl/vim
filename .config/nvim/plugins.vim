@@ -31,7 +31,7 @@ call dein#add('tacroe/unite-mark', {'on_source': 'denite.vim'})
 " call dein#add('Shougo/neossh.vim', {'on_source': 'denite.vim'}) ", {'on_ft': 'vimfiler', 'sources': 'ssh'})
 " call dein#add('lambdalisue/vim-gista-unite', { 'on_source': 'denite.vim', 'depends': 'vim-gista'})
 
-" call dein#add('chemzqm/unite-location', {'on_source': 'denite.nvim' })
+call dein#add('chemzqm/unite-location', {'on_source': 'denite.nvim' })
 call dein#add('chemzqm/denite-git', {'on_source': 'denite.nvim' })
 " call dein#add('rafi/vim-denite-session', {'on_source': 'denite.nvim' })
 
@@ -47,7 +47,7 @@ endif
 
 "}}}
 " Theme | GUI {{{
-call dein#add('jeffkreeftmeijer/vim-numbertoggle', {'on_i': 1})
+" call dein#add('jeffkreeftmeijer/vim-numbertoggle', {'on_i': 1})
 
 call dein#add('kshenoy/vim-signature', {'on_path': '.*'})
 
@@ -115,16 +115,18 @@ call dein#add('Raimondi/delimitMate', {
 
 call dein#add('Shougo/echodoc.vim')
 
-call dein#add('Shougo/vimfiler.vim', {
-         \ 'depends': 'unite.vim',
-         \ 'hook_post_source': 'source $HOME/.config/nvim/vimfiler.vim'
-         \ })
+" call dein#add('Shougo/vimfiler.vim', {
+"          \ 'depends': 'unite.vim',
+"          \ 'hook_post_source': 'source $HOME/.config/nvim/vimfiler.vim'
+"          \ })
 
 call dein#add('Shougo/vinarise.vim', {'on_cmd': 'Vinarise'})
 
 call dein#add('bchretien/vim-profiler', {'rtp': ''})
 
 call dein#add('embear/vim-localvimrc')
+
+call dein#add('tpope/vim-unimpaired')
 
 call dein#add('tpope/vim-repeat')
 
@@ -157,7 +159,7 @@ call dein#add('Lokaltog/vim-easymotion')
 " call dein#add('justinmk/vim-sneak')
 " let g:sneak#use_ic_scs = 1
 " let g:sneak#streak = 1
-call dein#add('unblevable/quick-scope', {'on_path': '.*'})
+call dein#add('bradford-smith94/quick-scope', {'on_path': '.*'})
 
 " call dein#add('bkad/CamelCaseMotion', {'on_map': {'nx': '<Plug>CamelCaseMotion'}})
 
@@ -180,6 +182,8 @@ call dein#add('neomake/neomake', {
          \ 'if': "has('nvim') && empty($VIM_MINIMAL)",
          \ 'on_cmd': 'Neomake'
          \ })
+
+call dein#add('tpope/vim-dispatch')
 
 " Pandoc | Markdown | Latex {{{
 call dein#add('vim-pandoc/vim-pandoc-syntax', {'on_ft': 'pandoc'})

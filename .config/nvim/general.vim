@@ -41,6 +41,7 @@ set history=500              " Search and commands remembered
 set synmaxcol=1000           " Don't syntax highlight long lines
 set formatoptions+=1         " Don't break lines after a one-letter word
 set formatoptions-=t         " Don't auto-wrap text
+set inccommand=split         " show substitute preview
 
 set modeline                 " automatically setting options from modelines
 set report=0                 " Don't report on line changes
@@ -116,6 +117,7 @@ endif
 "
 
 set mouse=a           " Enable mouse in all modes
+set mousemodel=popup_setpos
 if exists('$TMUX') && !has('nvim')
    if has("mouse_sgr")
       set ttymouse=sgr
