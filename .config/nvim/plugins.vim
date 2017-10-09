@@ -22,7 +22,11 @@ call dein#add('Shougo/denite.nvim', {
 " Unit sources
 call dein#add('chemzqm/denite-extra', {'on_if': 1, 'on_source': 'denite.vim'})
 call dein#add('Shougo/neomru.vim', {'on_if': 1})
-call dein#add('Shougo/neoyank.vim', {'on_if': 1, 'on_source': 'denite.vim'})
+call dein#add('Shougo/neoyank.vim', {
+         \ 'on_if': 1,
+         \ 'on_source': 'denite.vim',
+         \ 'if' : "has('clipboard')"
+         \ })
 call dein#add('Shougo/unite-outline', {'on_source': 'denite.vim'})
 " call dein#add('osyo-manga/unite-quickfix', {'on_source': 'denite.vim'})
 " call dein#add('osyo-manga/unite-filetype', {'on_source': 'denite.vim'})
