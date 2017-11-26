@@ -26,9 +26,15 @@ inoremap <Esc> <nop>
 nnoremap  Q <Nop>
 nnoremap gQ <Nop>
 
+" Move across wrapped lines like regular lines
+" Go to the first non-blank character of a line
+" noremap 0 ^
+" Just in case you need to go to the very beginning of a line
+" noremap ^ 0
+
 " Toggle fold
 " nnoremap <CR> za
-nnoremap <expr> <CR> foldlevel('.') ? 'za' : '<CR>'
+   nnoremap <expr> <CR> foldlevel('.') ? 'za' : '<CR>'
 " cnoremap <cr> <cr>zv
 
 " Disable arrow movement, resize splits instead.
@@ -99,8 +105,8 @@ xnoremap > >gv|
 " Use tab for indenting in visual mode
 vnoremap <Tab> >gv|
 vnoremap <S-Tab> <gv
-nnoremap > >>_
-nnoremap < <<_
+" nnoremap > >>_
+" nnoremap < <<_
 
 nnoremap <leader>l gt
 nnoremap <leader>h gT
@@ -123,7 +129,7 @@ nmap <BS> %
 xmap <BS> %
 
 " Append modeline to EOF
-nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
+nnoremap <silent> <Leader>am :call AppendModeline()<CR>
 
 " Start an external command with a single bang
 nnoremap ! :!

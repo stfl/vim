@@ -22,6 +22,7 @@ function! s:goyo_enter()
    set nonumber norelativenumber
 
    SignifyDisable
+   GitGutterDisable
    SignatureToggleSigns
    QuickScopeToggle
 
@@ -56,6 +57,7 @@ function! s:goyo_leave()
    set number relativenumber
 
    SignifyEnable
+   GitGutterEnable
    SignatureToggleSigns
    QuickScopeToggle
 

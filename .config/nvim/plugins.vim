@@ -123,6 +123,7 @@ call dein#add('Shougo/echodoc.vim')
 "          \ 'depends': 'unite.vim',
 "          \ 'hook_post_source': 'source $HOME/.config/nvim/vimfiler.vim'
 "          \ })
+call dein#add('brooth/far.vim')
 
 call dein#add('Shougo/vinarise.vim', {'on_cmd': 'Vinarise'})
 
@@ -134,6 +135,9 @@ call dein#add('tpope/vim-unimpaired')
 
 call dein#add('tpope/vim-repeat')
 
+" This plugin automatically adjusts 'shiftwidth' and 'expandtab' heuristically
+call dein#add('tpope/vim-sleuth')
+
 " call dein#add('airblade/vim-rooter', {'on_cmd' : 'Rooter'})
 
 " call dein#add('chiel92/vim-autoformat')
@@ -143,18 +147,23 @@ call dein#add('sbdchd/neoformat', {'on_cmd': 'Neoformat'})
 " Version Control {{{
 " Git {{{
 
+" call dein#add('tpope/vim-fugitive')
 call dein#add('lambdalisue/vim-gita', {'on_cmd': 'Gita'})
 " call dein#add('lambdalisue/vim-gista', {'on_cmd': 'Gista'})          " git config github.user {username}
 call dein#add('chrisbra/vim-diff-enhanced', {'on_cmd': 'EnhancedDiff'})
 call dein#add('rhysd/committia.vim', {'on_path': 'COMMIT_EDITMSG'})
 call dein#add('cohama/agit.vim', {'on_cmd': 'Agit'})
+call dein#add('jreybert/vimagit', {'on_cmd': 'Magit'})
 
 " }}}
 call dein#add('juneedahamed/svnj.vim')
 
 call dein#add('will133/vim-dirdiff', {'on_cmd': 'DirDiff'})
 
+call dein#add('airblade/vim-gitgutter', {'on_path': '.*'})
+" for everythin else
 call dein#add('mhinz/vim-signify', {'on_path': '.*'})
+
 
 "}}}
 " Motions {{{
@@ -202,6 +211,8 @@ call dein#add('ujihisa/neco-look', {
          \ 'if': 'executable("look")',
          \ 'on_if': '&spell',
          \ })
+call dein#add('beloglazov/vim-online-thesaurus', {'on_cmd': 'OnlineThesaurusCurrentWord'})
+"
 " run :UpdateRemotePlugins
 
 " TODO
@@ -211,9 +222,13 @@ call dein#add('ujihisa/neco-look', {
 " Python {{{
 call dein#add('davidhalter/jedi-vim', {'on_ft': 'python'})
 call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'}) ", 'on_i': 1})
-call dein#add('hynek/vim-python-pep8-indent', {'on_ft': 'python'}) ", 'on_i': 1})
 " call dein#add('bfredl/nvim-ipy', {'on_ft': 'python'}) ", 'on_i': 1})
 " install: pip install --user jupyter_client
+"
+call dein#add('hynek/vim-python-pep8-indent', {'on_ft': 'python'}) ", 'on_i': 1})
+" better python syntax highlighting
+call dein#add('vim-python/python-syntax', {'on_ft': 'python'})
+call dein#add('raimon49/requirements.txt.vim', {'lazy': 1, 'on_ft': 'requirements'})
 
 " }}}
 " Javascript {{{

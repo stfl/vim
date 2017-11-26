@@ -33,10 +33,11 @@ au MyAutoCmd BufRead *.snip set noexpandtab
 
 " TODO set makeprog ? neomake?
 au MyAutoCmd FileType python nnoremap <F9> :exec '!python3' shellescape(@%, 1)<cr>
+au MyAutoCmd FileType python setlocal foldmethod=indent foldignore=
 
 au MyAutoCmd FileType c,cpp,objc,objcpp set foldmethod=syntax
 
 au MyAutoCmd BufRead /home/slendl/.ssh/config.d/* set ft=sshconfig
 au MyAutoCmd BufRead /home/slendl/.config/mr/* set ft=sh
 
-au MyAutoCmd FileType qf setlocal scrolloff=0
+" au MyAutoCmd FileType qf setlocal scrolloff=0

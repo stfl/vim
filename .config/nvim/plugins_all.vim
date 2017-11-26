@@ -209,10 +209,32 @@ if dein#tap('vim-signify')
    " let g:signify_update_on_focusgained  = 1
 
    " ignore whitespaces
+   let g:signify_vcs_list = ['cvs', 'hg', 'svn']
+" 'bzr'
+   "['accurev', 'bzr', 'cvs', 'darcs', 'fossil', 'hg', 'perforce', 'rcs', 'svn', 'tfs']
+
+   " disable for git
    if !exists('g:signify_vcs_cmds')
       let g:signify_vcs_cmds = { 'git': 'git diff --no-color --no-ext-diff -U0 -w -- %f' }
       " let g:signify_vcs_cmds = { 'svn': 'svn diff --diff-cmd %d -x -U0 -- %f' }
    endif
+
+    nmap <leader>gj <plug>(signify-next-hunk)
+    nmap <leader>gk <plug>(signify-prev-hunk)
+endif
+
+if dein#tap('vim-gitgutter')
+   let g:gitgutter_diff_args = '-w'
+
+   nmap <leader>gj <Plug>GitGutterNextHunk
+   nmap <leader>gk <Plug>GitGutterPrevHunk
+   nmap <Leader>gs <Plug>GitGutterStageHunk
+   nmap <Leader>gu <Plug>GitGutterUndoHunk
+   nmap <Leader>gp <Plug>GitGutterPreviewHunk
+endif
+
+if dein#tap('vimagit')
+   nnoremap <leader>gS :Magit<CR>
 endif
 
 if dein#tap('svnj.vim')
@@ -381,6 +403,11 @@ if dein#tap('vimtex')
             \ "subsection",
             \ "subsubsection",
             \ ]
+endif
+ 
+if dein#tap('vim-online-thesaurus')
+   let g:online_thesaurus_map_keys = 0
+   nnoremap <localeader>K :OnlineThesaurusCurrentWord<CR>
 endif
 
 if dein#tap('FastFold')
@@ -574,7 +601,16 @@ if dein#tap('neomake')
 
 
    let g:neomake_python_pycodestyle_args = ['--max-line-length=9999']
+   let g:neomake_python_pylint_args = ['--output-format=text', '--msg-template="{path}:{line}:{column}:{C}: [{symbol}] {msg} [{msg_id}]"', '--reports=no',
+            \ '--disable=C0301', '']
 
+endif
+
+if dein#tap('vim-dispatch')
+   nnoremap <leader>m :Dispatch<CR>
+
+   autocmd MyAutoCmd FileType python let b:dispatch = 'python %'
+   autocmd MyAutoCmd FileType zsh,bash,sh let b:dispatch = './%'
 endif
 
 if dein#tap('OMNeTpp4.x-NED-Syntax-file')
