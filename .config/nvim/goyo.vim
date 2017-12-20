@@ -21,10 +21,20 @@ function! s:goyo_enter()
    set nolist
    set nonumber norelativenumber
 
-   SignifyDisable
-   GitGutterDisable
-   SignatureToggleSigns
-   QuickScopeToggle
+   if exists(":SignifyDisable")
+      SignifyDisable
+   endif
+   if exists(":GitGutterDisable")
+      GitGutterDisable
+   endif
+   if exists(":SignatureToggleSigns")
+      SignatureToggleSigns
+   endif
+   if exists(":QuickScopeToggle")
+      QuickScopeToggle
+   endif
+
+   set scl=no   " force the signcolumn to disappear
 
    " let g:neomake_place_signs = 0
 
@@ -56,11 +66,20 @@ function! s:goyo_leave()
    set list
    set number relativenumber
 
-   SignifyEnable
-   GitGutterEnable
-   SignatureToggleSigns
-   QuickScopeToggle
+   if exists(":SignifyEnable")
+      SignifyEnable
+   endif
+   if exists(":GitGutterEnable")
+      GitGutterEnable
+   endif
+   if exists(":SignatureToggleSigns")
+      SignatureToggleSigns
+   endif
+   if exists(":QuickScopeToggle")
+      QuickScopeToggle
+   endif
 
+   set scl=auto " return the signcolumn to the default behaviour
    " let g:neomake_place_signs = 1
    " hi Folded
 

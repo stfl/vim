@@ -53,12 +53,14 @@ endif
 " Theme | GUI {{{
 " call dein#add('jeffkreeftmeijer/vim-numbertoggle', {'on_i': 1})
 
-call dein#add('kshenoy/vim-signature', {'on_path': '.*'})
 
 call dein#add('altercation/vim-colors-solarized')
 
 " TODO maybe replace some of solarized stuff with: 
 " call dein#add('https://github.com/ntpeters/vim-better-whitespace')
+
+" call dein#add('kshenoy/vim-signature', {'on_path': '.*'})
+call dein#add('MattesGroeger/vim-bookmarks', {'on_path': '.*'})
 
 
 call dein#add('vim-airline/vim-airline')
@@ -85,7 +87,7 @@ call dein#add('Konfekt/FastFold', {
 " }}}
 " Utils {{{
 
-call dein#add('mileszs/ack.vim', { 'on_cmd': 'Ack'})
+" call dein#add('mileszs/ack.vim', { 'on_cmd': 'Ack'})
 
 call dein#add('mbbill/undotree', { 'on_cmd': 'UndotreeToggle' })
 
@@ -136,12 +138,13 @@ call dein#add('tpope/vim-unimpaired')
 call dein#add('tpope/vim-repeat')
 
 " This plugin automatically adjusts 'shiftwidth' and 'expandtab' heuristically
-call dein#add('tpope/vim-sleuth')
+" call dein#add('tpope/vim-sleuth')
 
 " call dein#add('airblade/vim-rooter', {'on_cmd' : 'Rooter'})
 
 " call dein#add('chiel92/vim-autoformat')
 call dein#add('sbdchd/neoformat', {'on_cmd': 'Neoformat'})
+
 
 " }}}
 " Version Control {{{
@@ -185,6 +188,8 @@ call dein#add('tpope/vim-surround')
 "}}}
 " call dein#add('terryma/vim-multiple-cursors')
 " call dein#add('vim-scripts/accelerated-jk')
+"
+" call dein#add('yuttie/comfortable-motion.vim')
 " }}}
 
 " ------------------------------------
@@ -212,6 +217,8 @@ call dein#add('ujihisa/neco-look', {
          \ 'on_if': '&spell',
          \ })
 call dein#add('beloglazov/vim-online-thesaurus', {'on_cmd': 'OnlineThesaurusCurrentWord'})
+
+call dein#add('vimwiki/vimwiki', {'on_ft': 'vimwiki'})
 "
 " run :UpdateRemotePlugins
 
@@ -275,11 +282,13 @@ call dein#add('zchee/deoplete-clang', {
          " \ 'merged': 0,
          " \ 'frozen': 1,
 
-call dein#add('vim-scripts/Conque-GDB',
-          \ {'on_cmd': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermVSplit', 'ConqueTermTab', 
-          \             'ConqueGdb', 'ConqueGdbSplit', 'ConqueGdbVSplit', 'ConqueGdbTab', 
-          \             'ConqueGdbExe', 'ConqueGdbBDelete', 'ConqueGdbCommand']
-          \ })
+" call dein#add('vim-scripts/Conque-GDB',
+"           \ {'on_cmd': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermVSplit', 'ConqueTermTab',
+"           \             'ConqueGdb', 'ConqueGdbSplit', 'ConqueGdbVSplit', 'ConqueGdbTab',
+"           \             'ConqueGdbExe', 'ConqueGdbBDelete', 'ConqueGdbCommand']
+"           \ })
+"
+call dein#add('idanarye/vim-vebugger')
 
 call dein#add("mphe/grayout.vim", {
          \ 'on_ft': ['c','cpp','objc','objcpp']

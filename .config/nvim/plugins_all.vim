@@ -259,6 +259,12 @@ if dein#tap('vim-signature')
    let g:SignatureMap = { 'ToggleMarkAtLine'   :  "mm" }
 endif
 
+if dein#tap('vim-bookmarks')
+   " let g:bookmark_save_per_working_dir = 1
+   let g:bookmark_auto_save = 1
+   let g:bookmark_auto_save_file = expand('$HOME/.config/nvim/tmp/bookmarks')
+endif
+
 if dein#tap('vim-easymotion')
    let g:EasyMotion_do_mapping = 0
    let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
@@ -281,6 +287,20 @@ if dein#tap('accelerated-jk')
    " nmap k <Plug>(accelerated_jk_gk_position)
    nmap j <Plug>(accelerated_jk_gj)
    nmap k <Plug>(accelerated_jk_gk)
+endif
+
+if dein#tap('comfortable-motion.vim')
+   " let g:comfortable_motion_no_default_key_mappings = 1
+   " let g:comfortable_motion_impulse_multiplier = 1  " Feel free to increase/decrease this value.
+
+   " If you would like to use scrolling proportional to the window height, you may use settings such as these:
+   " nnoremap <silent> <C-d> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 2)<CR>
+   " nnoremap <silent> <C-u> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * -2)<CR>
+   " nnoremap <silent> <C-f> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 4)<CR>
+   " nnoremap <silent> <C-b> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * -4)<CR>
+
+   noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
+   noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
 endif
 
 if dein#tap('CamelCaseMotion')
@@ -641,6 +661,8 @@ endif
 
 if dein#tap('agit.vim')
    let g:agit_enable_auto_refresh = 1
+   nnoremap <leader>gl :Agit<CR>
+   nnoremap <leader>gL :AgitFile<CR>
 endif
 
 if dein#tap('indentLine')
