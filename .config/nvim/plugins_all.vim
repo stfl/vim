@@ -16,6 +16,7 @@ if dein#tap('denite.nvim')
 
    nnoremap <silent> <leader>dg :<C-u>Denite grep<CR>
    nnoremap <silent> <leader>dG :<C-u>DeniteCursorWord grep<CR>
+   nnoremap <silent> <leader>dg :<C-u>Denite grep<CR>
 
 " nnoremap <leader><Space>s :<C-u>DeniteBufferDir buffer<CR>
 " nnoremap <leader>8 :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
@@ -47,6 +48,8 @@ endif
 if dein#tap('vim-localvimrc')
    let g:localvimrc_ask = 0
    let g:localvimrc_sandbox = 0
+
+   nnoremap <leader>rl :<C-u>LocalVimRC<CR>
 endif
 
 if dein#tap('vim-rooter')
@@ -61,10 +64,10 @@ if dein#tap('vim-tmux-navigator')
    "unmap <A-j>
    "unmap <A-k>
    "unmap <A-l>
-   nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
-   nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
-   nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
-   nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
+   nnoremap <silent> <A-h> :<C-u>TmuxNavigateLeft<cr>
+   nnoremap <silent> <A-j> :<C-u>TmuxNavigateDown<cr>
+   nnoremap <silent> <A-k> :<C-u>TmuxNavigateUp<cr>
+   nnoremap <silent> <A-l> :<C-u>TmuxNavigateRight<cr>
    " nnoremap <silent> <A-\> :TmuxNavigatePrevious<cr>
 endif
 
@@ -108,16 +111,16 @@ if dein#tap('ack.vim')
       let g:ackprg = 'ag --vimgrep'
    endif
    " search for current word in project: acording to current dir!!
-   nnoremap <leader>* :Ack! <c-r><c-w><cr>
+   nnoremap <leader>* :<C-u>Ack! <c-r><c-w><cr>
 endif
 
 if dein#tap('undotree')
-   nnoremap <Leader>gu  :UndotreeToggle<CR>
-   nnoremap <F5> :UndotreeToggle<cr>
+   nnoremap <Leader>gu  :<C-u>UndotreeToggle<CR>
+   nnoremap <F5> :<C-u>UndotreeToggle<cr>
 endif
 
 if dein#tap('fzf.vim')
-   nnoremap <c-p> :FZF<CR>
+   nnoremap <c-p> :<C-u>FZF<CR>
 
    " Mapping selecting mappings
    nmap <leader><tab> <plug>(fzf-maps-n)
@@ -130,7 +133,7 @@ if dein#tap('fzf.vim')
    imap <c-x><c-j> <plug>(fzf-complete-file-ag)
    imap <c-x><c-l> <plug>(fzf-complete-line)
 
-   nnoremap <leader>p :History<cr>
+   nnoremap <leader>p :<C-u>History<cr>
 
    if executable('rg')
       command! -bang -nargs=* Rg
@@ -143,8 +146,44 @@ if dein#tap('fzf.vim')
 endif
 
 if dein#tap('tagbar')
-   nnoremap <Leader>gu  :TagbarToggle<CR>
-   nnoremap <F6> :TagbarToggle<CR>
+   nnoremap <Leader>gu  :<C-u>TagbarToggle<CR>
+   nnoremap <F6> :<C-u>TagbarToggle<CR>
+endif
+
+if dein#tap('nerdtree')
+   " autocmd vimenter * NERDTree
+
+   noremap <C-n> :<c-u>NERDTreeToggle<CR>
+
+
+
+   " How can I open NERDTree automatically when vim starts up on opening a directory?
+   autocmd StdinReadPre * let s:std_in=1
+   autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+   " How can I close vim if the only window left open is a NERDTree?
+   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+
+   " " NERDTress File highlighting
+   " function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+   "    exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+   "    exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+   " endfunction
+   "
+   " call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
+   " call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+   " call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+   " call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+   " call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+   " call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+   " call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+   " call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+   " call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+   " call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+   " call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+   " call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+   " call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
 endif
 
 if dein#tap('nerdcommenter')
@@ -234,7 +273,7 @@ if dein#tap('vim-gitgutter')
 endif
 
 if dein#tap('vimagit')
-   nnoremap <leader>gS :Magit<CR>
+   nnoremap <leader>gS :<C-u>Magit<CR>
 endif
 
 if dein#tap('svnj.vim')
@@ -262,7 +301,22 @@ endif
 if dein#tap('vim-bookmarks')
    " let g:bookmark_save_per_working_dir = 1
    let g:bookmark_auto_save = 1
-   let g:bookmark_auto_save_file = expand('$HOME/.config/nvim/tmp/bookmarks')
+   " let g:bookmark_auto_save_file = expand('$HOME/.config/nvim/tmp/bookmarks')
+  
+" action 	                                        shortcut 	    command
+" add/remove bookmark at current line           	 mm         	 :bookmarktoggle
+" add/edit/remove annotation at current line    	 mi         	 :bookmarkannotate <text>
+" jump to next bookmark in buffer               	 mn         	 :bookmarknext
+" jump to previous bookmark in buffer           	 mp         	 :bookmarkprev
+" show all bookmarks (toggle)                   	 ma         	 :bookmarkshowall
+" clear bookmarks in current buffer only        	 mc         	 :bookmarkclear
+" clear bookmarks in all buffers                	 mx         	 :bookmarkclearall
+" move up bookmark at current line              	 [count]mkk 	 :bookmarkmoveup [<count>]
+" move down bookmark at current line            	 [count]mjj 	 :bookmarkmovedown [<count>]
+" move bookmark at current line to another line 	 [count]mg  	 :bookmarkmovetoline <line>
+" save all bookmarks to a file                  	 :bookmarksave <file_path>
+" load bookmarks from a file                    	 :bookmarkload <file_path>
+
 endif
 
 if dein#tap('vim-easymotion')
@@ -299,8 +353,8 @@ if dein#tap('comfortable-motion.vim')
    " nnoremap <silent> <C-f> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 4)<CR>
    " nnoremap <silent> <C-b> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * -4)<CR>
 
-   noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
-   noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
+   noremap <silent> <ScrollWheelDown> :<C-u>call comfortable_motion#flick(40)<CR>
+   noremap <silent> <ScrollWheelUp>   :<C-u>call comfortable_motion#flick(-40)<CR>
 endif
 
 if dein#tap('CamelCaseMotion')
@@ -385,7 +439,7 @@ if dein#tap('vimtex')
    let g:vimtex_compiler_latexmk_callback = 1
 
    " reload formating and folds
-   nmap <silent> zuz <plug>(vimtex-reload)
+   nmap <silent> zuz <plug>(vimtex-reload)<Plug>(FastFoldUpdate)
    nmap <silent> <localleader>lL <plug>(vimtex-compile-ss)
    " nmap <silent> <localleader>lo <plug>(vimtex-compile-ss)
 
@@ -427,12 +481,13 @@ endif
  
 if dein#tap('vim-online-thesaurus')
    let g:online_thesaurus_map_keys = 0
-   nnoremap <localeader>K :OnlineThesaurusCurrentWord<CR>
+   nnoremap <localleader>O :<C-u>OnlineThesaurusCurrentWord<CR>
 endif
 
 if dein#tap('FastFold')
    let g:tex_fold_enabled=1
    let g:fastfold_savehook = 1 " don't update on save
+   nmap zuz <Plug>(FastFoldUpdate)
 endif
 
 if dein#tap('jedi-vim')
@@ -622,12 +677,13 @@ if dein#tap('neomake')
 
    let g:neomake_python_pycodestyle_args = ['--max-line-length=9999']
    let g:neomake_python_pylint_args = ['--output-format=text', '--msg-template="{path}:{line}:{column}:{C}: [{symbol}] {msg} [{msg_id}]"', '--reports=no',
-            \ '--disable=C0301', '']
+            \ '--rcfile', expand('$HOME/.config/pylintrc')]
+            " \ '--disable=C0301', '']
 
 endif
 
 if dein#tap('vim-dispatch')
-   nnoremap <leader>m :Dispatch<CR>
+   nnoremap <leader>m :<c-u>Dispatch<CR>
 
    autocmd MyAutoCmd FileType python let b:dispatch = 'python %'
    autocmd MyAutoCmd FileType zsh,bash,sh let b:dispatch = './%'
@@ -648,7 +704,7 @@ endif
 " endif
 
 if dein#tap('vim-gita')
-   nnoremap gcc :Gita status<CR>
+   nnoremap gcc :<c-u>Gita status<CR>
    augroup mygita
       autocmd!
       autocmd FileType gita-commit nmap gcc <Plug>(gita-status-open)
@@ -661,8 +717,8 @@ endif
 
 if dein#tap('agit.vim')
    let g:agit_enable_auto_refresh = 1
-   nnoremap <leader>gl :Agit<CR>
-   nnoremap <leader>gL :AgitFile<CR>
+   nnoremap <leader>gl :<c-u>Agit<CR>
+   nnoremap <leader>gL :<c-u>AgitFile<CR>
 endif
 
 if dein#tap('indentLine')
@@ -672,7 +728,7 @@ if dein#tap('indentLine')
 endif
 
 if dein#tap('goyo.vim')
-   nnoremap <leader>tg :Goyo<CR>
+   nnoremap <leader>tg :<c-u>Goyo<CR>
 endif
 
 if dein#tap('limelight.vim')

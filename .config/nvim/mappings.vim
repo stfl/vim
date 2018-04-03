@@ -20,7 +20,7 @@ noremap ; :
 noremap : ;
 
 inoremap jk <Esc>
-inoremap <Esc> <nop>
+" inoremap <Esc> <nop>
 
 " Disable EX-mode
 nnoremap  Q <Nop>
@@ -42,8 +42,6 @@ nnoremap <Up>    :resize -2<CR>
 nnoremap <Down>  :resize +2<CR>
 nnoremap <Left>  :vertical resize -2<CR>
 nnoremap <Right> :vertical resize +2<CR>
-
-nnoremap <C-w>z :ZoomToggle<CR>
 
 noremap <silent> j gj
 noremap <silent> k gk
@@ -153,8 +151,10 @@ inoremap <S-Return> <C-o>o
 " Quick substitute within selected area
 xnoremap s :s//g<Left><Left>
 
-" C-r: Easier search and replace
-xnoremap <C-r> :<C-u>call VSetSearch('/')<CR>:%s/\V<C-R>=@/<CR>//gc<Left><Left><Left>
+" nnoremap <C-w>z :ZoomToggle<CR>  > in utils.vim
+
+" C-r: Easier search and replace > in utils.vim
+" xnoremap <C-r> :<C-u>call VSetSearch('/')<CR>:%s/\V<C-R>=@/<CR>//gc<Left><Left><Left>
 
 " Improve scroll, credits: https://github.com/Shougo
 nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?
@@ -195,6 +195,7 @@ vnoremap <expr> dp  &diff ? ":'<,'>diffput<CR>:diffupdate<CR>" : 'dp'
 " map the F9 key to run make
 map <F9> :make<CR>
 
+" Math evaluation
 " Evaluate an expression contained in a visual selection and place the answer in a new line below the current line:
 " if the $x= is overwritten at the end with the actal formula, it also works to set $a= variables
 vnoremap <Leader>ma yo<Esc>p^y$V:!perl -e '$x = <C-R>"; print $x'<CR>-y0j0P

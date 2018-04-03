@@ -71,3 +71,46 @@ alias   \begin{equation} \equation
 	\begin{equation}\label{eq:${1:name}}
 	${2:TARGET}
 	\end{equation}
+
+snippet figure
+alias   \begin{figure} \figure
+    \begin{figure}[!t]%
+        \centering
+        \includegraphics[width=${4}\linewidth]{${1:TARGET}}%
+        \caption{${2}}%
+        \label{${3}}
+    \end{figure}
+
+snippet figure_multi
+    \begin{figure}[!t]%
+	\begin{adjustwidth}{-4em}{-4em}
+	\centering
+	\begin{minipage}{.58\textwidth}%
+		\centering
+		\includegraphics[width=\linewidth]{${1:TARGET}}%
+	\begin{adjustwidth}{1em}{1em}
+		\caption{${2}}%
+	\label{fig:${3}}
+	\end{adjustwidth}
+	\end{minipage}%
+	\begin{minipage}{.58\textwidth}%
+		\centering
+		\includegraphics[width=\linewidth]{${10}}%
+	\begin{adjustwidth}{1em}{1em}
+		\caption{${11}}%
+	\label{fig:${12}}
+	\end{adjustwidth}
+	\end{minipage}
+	\end{adjustwidth}
+	\end{figure}${0}
+
+snippet param
+    ${0}\small Variant: \texttt{${1:single}}, $PDR = ${2:12.5}\%$, $\delta_e = ${3:40}ms$
+
+# ${7:#:\begin\{adjustwidth\}\{-4em\}\{-4em\}}
+# \begin{adjustwidth}{${8:1em}}{${8}}
+snippet delta
+	$\delta_e = ${1:20}ms$ ${0}
+
+snippet pdr
+	$PDR = ${1:6.2}\%$ ${0}

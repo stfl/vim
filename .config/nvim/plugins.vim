@@ -97,12 +97,18 @@ call dein#add('mbbill/undotree', { 'on_cmd': 'UndotreeToggle' })
 "          \ 'on_if': 0,
 "          \ })
 " call dein#add('junegunn/fzf.vim') ", {'on_cmd': 'FZF'})
+"
+call dein#add('ctrlpvim/ctrlp.vim')
 
 call dein#add('majutsushi/tagbar', {'on_cmd': 'TagbarToggle'})
 " call dein#add('xolox/vim-easytags', { 'depends' : 'xolox/vim-misc' })
 
 call dein#add('scrooloose/nerdcommenter') ", {'on_map': {'n': '<Plug>NERDCommenter'}})
 " 'tyru/caw.vim'
+
+call dein#add('scrooloose/nerdtree', {'on_cmd': 'NERDTree'})
+call dein#add('Xuyuanp/nerdtree-git-plugin', {'on_cmd': 'NERDTree'})
+call dein#add('ryanoasis/vim-devicons')
 
 call dein#add('haya14busa/incsearch.vim', {'on_map': {'n': '<Plug>'}})
 call dein#add('haya14busa/vim-asterisk', {'on_map': {'vn': '<Plug>'}})

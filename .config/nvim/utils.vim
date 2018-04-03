@@ -38,9 +38,7 @@ endfunction
 
 "}}}
 " Save and persist session {{{
-command! -bar -complete=file -nargs=? SessionSave
-         \ call s:session_save(<q-args>)
-
+command! -bar -complete=file -nargs=? SessionSave call s:session_save(<q-args>)
 function! s:session_save(file) abort
    if ! isdirectory(g:session_directory)
       call mkdir(g:session_directory, 'p')
@@ -55,7 +53,8 @@ endfunction
 " }}}
 " Append modeline after last line in buffer {{{
 " See: http://vim.wikia.com/wiki/Modeline_magic
-function! AppendModeline()
+command! AppendModeline call <SID>AppendModeline()
+function! s:AppendModeline()
    let l:modeline = printf(' vim: set ft=%s ts=%d sw=%d tw=%d %set :',
             \ &filetype, &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
    let l:modeline = substitute(&commentstring, '%s', l:modeline, '')
@@ -63,17 +62,20 @@ function! AppendModeline()
 endfunction
 
 "}}}
-function! CopyMatches(reg) " {{{
+" Copy search matches into a register {{{
+command! -register CopyMatches call CopyMatches(<q-reg>)
+function! s:CopyMatches(reg)
    let hits = []
    %s//\=len(add(hits, submatch(0))) ? submatch(0) : ''/ge
    let reg = empty(a:reg) ? '+' : a:reg
    execute 'let @'.reg.' = join(hits, "\n") . "\n"'
 endfunction
-command! -register CopyMatches call CopyMatches(<q-reg>)
 
 " }}}
-" " Makes * and # work on visual mode too. used for <C-R> replacements ;)  "{{{
+" <C-R> replacements ;)  "{{{
 " " See: http://github.com/nelstrom/vim-visual-star-search
+" C-r: Easier search and replace
+xnoremap <C-r> :<C-u>call VSetSearch('/')<CR>:%s/\V<C-R>=@/<CR>//gc<Left><Left><Left>
 function! VSetSearch(cmdtype)
    let temp = @s
    normal! gv"sy
@@ -83,8 +85,9 @@ endfunction
 
 "}}}
 " Zoom / Restore window {{{
+nnoremap <C-w>z :ZoomToggle<CR>
 command! ZoomToggle call s:ZoomToggle()
-function! s:ZoomToggle() "{{{
+function! s:ZoomToggle()
    if exists('t:zoomed') && t:zoomed > -1
       execute t:zoom_winrestcmd
       let t:zoomed = -1
@@ -95,8 +98,6 @@ function! s:ZoomToggle() "{{{
       let t:zoomed = bufnr('%')
    endif
 endfunction
-
-" }}}
 
 " }}}
 " Function to Check if Version is is newer {{{
@@ -111,3 +112,22 @@ function! VerNewerThen(min, current)
 endfunction
 
 " }}}
+" Automatically write to remote location {{{
+
+augroup write_remote " init the augroup
+augroup END
+command! -nargs=1 -complete=file WriteRemote
+         \ au! write_remote BufWritePost <buffer> silent Nwrite <args>
+         
+" call s:auto_write_remote(<args>)
+
+" function! s:auto_write_remote(target)
+"    augroup write_remote
+"       au! BufWritePost <buffer> silent Nwrite scp://.a:target
+"    augroup END
+" endfunction
+
+command! WriteRemoteClear au! write_remote BufWritePost <buffer>
+
+" }}}
+
