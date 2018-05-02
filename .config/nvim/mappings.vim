@@ -14,10 +14,10 @@ map! <Nul> <C-Space>
 
 let g:mapleader="\<Space>"
 " let mapleader = ","  " rebmap the <Leader> key
-let g:maplocalleader=','
+let g:maplocalleader=';'
 
-noremap ; :
-noremap : ;
+" noremap ; :
+" noremap : ;
 
 inoremap jk <Esc>
 " inoremap <Esc> <nop>
@@ -34,7 +34,7 @@ nnoremap gQ <Nop>
 
 " Toggle fold
 " nnoremap <CR> za
-   nnoremap <expr> <CR> foldlevel('.') ? 'za' : '<CR>'
+nnoremap <expr> <Tab> foldlevel('.') ? 'za' : '<Tab>'
 " cnoremap <cr> <cr>zv
 
 " Disable arrow movement, resize splits instead.
@@ -47,13 +47,20 @@ noremap <silent> j gj
 noremap <silent> k gk
 
 " Toggle editor visuals
-nnoremap <leader><F7> :setlocal list!<CR>
+" nnoremap <leader><F7> :setlocal list!<CR>
 nnoremap <Leader>ts :setlocal spell!<cr>
-nnoremap <Leader>tn :setlocal nonumber! norelativenumber!<CR>
-nnoremap <Leader>tl :setlocal nolist!<CR>
+nnoremap <Plug>ToggleNumber :setlocal nonumber! norelativenumber!<CR>
+nmap <Leader>tc <Plug>ToggleNumber
+nnoremap <Leader>tL :setlocal nolist!<CR>
+" nnoremap <F7> :call TogleVisibility()<CR>
+" from solarized at theme.vim
+nnoremap <leader>tl :call TogleVisibility()<CR>
 nnoremap <Leader>th :nohlsearch<CR>
 nnoremap <Leader>tw :setlocal wrap! breakindent!<CR>
-nnoremap <expr> <Leader>tc &conceallevel == 0 ? ':setlocal conceallevel=2<CR>' : ':setlocal conceallevel=0<CR>'
+nnoremap <C-l> :redraw!<cr>:nohl<cr>
+
+nnoremap <expr> <Plug>ToggleConceal &conceallevel == 0 ? ':setlocal conceallevel=2<CR>' : ':setlocal conceallevel=0<CR>'
+nmap <Leader>tc <Plug>ToggleConceal
 " <leader>tq >> toggle quick-scope
 
 " split naviagetion
@@ -62,11 +69,22 @@ nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 
-nnoremap <C-l> :redraw<cr>:nohl<cr>
+" formatting
+nnoremap <Plug>FormatTextLine gww
+nmap <leader>ft <Plug>FormatTextLine
 
-nnoremap <leader>f gww
-vnoremap <leader>f gw
-nnoremap <leader>F gwap
+vnoremap <Plug>FormatText gw
+vmap <leader>ft <Plug>FormatText
+
+nnoremap <Plug>FormatTextParagraph gwap
+nmap <leader>fp <Plug>FormatTextParagraph
+
+nnoremap <Plug>WhitespaceErase :WhitespaceErase<CR>:AirlineToggleWhitespace<cr>:AirlineToggleWhitespace<cr>
+nmap <leader>fw <Plug>WhitespaceErase
+
+" nnoremap <leader>fl :Neoformat  >> plugins_all.vim
+" nnoremap <leader>fa :Neoformat > entire file
+" vnoremap <leader>ff :Neoformat
 
 " Capitalize first letter in words of selection
 vnoremap gU :<C-U>%s/\%V\v<(.)(\w*)/\u\1\L\2/g<CR>:nohl<CR>
@@ -83,10 +101,13 @@ nnoremap <expr> ZT tabpagenr('$') > 1
 nmap     <expr> ZZ winnr('$') == 1 && tabpagenr() != 1 && tabpagenr('$') != tabpagenr()
          \ ? 'ZZgT' : 'ZZ'
 
+" Easily switch to directory of current file
+" When pressing <leader>cd switch to the directory of the open buffer
+nnoremap <Plug>CdCurrentDir :cd %:p:h<CR>:pwd<CR>
+nmap <leader>cd <Plug>CdCurrentDir
 
 " Fast saving
-nnoremap <Leader>w :w<CR>
-vnoremap <Leader>w :<c-u>w<CR>
+nnoremap <Leader>w :<c-u>w<CR>
 nnoremap <C-s> :<C-u>w<CR>
 vnoremap <C-s> :<C-u>w<CR>
 cnoremap <C-s> <C-u>w<CR>
@@ -106,14 +127,17 @@ vnoremap <S-Tab> <gv
 " nnoremap > >>_
 " nnoremap < <<_
 
-nnoremap <leader>l gt
-nnoremap <leader>h gT
+nnoremap <Plug>TabLeft gt
+nmap <leader>l <Plug>TabLeft
+nnoremap <Plug>TabRight gT
+nmap <leader>h <Plug>TabRight
 
 " past last yanked, not including stuff from d/D/x/X/...
 nnoremap gp "0p
 nnoremap gP "0P
 
 " Drag current line/s vertically and auto-indent
+" TODO this is shadowed by EasyMotion...
 noremap  <Leader>k :m-2<CR>==
 vnoremap <Leader>k :m-2<CR>gv=gv
 vnoremap <Leader>j :m'>+<CR>gv=gv
@@ -166,9 +190,6 @@ noremap <expr> <C-b> max([winheight(0) - 2, 1])
 noremap <expr> <C-e> (line("w$") >= line('$') ? "j" : "3\<C-e>")
 noremap <expr> <C-y> (line("w0") <= 1         ? "k" : "3\<C-y>")
 
-" When pressing <leader>cd switch to the directory of the open buffer
-map <Leader>cd :cd %:p:h<CR>:pwd<CR>
-
 " diffpu and optain for Vim Fugitive conflicts
 " nmap <expr> ]c  &diff ? ']czz' : ']c'
 " nmap <expr> [c  &diff ? '[czz' : '[c'
@@ -198,18 +219,46 @@ map <F9> :make<CR>
 " Math evaluation
 " Evaluate an expression contained in a visual selection and place the answer in a new line below the current line:
 " if the $x= is overwritten at the end with the actal formula, it also works to set $a= variables
-vnoremap <Leader>ma yo<Esc>p^y$V:!perl -e '$x = <C-R>"; print $x'<CR>-y0j0P
+vnoremap <Plug>MathCalcAppend yo<Esc>p^y$V:!perl -e '$x = <C-R>"; print $x'<CR>-y0j0P
+vmap <leader>ma <Plug>MathCalcAppend
 
 " Evaluate an expression contained in a visual selection and replace the visual selection with the answer: - only single line
-vnoremap <Leader>mr "aygvrXgv"by:r !perl -e '$x = <C-R>a; print $x'<CR>0"cyWddk:s/<C-R>b/<C-R>c/<CR>
+vnoremap <Plug>MathCalcReplace "aygvrXgv"by:r !perl -e '$x = <C-R>a; print $x'<CR>0"cyWddk:s/<C-R>b/<C-R>c/<CR>
+vmap <leader>mr <Plug>MathCalcReplace
 
-nnoremap <leader>sv :so $MYVIMRC<CR>:e<CR>
-" nnoremap <leader>ov :tabe $MYVIMRC<CR>
-" nnoremap <leader>oz :tabe ~/.zshrc<CR>
+" reload and edit rc files
+nnoremap <Plug>vimrc-source :so $MYVIMRC<CR>:e<CR>
+nmap <leader>rV <Plug>vimrc-source
+nnoremap <leader>rv :tabe $HOME/.config/nvim/<cr>
+nnoremap <leader>rP :tabe $HOME/.config/nvim/plugins.vim<cr>
+nnoremap <leader>rp :tabe $HOME/.config/nvim/plugins_all.vim<cr>
+nnoremap <leader>rm :tabe $HOME/.config/nvim/mappings.vim<cr>
+nnoremap <plug>ZshrcEdit :<c-u>tabe $HOME/.zshrc<CR>
+nmap <leader>rz <plug>zshrc-edit
+
+" function! ShowLeaderMapping()
+"   let c = nr2char(getchar())
+"   while c == "\<CursorHold>"
+"     let c = nr2char(getchar())
+"   endwhile
+"   exec 'nmap <leader>'.c
+" endfunction
+"
+" function! ShowLocalLeaderMapping()
+"   let c = nr2char(getchar())
+"   while c == "\<CursorHold>"
+"     let c = nr2char(getchar())
+"   endwhile
+"   exec 'nmap <localleader>'.c
+" endfunction
+"
+" nnoremap <leader>? :call ShowLeaderMapping()<cr>
+" nnoremap <localleader>? :call ShowLocalLeaderMapping()<cr>
 
 " Terminal mappings
 if has('nvim')
-   nnoremap <leader><C-T> :vsp term://zsh<cr>
+   nnoremap <Plug>Terminal :vsp term://zsh<cr>
+   nmap <leader><C-T> <Plug>Terminal
    tnoremap <Esc> <C-\><C-n>
    tnoremap jk <C-\><C-n>
    tnoremap <A-h> <C-\><C-n><C-w>h

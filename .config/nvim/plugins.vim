@@ -82,6 +82,8 @@ call dein#add('Konfekt/FastFold', {
          \ 'hook_post_source': 'FastFoldUpdate'
          \ })
 
+call dein#add('nathanaelkane/vim-indent-guides')
+
 " call dein#add('powerman/vim-plugin-AnsiEsc')    " adds support for ansi escape characters - useful for vimpager
 " 'on_cmd': 'AnsiEsc',
 " }}}
@@ -89,7 +91,12 @@ call dein#add('Konfekt/FastFold', {
 
 " call dein#add('mileszs/ack.vim', { 'on_cmd': 'Ack'})
 
-call dein#add('mbbill/undotree', { 'on_cmd': 'UndotreeToggle' })
+call dein#add('mbbill/undotree', {
+      \ 'on_cmd': 'UndotreeToggle',
+      \ 'hook_source': 'let g:delimitMate_expand_cr = 1',
+      \ })
+
+call dein#add('hecal3/vim-leader-guide') ", {'on_cmd': 'LeaderGuide'})
 
 " call dein#add('junegunn/fzf', {
 "          \ 'build': './install --all',
@@ -157,7 +164,8 @@ call dein#add('sbdchd/neoformat', {'on_cmd': 'Neoformat'})
 " Git {{{
 
 " call dein#add('tpope/vim-fugitive')
-call dein#add('lambdalisue/vim-gita', {'on_cmd': 'Gita'})
+" call dein#add('lambdalisue/vim-gita', {'on_cmd': 'Gita'})
+call dein#add('lambdalisue/gina.vim') ", {'on_cmd': 'Gita'})
 " call dein#add('lambdalisue/vim-gista', {'on_cmd': 'Gista'})          " git config github.user {username}
 call dein#add('chrisbra/vim-diff-enhanced', {'on_cmd': 'EnhancedDiff'})
 call dein#add('rhysd/committia.vim', {'on_path': 'COMMIT_EDITMSG'})
@@ -168,6 +176,7 @@ call dein#add('jreybert/vimagit', {'on_cmd': 'Magit'})
 call dein#add('juneedahamed/svnj.vim')
 
 call dein#add('will133/vim-dirdiff', {'on_cmd': 'DirDiff'})
+call dein#add('AndrewRadev/linediff.vim', {'on_cmd': 'Linediff'})
 
 call dein#add('airblade/vim-gitgutter', {'on_path': '.*'})
 " for everythin else
@@ -197,6 +206,8 @@ call dein#add('tpope/vim-surround')
 "
 " call dein#add('yuttie/comfortable-motion.vim')
 " }}}
+
+call dein#add('benjifisher/matchit.zip')
 
 " ------------------------------------
 " CODING Plugins

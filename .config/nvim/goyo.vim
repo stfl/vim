@@ -33,6 +33,9 @@ function! s:goyo_enter()
    if exists(":QuickScopeToggle")
       QuickScopeToggle
    endif
+   if exists(":IndentGuidesDisable")
+      IndentGuidesDisable
+   endif
 
    set scl=no   " force the signcolumn to disappear
 
@@ -77,6 +80,9 @@ function! s:goyo_leave()
    endif
    if exists(":QuickScopeToggle")
       QuickScopeToggle
+   endif
+   if exists(":IndentGuidesEnable")
+      IndentGuidesEnable
    endif
 
    set scl=auto " return the signcolumn to the default behaviour

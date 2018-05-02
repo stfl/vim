@@ -8,10 +8,10 @@ set autoread          " Set to auto read when a file is changed from the outside
 set smartindent
 set expandtab      " tab expansion to spaces
 set smarttab
-set tabstop=3
-set shiftwidth=3
+set tabstop=2
+set shiftwidth=2
 set shiftround      " Round indent to multiple of 'shiftwidth'
-set softtabstop=3
+set softtabstop=2
 set scrolloff=5    " scroll offset at begining and end of line
 set textwidth=100  " line break after 100 char
 

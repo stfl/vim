@@ -17,7 +17,10 @@ let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#max_list = 10000
 let g:deoplete#tag#cache_limit_size = 5000000
 
-call deoplete#custom#set('_', 'min_pattern_length', 2)
+" call deoplete#custom#option('_', 'min_pattern_length', 2)
+
+		call deoplete#custom#source('_',
+		\ 'min_pattern_length', 2)
 
 let g:deoplete#sources = get(g:, 'deoplete#sources', {})
 let g:deoplete#omni_patterns = get(g:, 'deoplete#omni_patterns', {})

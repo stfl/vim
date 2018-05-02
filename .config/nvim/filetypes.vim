@@ -16,6 +16,14 @@ augroup MyAutoCmd " Pandoc Markdown setup {{{
    " autocmd InsertEnter *.md,*.tex call MatchTechWordsToAvoid()
    autocmd InsertLeave *.md,*.tex call MatchTechWordsToAvoid()
    autocmd BufWinLeave *.md,*.tex call clearmatches()
+
+  " Allows to read PDF files with VIM by piping them through pdftotext
+  autocmd BufReadPre *.pdf set ro
+  autocmd BufReadPost *.pdf silent %!pdftotext -nopgbrk "%" - |fmt -csw78
+
+  " Same for word files with antiword
+  autocmd BufReadPre *.doc set ro
+  autocmd BufReadPost *.doc %!antiword "%"
 augroup END
 
 " Highlight words to avoid in tech writing
@@ -41,3 +49,4 @@ au MyAutoCmd BufRead /home/slendl/.ssh/config.d/* set ft=sshconfig
 au MyAutoCmd BufRead /home/slendl/.config/mr/* set ft=sh
 
 " au MyAutoCmd FileType qf setlocal scrolloff=0
+
