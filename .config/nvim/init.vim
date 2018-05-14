@@ -38,8 +38,8 @@ endif
 " Initialize dein.vim (package manager) {{{
 let s:path = expand('$HOME/.config/nvim/dein.vim')
 " if dein#load_state(s:path)
-   call dein#begin(s:path, [$MYVIMRC, '$HOME/.config/nvim/plugins.vim'])
-   source $HOME/.config/nvim/plugins.vim
+   call dein#begin(s:path, [$MYVIMRC, '$HOME/.config/nvim/plugins/plugins.vim'])
+   source $HOME/.config/nvim/plugins/plugins.vim
    call dein#end()
    " call dein#save_state()
    if dein#check_install()
@@ -54,7 +54,7 @@ let s:path = expand('$HOME/.config/nvim/dein.vim')
 source $HOME/.config/nvim/mappings.vim
 
 " plugin specific settings
-source $HOME/.config/nvim/plugins_all.vim
+source $HOME/.config/nvim/plugins/other.vim
 
 " if !has('vim_starting')
    call dein#call_hook('source')
@@ -80,7 +80,7 @@ execute 'autocmd MyAutoCmd BufWritePost $HOME/.config/nvim/*vim nested source $M
 
 " }}}
 
-" source $HOME/.config/nvim/deoplete.vim
+" source $HOME/.config/nvim/plugins/deoplete.vim
 set secure
 
 

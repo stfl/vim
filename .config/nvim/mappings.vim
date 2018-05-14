@@ -14,7 +14,7 @@ map! <Nul> <C-Space>
 
 let g:mapleader="\<Space>"
 " let mapleader = ","  " rebmap the <Leader> key
-let g:maplocalleader=';'
+let g:maplocalleader=','
 
 " noremap ; :
 " noremap : ;
@@ -45,6 +45,8 @@ nnoremap <Right> :vertical resize +2<CR>
 
 noremap <silent> j gj
 noremap <silent> k gk
+noremap <silent> H 0
+noremap <silent> L $
 
 " Toggle editor visuals
 " nnoremap <leader><F7> :setlocal list!<CR>
@@ -79,7 +81,7 @@ vmap <leader>ft <Plug>FormatText
 nnoremap <Plug>FormatTextParagraph gwap
 nmap <leader>fp <Plug>FormatTextParagraph
 
-nnoremap <Plug>WhitespaceErase :WhitespaceErase<CR>:AirlineToggleWhitespace<cr>:AirlineToggleWhitespace<cr>
+nnoremap <silent> <Plug>WhitespaceErase :WhitespaceErase<CR>:AirlineToggleWhitespace<cr>:AirlineToggleWhitespace<cr>
 nmap <leader>fw <Plug>WhitespaceErase
 
 " nnoremap <leader>fl :Neoformat  >> plugins_all.vim
@@ -95,11 +97,11 @@ nnoremap ZAZ :wqa<CR>
 " nnoremap ZTZ :windo w!<CR>:tabclose<CR>
 
 " select tab to the left if closing, but not if closing the first
-nnoremap <expr> ZW tabpagenr('$') > 1 ? ':windo w!<CR>:tabclose<CR>gT' : ':wqa<CR>'
-nnoremap <expr> ZT tabpagenr('$') > 1
-         \ ? ':tabclose!<CR>' : ':qa!<CR>'
-nmap     <expr> ZZ winnr('$') == 1 && tabpagenr() != 1 && tabpagenr('$') != tabpagenr()
-         \ ? 'ZZgT' : 'ZZ'
+" nnoremap <expr> ZW tabpagenr('$') > 1 ? ':windo w!<CR>:tabclose<CR>gT' : ':wqa<CR>'
+" nnoremap <expr> ZT tabpagenr('$') > 1
+"          \ ? ':tabclose!<CR>' : ':qa!<CR>'
+" nmap     <expr> ZZ winnr('$') == 1 && tabpagenr() != 1 && tabpagenr('$') != tabpagenr()
+"          \ ? 'ZZgT' : 'ZZ'
 
 " Easily switch to directory of current file
 " When pressing <leader>cd switch to the directory of the open buffer
@@ -135,6 +137,8 @@ nmap <leader>h <Plug>TabRight
 " past last yanked, not including stuff from d/D/x/X/...
 nnoremap gp "0p
 nnoremap gP "0P
+" nnoremap <Plug>LastYankToReg " TODO
+" nmap <leader>rr$reg <Plug>LastYankToReg
 
 " Drag current line/s vertically and auto-indent
 " TODO this is shadowed by EasyMotion...
@@ -151,7 +155,7 @@ nmap <BS> %
 xmap <BS> %
 
 " Append modeline to EOF
-nnoremap <silent> <Leader>am :call AppendModeline()<CR>
+nnoremap <silent> <Leader>am :<c-u>AppendModeline<CR>
 
 " Start an external command with a single bang
 nnoremap ! :!
@@ -228,13 +232,15 @@ vmap <leader>mr <Plug>MathCalcReplace
 
 " reload and edit rc files
 nnoremap <Plug>vimrc-source :so $MYVIMRC<CR>:e<CR>
-nmap <leader>rV <Plug>vimrc-source
-nnoremap <leader>rv :tabe $HOME/.config/nvim/<cr>
-nnoremap <leader>rP :tabe $HOME/.config/nvim/plugins.vim<cr>
-nnoremap <leader>rp :tabe $HOME/.config/nvim/plugins_all.vim<cr>
-nnoremap <leader>rm :tabe $HOME/.config/nvim/mappings.vim<cr>
-nnoremap <plug>ZshrcEdit :<c-u>tabe $HOME/.zshrc<CR>
-nmap <leader>rz <plug>zshrc-edit
+nmap <leader>fcV <Plug>vimrc-source
+nnoremap <leader>fcv :tabe $HOME/.config/nvim/<cr>
+nnoremap <leader>fcP :tabe $HOME/.config/nvim/plugins/plugins.vim<cr>
+nnoremap <leader>fcp :tabe $HOME/.config/nvim/plugins/other.vim<cr>
+nnoremap <leader>fcm :tabe $HOME/.config/nvim/mappings.vim<cr>
+nnoremap <plug>zshrc-edit :<c-u>tabe $HOME/.zshrc<CR>
+nmap <leader>fcz <plug>zshrc-edit
+nnoremap <plug>tmux.conf-edit :<c-u>tabe $HOME/.tmux.conf<CR>
+nmap <leader>fct <plug>tmux.conf-edit
 
 " function! ShowLeaderMapping()
 "   let c = nr2char(getchar())
@@ -304,4 +310,3 @@ noremap gä g]
 "   \gV:call setreg('"', old_reg, old_regtype)<CR>
 "
 " " }}}
-

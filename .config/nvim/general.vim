@@ -13,7 +13,9 @@ set shiftwidth=2
 set shiftround      " Round indent to multiple of 'shiftwidth'
 set softtabstop=2
 set scrolloff=5    " scroll offset at begining and end of line
+set sidescrolloff=5     " Keep at least 5 lines left/right
 set textwidth=100  " line break after 100 char
+set nojoinspaces   " when joining lines (J, gq), do not put a double space after .!?
 
 if has('patch-7.3.541')
    set formatoptions+=j       " Remove comment leader when joining lines
@@ -147,10 +149,6 @@ endif
 syntax on        " Syntax highlighting
 " set complete=.,w,b,u,t,i,kspell  " where the completion should look, spellcheck completion if :set spell
 set complete=.
-set foldmethod=marker            " allow folding at markers
-" set foldcolumn=3
-set foldnestmax=2
-set foldminlines=3
 set diffopt=filler,vertical,iwhite  " ignore whitespace
 set splitbelow splitright        " Splits open bottom right
 set switchbuf=usetab,split       " Switch buffer behavior
@@ -161,7 +159,7 @@ set breakat=\ \	;:,!?            " Long lines break chars
 set nostartofline                " Cursor in same column for few commands
 set whichwrap+=h,l,<,>,[,],~     " Move to following line on certain keys
 set completeopt=menuone          " Show menu even for one item
-" set completeopt+=noselect        " Do not select a match in the menu
+set completeopt+=noselect        " Do not select a match in the menu
 " if glob('/usr/share/dict/usa')
    " setlocal dictionary+=/usr/share/dict/usa
 " endif
@@ -171,6 +169,20 @@ endif
 if has('cscope') " && executable('cscope')
    set cscopetag                  " use cscope db when C-]
    set cscopeverbose
+endif
+
+
+" }}}
+" Time {{{
+" --------
+set timeout ttimeout
+set timeoutlen=1000  " Time out on mappings
+set ttimeoutlen=250  " Time out on key codes
+set updatetime=1500  " Idle time to write swap and trigger CursorHold
+
+if has('nvim')
+   " https://github.com/neovim/neovim/issues/2017
+   set ttimeoutlen=-1
 endif
 
 " }}}
@@ -183,7 +195,8 @@ set showcmd             " Show the (partial) command as it's being typed
 set noruler             " don't show the cursor position all the time
 set laststatus=2        " always show status line
 set noshowmode          " don't Show the current mode
-" set shortmess=aoOTI     " Shorten messages and don't show intro
+set shortmess=aoOTI     " Shorten messages and don't show intro
+set display=lastline
 
 set showtabline=2       " Always show the tabs line
 set tabpagemax=30       " Maximum number of tab pages
@@ -191,6 +204,9 @@ set winwidth=30         " Minimum width for current window
 set winheight=1         " Minimum height for current window
 set previewheight=8     " Completion preview height
 set helpheight=12       " Minimum help window height
+
+set fillchars=vert:│,fold:-
+set listchars=tab:\┆\ ,eol:¬,extends:⟫,precedes:⟪,nbsp:.,trail:·
 
 " Do not display completion messages
 " Patch: https://groups.google.com/forum/#!topic/vim_dev/WeBBjkXE8H8
@@ -207,18 +223,74 @@ if has('conceal') && v:version >= 703
    set conceallevel=2 concealcursor=nv
 endif
 
-" }}}
-" Time {{{
-" --------
-set timeout ttimeout
-set timeoutlen=1000  " Time out on mappings
-set ttimeoutlen=250  " Time out on key codes
-set updatetime=1500  " Idle time to write swap and trigger CursorHold
+" Folds {{{
+" -----
 
-if has('nvim')
-   " https://github.com/neovim/neovim/issues/2017
-   set ttimeoutlen=-1
+
+" FastFold
+" Credits: https://github.com/Shougo/shougo-s-github
+autocmd MyAutoCmd TextChangedI,TextChanged *
+      \ if &l:foldenable && &l:foldmethod !=# 'manual' |
+      \   let b:foldmethod_save = &l:foldmethod |
+      \   let &l:foldmethod = 'manual' |
+      \ endif
+
+autocmd MyAutoCmd BufWritePost *
+      \ if &l:foldmethod ==# 'manual' && exists('b:foldmethod_save') |
+      \   let &l:foldmethod = b:foldmethod_save |
+      \   execute 'normal! zx' |
+      \ endif
+
+if has('folding')
+  set foldenable
+  set foldmethod=syntax
+  set foldlevelstart=99
+  " set foldcolumn=3
+  set foldnestmax=2
+  set foldminlines=3
+
+  set foldtext=FoldText()
 endif
+
+" " Nicer fold text
+" " See: http://dhruvasagar.com/2013/03/28/vim-better-foldtext
+" function! FoldText() "{{{
+"   let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+"   let lines_count = v:foldend - v:foldstart + 1
+"   let lines_count_text = '| ' . printf('%10s', lines_count . ' lines') . ' |'
+"   let foldchar = matchstr(&fillchars, 'fold:\zs.')
+"   let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+"   let foldtextend = lines_count_text . repeat(foldchar, 8)
+"   let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+"   return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
+" endfunction "}}}
+" set foldtext=FoldText()
+" set foldmethod=marker            " allow folding at markers
+
+" Improved Vim fold-text
+" See: http://www.gregsexton.org/2011/03/improving-the-text-displayed-in-a-fold/
+function! FoldText()
+  " Get first non-blank line
+  let fs = v:foldstart
+  while getline(fs) =~? '^\s*$' | let fs = nextnonblank(fs + 1)
+  endwhile
+  if fs > v:foldend
+    let line = getline(v:foldstart)
+  else
+    let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
+  endif
+
+  let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
+  let foldSize = 1 + v:foldend - v:foldstart
+  let foldSizeStr = ' ' . foldSize . ' lines '
+  let foldLevelStr = repeat('+--', v:foldlevel)
+  let lineCount = line('$')
+  let foldPercentage = printf('[%.1f', (foldSize*1.0)/lineCount*100) . '%] '
+  let expansionString = repeat('.', w - strwidth(foldSizeStr.line.foldLevelStr.foldPercentage))
+  return line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
+endfunction
+
+
 
 " }}}
 " Make directory automatically. {{{
@@ -249,7 +321,7 @@ function! MyDiff()
       let opt = opt . "-w "
    endif
    silent execute "!diff -a --binary " . opt . v:fname_in . " " . v:fname_new .
-            \  " > " . v:fname_out
+         \  " > " . v:fname_out
 endfunction
 
 " }}}

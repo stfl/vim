@@ -8,15 +8,15 @@ if dein#tap('denite.nvim')
 
   nnoremap <silent> <C-p> :<C-u>Denite file_rec<CR>
 
-  nnoremap <silent> <leader>s :<C-u>Denite buffer -mode=normal<CR>
+  nnoremap <silent> <leader>sb :<C-u>Denite buffer -mode=normal<CR>
   " nnoremap <silent> <leader>dm :Unite mapping<cr>
 
-  nnoremap <silent> <space>p  :<C-u>Denite file_mru<CR>
+  nnoremap <silent> <space>fm  :<C-u>Denite file_mru<CR>
   nnoremap <silent> <space>dr  :<C-u>Denite -resume<CR>
+  nnoremap <silent> <space>sr  :<C-u>Denite register<CR>
 
-  nnoremap <silent> <leader>dg :<C-u>Denite grep<CR>
-  nnoremap <silent> <leader>dG :<C-u>DeniteCursorWord grep<CR>
-  nnoremap <silent> <leader>dg :<C-u>Denite grep<CR>
+  nnoremap <silent> <leader>/g :<C-u>Denite grep<CR>
+  nnoremap <silent> <leader>/w :<C-u>DeniteCursorWord grep<CR>
 
   " nnoremap <leader><Space>s :<C-u>DeniteBufferDir buffer<CR>
   " nnoremap <leader>8 :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
@@ -27,10 +27,10 @@ if dein#tap('denite.nvim')
 endif
 
 if dein#tap('denite-exta')
-  nnoremap <silent> <leader>o  :<C-u>Denite location_list -mode=normal -no-empty<CR>
-  nnoremap <silent> <leader>q  :<C-u>Denite quickfix -mode=normal -no-empty<CR>
-  nnoremap <silent> <leader>ds :<C-u>Denite history:search -mode=normal<CR>
-  nnoremap <silent> <leader>dc :<C-u>Denite history:cmd -mode=normal<CR>
+  " nnoremap <silent> <leader>q  :<C-u>Denite quickfix -mode=normal -auto-resize<CR>
+  " nnoremap <silent> <leader>o  :<C-u>Denite location_list -mode=normal -auto-resize<CR>
+  nnoremap <silent> <leader>sh :<C-u>Denite history:search -mode=normal<CR>
+  nnoremap <silent> <leader>sc :<C-u>Denite history:cmd -mode=normal<CR>
 endif
 
 if dein#tap('unite-location')
@@ -41,7 +41,7 @@ if dein#tap('unite-location')
 endif
 
 if dein#tap('neoyank.vim')
-  nnoremap <leader>y :Denite neoyank -default-action=append<cr>
+  nnoremap <leader>sy :Denite neoyank -default-action=append<cr>
   " -mode=normal
 endif
 
@@ -49,8 +49,8 @@ if dein#tap('vim-localvimrc')
   let g:localvimrc_ask = 0
   let g:localvimrc_sandbox = 0
 
-  nnoremap <leader>rl :<C-u>LocalVimRC<CR>
-  nnoremap <leader>rL :<C-u>LocalVimRCEdit<CR>
+  nnoremap <leader>fcL :<C-u>LocalVimRC<CR>
+  nnoremap <leader>fcl :<C-u>LocalVimRCEdit<CR>
 endif
 
 if dein#tap('vim-rooter')
@@ -523,10 +523,10 @@ if dein#tap('jedi-vim')
   let g:jedi#max_doc_height = 30
   let g:jedi#use_splits_not_buffers = 'right'
   let g:jedi#completions_command = ''
-  let g:jedi#goto_command = '<leader>d'
-  let g:jedi#goto_assignments_command = '<leader>a'
+  let g:jedi#goto_command = '<localleader>d'
+  let g:jedi#goto_assignments_command = '<localleader>a'
   let g:jedi#documentation_command = 'K'
-  let g:jedi#rename_command = '<C-R>'
+  let g:jedi#rename_command = '<localleader>r'
   let g:jedi#usages_command = '<leader>rf'
 
   if ! has('nvim')
@@ -704,7 +704,7 @@ if dein#tap('neomake')
 endif
 
 if dein#tap('vim-dispatch')
-  nnoremap <leader>m :<c-u>Dispatch<CR>
+  " nnoremap <leader>m :<c-u>Dispatch<CR>
 
   autocmd MyAutoCmd FileType python let b:dispatch = 'python %'
   autocmd MyAutoCmd FileType zsh,bash,sh let b:dispatch = './%'
@@ -785,25 +785,4 @@ if dein#tap('limelight.vim')
 endif
 
 if dein#tap('vim-leader-guide')
-    nnoremap <leader> :<C-U>LeaderGuide ' '<CR>
-    vnoremap <leader> :<C-U>LeaderGuideVisual ' '<CR>
-    nnoremap <localleader> :<C-U>LeaderGuide ';'<CR>
-    vnoremap <localleader> :<C-U>LeaderGuideVisual ';'<CR>
-    "
-    " " Define prefix dictionary
-    let g:lmap =  {}
-    let g:lmap.f = { 'name' : 'File Menu' }
-    let g:lmap.o = { 'name' : 'Open Stuff' }
-    let g:lmap.r = { 'name' : 'rc Config Files' }
-    " " 'name' is a special field. It will define the name of the group.
-    " " leader-f is the "File Menu" group.
-    " " Unnamed groups will show an empty string
-    "
-    let g:llmap =  {}
-    "
-    " " autocmd FileType gitcommit  noremap <buffer> <leader> <Plug>leaderguide-buffer
-    " " for fugitive
-    "
-    " " autocmd BufEnter tagbar  noremap <buffer> <leader> <Plug>leaderguide-buffer
-    " " for tagbar
 endif

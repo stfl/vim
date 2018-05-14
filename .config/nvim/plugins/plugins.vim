@@ -1,19 +1,22 @@
-
 call dein#add('Shougo/dein.vim')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('haya14busa/dein-command.vim', {'on_cmd': 'Dein'})
+call dein#add('wsdjeg/dein-ui.vim', {'depends': 'dein.vim'})
+
+call dein#add('roxma/nvim-yarp') " Yet Another Remote Plugin Framework for Neovim
+call dein#add('roxma/vim-hug-neovim-rpc') " compatibility layer for neovim rpc client working on vim8
 
 
 " Denite {{{
 " call dein#add('Shougo/denite.nvim', {
 "          \ 'lazy': 1,
 "          \ 'depends': 'neomru.vim',
-"          \ 'hook_post_source': 'source $HOME/.config/nvim/unite.vim'
+"          \ 'hook_post_source': 'source $HOME/.config/nvim/plugins/unite.vim'
 "          \ })
 
 call dein#add('Shougo/denite.nvim', {
          \ 'on_cmd': 'Denite',
-         \ 'hook_source': 'source $HOME/.config/nvim/denite.vim',
+         \ 'hook_source': 'source $HOME/.config/nvim/plugins/denite.vim',
          \ })
          " \ 'depends': 'neomru.vim',
 " from rafi:
@@ -56,7 +59,7 @@ endif
 
 call dein#add('altercation/vim-colors-solarized')
 
-" TODO maybe replace some of solarized stuff with: 
+" TODO maybe replace some of solarized stuff with:
 " call dein#add('https://github.com/ntpeters/vim-better-whitespace')
 
 " call dein#add('kshenoy/vim-signature', {'on_path': '.*'})
@@ -71,7 +74,7 @@ call dein#add('junegunn/limelight.vim', {'lazy': 1})
 call dein#add('junegunn/goyo.vim', {
          \ 'depends': 'limelight.vim',
          \ 'on_cmd': 'Goyo',
-         \ 'hook_add': 'source $HOME/.config/nvim/goyo.vim'
+         \ 'hook_add': 'source $HOME/.config/nvim/plugins/goyo.vim'
          \ })
 
 call dein#add('tmux-plugins/vim-tmux-focus-events')
@@ -96,7 +99,10 @@ call dein#add('mbbill/undotree', {
       \ 'hook_source': 'let g:delimitMate_expand_cr = 1',
       \ })
 
-call dein#add('hecal3/vim-leader-guide') ", {'on_cmd': 'LeaderGuide'})
+call dein#add('hecal3/vim-leader-guide', {
+      \ 'hook_post_source': 'source $HOME/.config/nvim/plugins/leader-guide.vim',
+      \ })
+      " \ 'on_cmd': 'LeaderGuide',
 
 " call dein#add('junegunn/fzf', {
 "          \ 'build': './install --all',
@@ -136,9 +142,10 @@ call dein#add('Shougo/echodoc.vim')
 
 " call dein#add('Shougo/vimfiler.vim', {
 "          \ 'depends': 'unite.vim',
-"          \ 'hook_post_source': 'source $HOME/.config/nvim/vimfiler.vim'
+"          \ 'hook_post_source': 'source $HOME/.config/nvim/plugins/vimfiler.vim'
 "          \ })
-call dein#add('brooth/far.vim')
+" find and replace
+call dein#add('brooth/far.vim', {'on_cmd': 'Far'})
 
 call dein#add('Shougo/vinarise.vim', {'on_cmd': 'Vinarise'})
 
@@ -207,7 +214,8 @@ call dein#add('tpope/vim-surround')
 " call dein#add('yuttie/comfortable-motion.vim')
 " }}}
 
-call dein#add('benjifisher/matchit.zip')
+" call dein#add('benjifisher/matchit.zip')
+call dein#add('andymass/vim-matchup')
 
 " ------------------------------------
 " CODING Plugins
@@ -236,6 +244,7 @@ call dein#add('ujihisa/neco-look', {
 call dein#add('beloglazov/vim-online-thesaurus', {'on_cmd': 'OnlineThesaurusCurrentWord'})
 
 call dein#add('vimwiki/vimwiki', {'on_ft': 'vimwiki'})
+call dein#add('jceb/vim-orgmode') ", {'on_ft': 'org'})
 "
 " run :UpdateRemotePlugins
 
@@ -290,7 +299,7 @@ call dein#add('zchee/deoplete-clang', {
 " call dein#add('Valloric/YouCompleteMe', {
 "          \ 'on_i': 1,
 "          \ 'on_ft': ['c','cpp','objc','objcpp'],
-"          \ 'hook_source': 'source $HOME/.config/nvim/ycm.vim',
+"          \ 'hook_source': 'source $HOME/.config/nvim/plugins/ycm.vim',
 "          \ })
          " \ 'on_ft': ['c', 'cpp', 'objc', 'objcpp', 'typescript'],
          " \ 'on_i': 1,
@@ -342,7 +351,7 @@ call dein#add('Shougo/deoplete.nvim', {
          \ 'if': 'has("nvim")',
          \ 'on_i': 1,
          \ 'hook_source': 'let g:deoplete#enable_at_startup = 1'
-         \   .' | source $HOME/.config/nvim/deoplete.vim'
+         \   .' | source $HOME/.config/nvim/plugins/deoplete.vim'
          \ })
 
 call dein#add('Shougo/neoinclude.vim', {'on_if': 1})

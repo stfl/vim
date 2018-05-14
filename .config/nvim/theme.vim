@@ -30,15 +30,8 @@ hi Search term=reverse cterm=reverse ctermfg=10 ctermbg=15 guibg=DarkGrey
 " hi Search term=bold cterm=bold ctermfg=15 ctermbg=10 guibg=DarkGrey
 hi Folded term=none cterm=none ctermfg=DarkGrey guifg=DarkGrey ctermbg=none guibg=none
 
-" make this switch with TogleVisibility()
-au MyAutoCmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=Black ctermbg=Black ctermfg=Black guifg=Black
-au MyAutoCmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=None ctermbg=None ctermfg=None guifg=None
 
-" for vim-indent-guides
-" hi IndentGuidesOdd  ctermbg=Black
-" hi IndentGuidesEven ctermbg=None
-
-" fix wierd display of Sign Column Color
+" fix weired display of Sign Column Color (Signify)
 if has('gui_running')
   highlight SignColumn ctermbg=white
 else
@@ -50,6 +43,15 @@ if version >= 703
   let g:solarized_hitrail = 1
 endif
 
+au MyAutoCmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=None ctermbg=None ctermfg=None guifg=None
+au MyAutoCmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=Black ctermbg=Black ctermfg=Black guifg=Black
+" TODO make this switch with TogleVisibility()
+
+" TODO only add this to theme file for vim-indent-guides
+" hi IndentGuidesOdd  ctermbg=Black
+" hi IndentGuidesEven ctermbg=None
+
+"}}}
 " Toggle solarized visibility {{{
 function! TogleVisibility()
   if (&list == 0)
@@ -63,26 +65,6 @@ function! TogleVisibility()
     colorscheme solarized
   endif
 endfunction
-
-" }}}
-
-" }}}
-" Nicer fold text {{{
-" See: http://dhruvasagar.com/2013/03/28/vim-better-foldtext
-function! FoldText() "{{{
-  let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
-  let lines_count = v:foldend - v:foldstart + 1
-  let lines_count_text = '| ' . printf('%10s', lines_count . ' lines') . ' |'
-  let foldchar = matchstr(&fillchars, 'fold:\zs.')
-  let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
-  let foldtextend = lines_count_text . repeat(foldchar, 8)
-  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
-endfunction "}}}
-set foldtext=FoldText()
-
-set fillchars=vert:│,fold:-
-set listchars=tab:\┆\ ,eol:¬,extends:⟫,precedes:⟪,nbsp:.,trail:·
 
 " }}}
 " Font Size in GUI {{{
