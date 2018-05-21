@@ -245,7 +245,7 @@ if dein#tap('neoformat')
   nnoremap <leader>fa :<c-u>undojoin \| silent Neoformat<cr>
   vnoremap <leader>ff :<c-u>undojoin \| silent '<,'>Neoformat<cr>
 
-  au MyAutoCmd filetype c,cpp nnoremap <leader>fc :<c-u>silent exec "!ln -sf " . $HOME . "/.config/.clang-format ."<cr>
+  au MyAutoCmd filetype c,cpp nnoremap <leader>fC :<c-u>silent exec "!ln -sf " . $HOME . "/.config/.clang-format ."<cr>
 
   let g:neoformat_try_formatprg = 1
 
