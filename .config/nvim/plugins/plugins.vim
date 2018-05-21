@@ -3,8 +3,10 @@ call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('haya14busa/dein-command.vim', {'on_cmd': 'Dein'})
 call dein#add('wsdjeg/dein-ui.vim', {'depends': 'dein.vim'})
 
-call dein#add('roxma/nvim-yarp') " Yet Another Remote Plugin Framework for Neovim
-call dein#add('roxma/vim-hug-neovim-rpc') " compatibility layer for neovim rpc client working on vim8
+if !has('nvim')
+  call dein#add('roxma/nvim-yarp') " Yet Another Remote Plugin Framework for Neovim
+  call dein#add('roxma/vim-hug-neovim-rpc') " compatibility layer for neovim rpc client working on vim8
+endif
 
 
 " Denite {{{
@@ -144,8 +146,11 @@ call dein#add('Shougo/echodoc.vim')
 "          \ 'depends': 'unite.vim',
 "          \ 'hook_post_source': 'source $HOME/.config/nvim/plugins/vimfiler.vim'
 "          \ })
+
 " find and replace
-call dein#add('brooth/far.vim', {'on_cmd': 'Far'})
+call dein#add('brooth/far.vim', {
+      \ 'on_cmd': 'Far',
+      \ })
 
 call dein#add('Shougo/vinarise.vim', {'on_cmd': 'Vinarise'})
 

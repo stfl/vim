@@ -19,7 +19,7 @@ let g:deoplete#tag#cache_limit_size = 5000000
 
 " call deoplete#custom#option('_', 'min_pattern_length', 2)
 
-call deoplete#custom#source('_', 'min_pattern_length', 2)
+" call deoplete#custom#source('_', 'min_pattern_length', 2)
 
 let g:deoplete#sources = get(g:, 'deoplete#sources', {})
 let g:deoplete#omni_patterns = get(g:, 'deoplete#omni_patterns', {})
@@ -143,6 +143,6 @@ smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
 inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:is_whitespace() "{{{
-	let col = col('.') - 1
-	return ! col || getline('.')[col - 1] =~? '\s'
+  let col = col('.') - 1
+  return ! col || getline('.')[col - 1] =~? '\s'
 endfunction "}}}

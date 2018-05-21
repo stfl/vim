@@ -52,7 +52,7 @@ noremap <silent> L $
 " nnoremap <leader><F7> :setlocal list!<CR>
 nnoremap <Leader>ts :setlocal spell!<cr>
 nnoremap <Plug>ToggleNumber :setlocal nonumber! norelativenumber!<CR>
-nmap <Leader>tc <Plug>ToggleNumber
+nmap <Leader>tn <Plug>ToggleNumber
 nnoremap <Leader>tL :setlocal nolist!<CR>
 " nnoremap <F7> :call TogleVisibility()<CR>
 " from solarized at theme.vim
