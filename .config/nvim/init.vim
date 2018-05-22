@@ -56,13 +56,13 @@ source $HOME/.config/nvim/mappings.vim
 " plugin specific settings
 source $HOME/.config/nvim/plugins/other.vim
 
-" if !has('vim_starting')
+if !has('vim_starting')
    call dein#call_hook('source')
-	call dein#call_hook('post_source')
+   call dein#call_hook('post_source')
 
    filetype plugin indent on
    syntax enable
-" endif
+endif
 
 " }}}
 " Loading configuration modules {{{

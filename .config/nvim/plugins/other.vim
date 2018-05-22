@@ -2,7 +2,6 @@
 " Plugin specific config
 " -----------
 
-
 if dein#tap('denite.nvim')
   cnoreabbrev D Denite
 
@@ -561,6 +560,9 @@ if dein#tap('deoplete-clang')
   if !empty(glob("/usr/lib/libclang.so"))                                " on Arch
     let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
     let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/'
+  elseif !empty(glob("/usr/lib/llvm-5.0/lib/libclang.so"))               " on Debian
+    let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-5.0/lib/libclang.so'
+    let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-5.0/'
   elseif !empty(glob("/usr/lib/llvm-3.5/lib/libclang.so"))               " on Debian
     let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-3.5/lib/libclang.so'
     let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.5/'
