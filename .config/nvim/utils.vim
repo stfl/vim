@@ -129,5 +129,9 @@ command! -nargs=1 -complete=file WriteRemote
 
 command! WriteRemoteClear au! write_remote BufWritePost <buffer>
 
+if exists(":CompilerSet") != 2 " older Vim always used :setlocal
+  command -nargs=* CompilerSet setlocal <args>
+endif
+
 " }}}
 
