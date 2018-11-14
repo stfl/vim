@@ -106,11 +106,11 @@ call dein#add('hecal3/vim-leader-guide', {
       \ })
       " \ 'on_cmd': 'LeaderGuide',
 
-" call dein#add('junegunn/fzf', {
-"          \ 'build': './install --all',
-"          \ 'install_process_timeout': '800',
-"          \ 'on_if': 0,
-"          \ })
+call dein#add('junegunn/fzf', {
+         \ 'build': './install --all',
+         \ 'install_process_timeout': '800',
+         \ 'on_if': 0,
+         \ })
 " call dein#add('junegunn/fzf.vim') ", {'on_cmd': 'FZF'})
 "
 call dein#add('ctrlpvim/ctrlp.vim')
@@ -158,7 +158,7 @@ call dein#add('bchretien/vim-profiler', {'rtp': ''})
 
 call dein#add('embear/vim-localvimrc')
 
-call dein#add('tpope/vim-unimpaired')
+" call dein#add('tpope/vim-unimpaired')
 
 call dein#add('tpope/vim-repeat')
 
@@ -209,6 +209,9 @@ call dein#add('bradford-smith94/quick-scope', {'on_path': '.*'})
 "
 call dein#add('tpope/vim-surround')
 
+call dein#add('matze/vim-move', {'on_map': {'nvx': '<Plug>Move'}})
+let g:move_key_modifier = 'C'  " use with <C-?>
+
 " call dein#add('terryma/vim-expand-region') "{{{
 " map gk <Plug>(expand_region_expand)
 " map gj <Plug>(expand_region_shrink)
@@ -225,6 +228,11 @@ call dein#add('andymass/vim-matchup')
 " ------------------------------------
 " CODING Plugins
 " -----------------------------------
+call dein#add('autozimu/LanguageClient-neovim', {
+      \ 'rev': 'next',
+      \ 'build': 'bash install.sh',
+      \ })
+
 " call dein#add('scrooloose/syntastic')
 call dein#add('neomake/neomake', {
          \ 'if': "has('nvim') && empty($VIM_MINIMAL)",
@@ -282,6 +290,10 @@ call dein#add('raimon49/requirements.txt.vim', {'lazy': 1, 'on_ft': 'requirement
 "          \ 'on_i': 1
 "          \ })
 
+
+" }}}
+" Rust {{{
+call dein#add('rust-lang/rust.vim', {'on_ft': 'rust'})
 " }}}
 " Go {{{
 " call dein#add('fatih/vim-go', {'on_ft': 'go'})
@@ -289,11 +301,11 @@ call dein#add('raimon49/requirements.txt.vim', {'lazy': 1, 'on_ft': 'requirement
 
 " }}}
 " C / C++ {{{
-call dein#add('zchee/deoplete-clang', {
-         \ 'depends': 'deoplete.nvim',
-         \ 'on_i': 1,
-         \ 'on_ft': ['c','cpp','objc','objcpp']
-         \ })
+" call dein#add('zchee/deoplete-clang', {
+"          \ 'depends': 'deoplete.nvim',
+"          \ 'on_i': 1,
+"          \ 'on_ft': ['c','cpp','objc','objcpp']
+"          \ })
 
 " call dein#add('tweekmonster/deoplete-clang2', {
 "          \ 'depends': 'deoplete.nvim',
@@ -346,6 +358,9 @@ call dein#add('kergoth/vim-bitbake', {'on_ft': 'bitbake'})
 call dein#add('ericpruitt/tmux.vim', { 'rtp': 'vim/',  'on_ft': 'tmux'})
 call dein#add('stfl/meson.vim', {'on_ft': 'meson'})
 call dein#add('vim-scripts/OMNeTpp4.x-NED-Syntax-file', {'on_ft': 'ned'})
+
+call dein#add('cespare/vim-toml', {'on_ft': "toml"})
+call dein#add('maralla/vim-toml-enhance', {'depends': 'cespare/vim-toml'})
 
 " }}}
 

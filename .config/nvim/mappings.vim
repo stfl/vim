@@ -59,7 +59,7 @@ nnoremap <Leader>tL :setlocal nolist!<CR>
 nnoremap <leader>tl :call TogleVisibility()<CR>
 nnoremap <Leader>th :nohlsearch<CR>
 nnoremap <Leader>tw :setlocal wrap! breakindent!<CR>
-nnoremap <C-l> :redraw!<cr>:nohl<cr>
+nnoremap <C-l> :<c-u>redraw!<cr>:<c-u>nohl<cr>
 
 nnoremap <expr> <Plug>ToggleConceal &conceallevel == 0 ? ':setlocal conceallevel=2<CR>' : ':setlocal conceallevel=0<CR>'
 nmap <Leader>tc <Plug>ToggleConceal

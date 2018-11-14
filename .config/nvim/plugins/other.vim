@@ -2,8 +2,190 @@
 " Plugin specific config
 " -----------
 
+scriptencoding utf-8
+
 if dein#tap('denite.nvim')
   cnoreabbrev D Denite
+
+  " denite option
+  let s:denite_options = {
+        \ 'default' : {
+        \ 'winheight' : 15,
+        \ 'mode' : 'insert',
+        \ 'quit' : 1,
+        \ 'highlight_matched_char' : 'MoreMsg',
+        \ 'highlight_matched_range' : 'MoreMsg',
+        \ 'direction': 'rightbelow',
+        \ 'statusline' : has('patch-7.4.1154') ? v:false : 0,
+        \ 'prompt' : '➭',
+        \ }}
+
+  " function! s:profile(opts) abort
+  "   for fname in keys(a:opts)
+  "     for dopt in keys(a:opts[fname])
+  "       call denite#custom#option(fname, dopt, a:opts[fname][dopt])
+  "     endfor
+  "   endfor
+  " endfunction
+  " 
+  " call s:profile(s:denite_options)
+  " 
+  " " buffer source
+  " call denite#custom#var(
+  "       \ 'buffer',
+  "       \ 'date_format', '%m-%d-%Y %H:%M:%S')
+  " 
+  " " denite command
+  " if !has("win32")
+  "   if executable('rg')
+  "     " For ripgrep
+  "     " Note: It is slower than ag
+  "     call denite#custom#var('file_rec', 'command',
+  "           \ ['rg', '--hidden', '--files', '--glob', '!.git', '--glob', '']
+  "           \ + zvim#util#Generate_ignore(g:spacevim_wildignore, 'rg')
+  "           \ )
+  "   elseif executable('ag')
+  "     " Change file_rec command.
+  "     call denite#custom#var('file_rec', 'command',
+  "           \ ['ag' , '--nocolor', '--nogroup', '-g', '']
+  "           \ + zvim#util#Generate_ignore(g:spacevim_wildignore, 'ag')
+  "           \ )
+  "   endif
+  " else
+  "   if executable('pt')
+  "     " For Pt(the platinum searcher)
+  "     " NOTE: It also supports windows.
+  "     call denite#custom#var('file_rec', 'command',
+  "           \ ['pt', '--follow', '--nocolor', '--nogroup', '-g:', ''])
+  "   endif
+  " endif
+  " 
+  " call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+  " call denite#custom#var('file_rec/git', 'command',
+  "       \ ['git', 'ls-files', '-co', '--exclude-standard'])
+  " 
+  " " FIND and GREP COMMANDS
+  " if executable('rg')
+  "   " Ripgrep command on grep source
+  "   call denite#custom#var('grep', 'command', ['rg'])
+  "   call denite#custom#var('grep', 'default_opts',
+  "         \ ['--vimgrep', '--no-heading'])
+  "   call denite#custom#var('grep', 'recursive_opts', [])
+  "   call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+  "   call denite#custom#var('grep', 'separator', ['--'])
+  "   call denite#custom#var('grep', 'final_opts', [])
+  " 
+  " elseif  executable('pt')
+  "   " Pt command on grep source
+  "   call denite#custom#var('grep', 'command', ['pt'])
+  "   call denite#custom#var('grep', 'default_opts',
+  "         \ ['--nogroup', '--nocolor', '--smart-case'])
+  "   call denite#custom#var('grep', 'recursive_opts', [])
+  "   call denite#custom#var('grep', 'pattern_opt', [])
+  "   call denite#custom#var('grep', 'separator', ['--'])
+  "   call denite#custom#var('grep', 'final_opts', [])
+  " elseif executable('ag')
+  "   call denite#custom#var('grep', 'command', ['ag'])
+  "   call denite#custom#var('grep', 'recursive_opts', [])
+  "   call denite#custom#var('grep', 'pattern_opt', [])
+  "   call denite#custom#var('grep', 'separator', ['--'])
+  "   call denite#custom#var('grep', 'final_opts', [])
+  "   call denite#custom#var('grep', 'default_opts',
+  "         \ [ '--vimgrep', '--smart-case' ])
+  " elseif executable('ack')
+  "   " Ack command
+  "   call denite#custom#var('grep', 'command', ['ack'])
+  "   call denite#custom#var('grep', 'recursive_opts', [])
+  "   call denite#custom#var('grep', 'pattern_opt', ['--match'])
+  "   call denite#custom#var('grep', 'separator', ['--'])
+  "   call denite#custom#var('grep', 'final_opts', [])
+  "   call denite#custom#var('grep', 'default_opts',
+  "         \ ['--ackrc', $HOME.'/.config/ackrc', '-H',
+  "         \ '--nopager', '--nocolor', '--nogroup', '--column'])
+  " endif
+  " 
+  " " enable unite menu compatibility
+  " call denite#custom#var('menu', 'unite_source_menu_compatibility', 1)
+  " 
+  " " KEY MAPPINGS
+  " let s:insert_mode_mappings = [
+  "       \ ['jk', '<denite:enter_mode:normal>', 'noremap'],
+  "       \ ['<Tab>', '<denite:move_to_next_line>', 'noremap'],
+  "       \ ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
+  "       \ ['<S-tab>', '<denite:move_to_previous_line>', 'noremap'],
+  "       \ ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
+  "       \ ['<C-t>', '<denite:do_action:tabopen>', 'noremap'],
+  "       \ ['<C-v>', '<denite:do_action:vsplit>', 'noremap'],
+  "       \ ['<C-s>', '<denite:do_action:split>', 'noremap'],
+  "       \ ['<Esc>', '<denite:enter_mode:normal>', 'noremap'],
+  "       \ ['<C-N>', '<denite:assign_next_matched_text>', 'noremap'],
+  "       \ ['<C-P>', '<denite:assign_previous_matched_text>', 'noremap'],
+  "       \ ['<Up>', '<denite:assign_previous_text>', 'noremap'],
+  "       \ ['<Down>', '<denite:assign_next_text>', 'noremap'],
+  "       \ ['<C-Y>', '<denite:redraw>', 'noremap'],
+  "       \ ]
+  " 
+  " let s:normal_mode_mappings = [
+  "       \ ["'", '<denite:toggle_select_down>', 'noremap'],
+  "       \ ['<C-n>', '<denite:jump_to_next_source>', 'noremap'],
+  "       \ ['<C-p>', '<denite:jump_to_previous_source>', 'noremap'],
+  "       \ ['<Tab>', '<denite:move_to_next_line>', 'noremap'],
+  "       \ ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
+  "       \ ['<S-tab>', '<denite:move_to_previous_line>', 'noremap'],
+  "       \ ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
+  "       \ ['gg', '<denite:move_to_first_line>', 'noremap'],
+  "       \ ['<C-t>', '<denite:do_action:tabopen>', 'noremap'],
+  "       \ ['<C-v>', '<denite:do_action:vsplit>', 'noremap'],
+  "       \ ['<C-s>', '<denite:do_action:split>', 'noremap'],
+  "       \ ['q', '<denite:quit>', 'noremap'],
+  "       \ ['r', '<denite:redraw>', 'noremap'],
+  "       \ ]
+  " 
+  " for s:m in s:insert_mode_mappings
+  "   call denite#custom#map('insert', s:m[0], s:m[1], s:m[2])
+  " endfor
+  " for s:m in s:normal_mode_mappings
+  "   call denite#custom#map('normal', s:m[0], s:m[1], s:m[2])
+  " endfor
+  " 
+  " unlet s:m s:insert_mode_mappings s:normal_mode_mappings
+  " 
+  " 
+  " exe 'nnoremap <silent><nowait> [denite] :<c-u>LeaderGuide "' .
+  "       \ <leader>d . '"<CR>'
+  " exe 'nmap ' . . ' [denite]'
+  " let g:_spacevim_mappings_denite = {}
+  " nnoremap <silent> [denite]r
+  "       \ :<C-u>Denite -resume<CR>
+  " let g:_spacevim_mappings_denite.r = ['Denite -resume',
+  "       \ 'resume denite window']
+  " nnoremap <silent> [denite]f  :<C-u>Denite file_rec<cr>
+  " let g:_spacevim_mappings_denite.f = ['Denite file_rec', 'file_rec']
+  " nnoremap <silent> [denite]i  :<C-u>Denite file_rec/git<cr>
+  " let g:_spacevim_mappings_denite.i = ['Denite file_rec/git', 'git files']
+  " nnoremap <silent> [denite]g  :<C-u>Denite grep<cr>
+  " let g:_spacevim_mappings_denite.g = ['Denite grep', 'denite grep']
+  " nnoremap <silent> [denite]t  :<C-u>Denite tag<CR>
+  " let g:_spacevim_mappings_denite.t = ['Denite tag', 'denite tag']
+  " nnoremap <silent> [denite]T  :<C-u>Denite tag:include<CR>
+  " let g:_spacevim_mappings_denite.T = ['Denite tag/include',
+  "       \ 'denite tag/include']
+  " nnoremap <silent> [denite]j  :<C-u>Denite jump<CR>
+  " let g:_spacevim_mappings_denite.j = ['Denite jump', 'denite jump']
+  " nnoremap <silent> [denite]h  :<C-u>Denite neoyank<CR>
+  " let g:_spacevim_mappings_denite.h = ['Denite neoyank', 'denite neoyank']
+  " nnoremap <silent> [denite]<C-h>  :<C-u>DeniteCursorWord help<CR>
+  " let g:_spacevim_mappings_denite['<C-h>'] = ['DeniteCursorWord help',
+  "       \ 'denite with cursor word help']
+  " nnoremap <silent> [denite]o  :<C-u>Denite -buffer-name=outline
+  "       \  -auto-preview outline<CR>
+  " let g:_spacevim_mappings_denite.o = ['Denite outline', 'denite outline']
+  " nnoremap <silent> [denite]e  :<C-u>Denite
+  "       \ -buffer-name=register register<CR>
+  " let g:_spacevim_mappings_denite.e = ['Denite register', 'denite register']
+  " nnoremap <silent> [denite]<Space> :Denite menu:CustomKeyMaps<CR>
+  " let g:_spacevim_mappings_denite['<Space>'] = ['Denite menu:CustomKeyMaps',
+  "       \ 'denite customkeymaps']
 
   nnoremap <silent> <C-p> :<C-u>Denite file_rec<CR>
 
@@ -420,8 +602,12 @@ if dein#tap('vim-asterisk')
   " let g:asterisk#keeppos = 1
 endif
 
+if dein#tap('vim-pandoc-syntax')
+  let g:pandoc#syntax#codeblocks#embeds#langs = []
+endif
+
 if dein#tap('vim-pandoc')
-  let g:pandoc#command#autoexec_command = 'Pandoc pdf -s'
+  " let g:pandoc#command#autoexec_command = 'Pandoc pdf -s'
   let g:pandoc#formatting#textwidth = 100
   let g:pandoc#command#use_message_buffers = '0'
   " let g:pandoc#biblio#use_bibtool = 1
@@ -430,10 +616,20 @@ if dein#tap('vim-pandoc')
 
   autocmd MyAutoCmd FileType pandoc nnoremap <localleader>zc :r !zotcite<CR>
 
+
   " toggle autoexec
   autocmd MyAutoCmd FileType pandoc,markdown nnoremap <localleader>aa
         \ :let g:pandoc#command#autoexec_on_writes = g:pandoc#command#autoexec_on_writes == 1 ? 0 : 1<CR>
         \ :echomsg "Pandoc autoexec " . string(g:pandoc#command#autoexec_on_writes == 0 ? "deactivated" : "activated")<CR>
+
+  " use fast fold
+  if dein#tap('FastFold')
+    augroup EnableFastFolds
+      au!
+      autocmd InsertEnter <buffer> setlocal foldmethod=manual
+      autocmd InsertLeave <buffer> setlocal foldmethod=expr
+    augroup end
+  endif
 endif
 
 if dein#tap('vim-pandoc-after')
@@ -567,7 +763,7 @@ if dein#tap('deoplete-clang')
     let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-3.5/lib/libclang.so'
     let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.5/'
   else
-    echomsg string('deoplete-clang: libclang not found!!!')
+    autocmd VimEnter * echomsg string('deoplete-clang: libclang not found!!!')
   endif
 
   let g:deoplete#sources#clang#sort_algo = 'priority'
@@ -588,42 +784,6 @@ if dein#tap('tweekmonster/deoplete-clang2')
     echomsg string('deoplete-clang2: clang not found!!!')
   endif
 endif
-
-
-" if dein#tap('Valloric/YouCompleteMe')
-" ignore alot to allow ycm to kick in
-" let g:deoplete#ignore_sources.c =
-"       \ ['dictionary', 'member', 'omni', 'tag', 'syntax', 'file/include', 'neosnippet', 'around']
-" let g:deoplete#ignore_sources.cpp    = g:deoplete#ignore_sources.c
-" let g:deoplete#ignore_sources.objc = g:deoplete#ignore_sources.c
-"
-" function! YCMConfig()
-"   let g:ycm_auto_trigger = 1
-"   let g:ycm_min_num_of_chars_for_completion = 1
-"   let g:ycm_filetype_blacklist = {
-"         \ 'tagbar' : 1,
-"         \ 'pandoc' : 1,
-"         \ 'quickrun' : 1,
-"         \ 'markdown' : 1,
-"         \}
-"   let g:ycm_always_populate_location_list = 1
-"   let g:ycm_autoclose_preview_window_after_completion = 1
-"   let g:ycm_autoclose_preview_window_after_insertion = 1
-"   let g:ycm_collect_identifiers_from_comments_and_strings = 1
-"   let g:ycm_collect_identifiers_from_tags_files = 1
-"   let g:ycm_complete_in_comments = 1
-"   let g:ycm_confirm_extra_conf = 0
-"   let g:ycm_extra_conf_globlist = ['./*','../*']
-"   let g:ycm_filepath_completion_use_working_dir = 1
-"   let g:ycm_global_ycm_extra_conf = $XDG_CONFIG_HOME.'/nvim/.ycm_extra_conf.py'
-"   let g:ycm_goto_buffer_command = 'same-buffer'  " ['same-buffer', 'horizontal-split', 'vertical-split', 'new-tab', 'new-or-existing-tab']
-"   let g:ycm_key_list_select_completion = ['<Down>']
-"   let g:ycm_server_python_interpreter = g:python3_host_prog
-"   let g:ycm_seed_identifiers_with_syntax = 1
-
-"   autocmd! FileType rust nmap <buffer><C-]>  <C-u>YcmCompleter GoTo<CR>
-" endfunction
-" endif
 
 if dein#tap('lyuts/vim-rtags')
   let g:rtagsJumpStackMaxSize = 1000
@@ -787,4 +947,27 @@ if dein#tap('limelight.vim')
 endif
 
 if dein#tap('vim-leader-guide')
+endif
+
+if dein#tap('LanguageClient-neovim')
+  let g:LanguageClient_serverCommands = {
+        \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+        \ 'python': ['/usr/local/bin/pyls'],
+        \ }
+
+        " \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+        " \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+
+  " let $RUST_BACKTRACE = 1
+  " let g:LanguageClient_loggingLevel = 'INFO'
+  " let g:LanguageClient_loggingFile = '/tmp/LanguageClient.log'
+  " let g:LanguageClient_serverStderr = '/tmp/LanguageServer.log'
+
+  nnoremap <F5> :<c-u>call LanguageClient_contextMenu()<CR>
+  " Or map each action separately
+  nnoremap <silent> K :<c-u>call LanguageClient#textDocument_hover()<CR>
+  nnoremap <silent> <localleader>d :<c-u>call LanguageClient#textDocument_definition()<CR>
+  nnoremap <silent> <localleader>r :<c-u>call LanguageClient#textDocument_rename()<CR>
+
+  let g:LanguageClient_autoStart = 1
 endif

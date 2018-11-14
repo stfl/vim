@@ -1,7 +1,7 @@
 nnoremap <leader> :<C-U>LeaderGuide ' '<CR>
 vnoremap <leader> :<C-U>LeaderGuideVisual ' '<CR>
-nnoremap <localleader> :<C-U>LeaderGuide ';'<CR>
-vnoremap <localleader> :<C-U>LeaderGuideVisual ';'<CR>
+nnoremap <localleader> :<C-U>LeaderGuide ','<CR>
+vnoremap <localleader> :<C-U>LeaderGuideVisual ','<CR>
 "
 " " Define prefix dictionary
 let g:lmap =  {}

@@ -32,6 +32,13 @@ let g:deoplete#keyword_patterns = get(g:, 'deoplete#keyword_patterns', {})
 let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
 " let g:deoplete#ignore_sources._ = ['around']
 
+" let g:deoplete#ignore_sources._ = get(g:deoplete#ignore_sources, '_', ['around', 'LanguageClient'])
+" for key in keys(g:deoplete#ignore_sources)
+"   if key != '_' && index(keys(get(g:, 'LanguageClient_serverCommands', {})), key) == -1
+"     let g:deoplete#ignore_sources[key] = g:deoplete#ignore_sources[key] + ['around', 'LanguageClient']
+"   endif
+" endfor
+
 " C/C++
 " ignore alot to allow ycm to kick in
 " let g:deoplete#ignore_sources.c =

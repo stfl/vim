@@ -30,6 +30,10 @@ hi Search term=reverse cterm=reverse ctermfg=10 ctermbg=15 guibg=DarkGrey
 " hi Search term=bold cterm=bold ctermfg=15 ctermbg=10 guibg=DarkGrey
 hi Folded term=none cterm=none ctermfg=DarkGrey guifg=DarkGrey ctermbg=none guibg=none
 
+" highlighting for matchit
+hi MatchParen cterm=bold ctermfg=1 ctermbg=0 guibg=DarkCyan
+hi MatchParenCur cterm=bold ctermfg=1 ctermbg=0 guibg=DarkCyan
+
 
 " fix weired display of Sign Column Color (Signify)
 if has('gui_running')

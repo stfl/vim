@@ -67,6 +67,7 @@ endif
 " }}}
 " Loading configuration modules {{{
 
+source $HOME/.config/nvim/plugins/spacevim.vim
 source $HOME/.config/nvim/general.vim
 call s:my_on_filetype()
 source $HOME/.config/nvim/utils.vim
